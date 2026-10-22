@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasmo Diagnostics Pvt Ltd | Precision Diagnostics & Home Sample Collection</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        clasmo: {
+                            navy: '#061a2e',
+                            blue: '#0a3663',
+                            accentBlue: '#1a5fb4',
+                            teal: '#00b4d8',
+                            emerald: '#06d6a0',
+                            lightTeal: '#caf0f8',
+                            gold: '#ffd166',
+                            coral: '#ff6b6b',
+                            cardBg: '#f8fafc',
+                        }
+                    },
+                    animation: {
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'floatRev 7s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2.5s infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'blob': 'blob 10s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-14px)' },
+                        },
+                        floatRev: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(14px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '1', boxShadow: '0 0 25px rgba(0, 180, 216, 0.4)' },
+                            '50%': { opacity: '0.85', boxShadow: '0 0 40px rgba(6, 214, 160, 0.6)' },
+                        },
+                        shimmer: {
+                            '100%': { transform: 'translateX(100%)' }
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styling for Glassmorphism and Micro-interactions */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-dark {
+            background: rgba(6, 26, 46, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .card-hover-effect {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 30px -10px rgba(10, 54, 99, 0.15);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #00b4d8;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #0a3663;
+        }
+        /* Gradient Text Helper */
+        .gradient-text {
+            background: linear-gradient(135deg, #0a3663 0%, #00b4d8 50%, #06d6a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-text-light {
+            background: linear-gradient(135deg, #ffffff 0%, #caf0f8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased flex flex-col min-h-screen overflow-x-hidden selection:bg-clasmo-teal selection:text-white">
+
+    <!-- Ambient Floating Background Blobs -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-clasmo-teal/30 rounded-full blur-3xl animate-blob"></div>
+        <div class="absolute top-1/3 -right-40 w-96 h-96 bg-clasmo-emerald/20 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-clasmo-blue/20 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- 1. Top Announcement Bar & Dynamic Offer -->
+    <div class="relative z-50 bg-gradient-to-r from-clasmo-navy via-clasmo-blue to-clasmo-navy text-white text-xs md:text-sm py-2.5 px-4 shadow-sm border-b border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 bg-clasmo-emerald/20 text-clasmo-emerald border border-clasmo-emerald/40 px-2.5 py-0.5 rounded-full font-bold text-[11px] animate-pulse">
+                    <i class="fa-solid fa-fire-flame-curved"></i> Special Health Offer
+                </span>
+                <span class="hidden sm:inline text-slate-200">Get <strong>20% OFF</strong> Full Body Checkup with Code: <strong class="text-clasmo-gold bg-white/10 px-1.5 py-0.5 rounded">CLASMO20</strong></span>
+            </div>
+
+            <div class="flex items-center gap-4 text-xs font-medium">
+                <a href="tel:9272173712" class="flex items-center gap-1.5 hover:text-clasmo-teal transition-colors">
+                    <i class="fa-solid fa-phone-volume text-clasmo-emerald"></i>
+                    <span>Call: <strong>9272173712</strong></span>
+                </a>
+                <a href="https://wa.me/919272173712?text=Hi%20Clasmo%20Diagnostics%2C%20I%20want%20to%20book%20a%20test" target="_blank" class="hidden md:flex items-center gap-1.5 hover:text-emerald-400 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> WhatsApp Support
+                </a>
+                <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all" target="_blank" class="hover:text-clasmo-teal transition-colors flex items-center gap-1" title="LinkedIn Profile">
+                    <i class="fa-brands fa-linkedin text-sm"></i> <span class="hidden lg:inline">LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 gap-4">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-clasmo-blue via-clasmo-teal to-clasmo-emerald flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-clasmo-teal/20 group-hover:scale-105 transition-all duration-300">
+                        C
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight text-clasmo-navy block leading-none">CLASMO</span>
+                        <span class="text-[11px] font-bold text-clasmo-teal tracking-widest uppercase">Diagnostics Pvt Ltd</span>
+                    </div>
+                </a>
+
+                <!-- Search Bar -->
+                <div class="hidden lg:flex flex-1 max-w-md mx-6 relative">
+                    <input type="text" id="desktopSearchInput" onkeyup="filterTestsByQuery(this.value)" placeholder="Search CBC, Thyroid, HbA1c, Vitamin D, Scans..." class="w-full pl-11 pr-10 py-2.5 bg-slate-100/80 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal focus:bg-white transition-all shadow-inner">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                    <button onclick="filterTestsByQuery('')" class="absolute right-3 top-3 text-xs text-slate-400 hover:text-slate-600 hidden" id="clearSearchBtn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center gap-6 font-semibold text-sm text-slate-700">
+                    <a href="#home" class="hover:text-clasmo-teal transition-colors">Home</a>
+                    <a href="#tests" class="hover:text-clasmo-teal transition-colors">Tests & Packages</a>
+                    <a href="#portal" class="hover:text-clasmo-teal transition-colors flex items-center gap-1.5"><i class="fa-solid fa-circle-user text-clasmo-teal"></i> Patient Portal</a>
+                    <a href="#about" class="hover:text-clasmo-teal transition-colors">About Us</a>
+                    <a href="#contact" class="hover:text-clasmo-teal transition-colors">Contact</a>
+                </nav>
+
+                <!-- Actions Button -->
+                <div class="flex items-center gap-3">
+                    <!-- Cart Button -->
+                    <button onclick="toggleCartDrawer()" class="relative p-2.5 text-slate-700 hover:text-clasmo-teal hover:bg-slate-100/80 rounded-2xl transition-all" title="View Cart">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cartBadge" class="absolute -top-1 -right-1 bg-clasmo-coral text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm hidden">0</span>
+                    </button>
+
+                    <!-- Quick Booking Trigger -->
+                    <button onclick="openBookingModal()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-clasmo-teal to-clasmo-emerald hover:opacity-95 shadow-md shadow-clasmo-teal/20 hover:scale-105 transition-all">
+                        <i class="fa-solid fa-calendar-check"></i> Book Home Pickup
+                    </button>
+
+                    <!-- Call Button Mobile/Tablet -->
+                    <a href="tel:9272173712" class="sm:hidden p-2.5 text-clasmo-blue bg-blue-50 rounded-2xl" title="Call Now">
+                        <i class="fa-solid fa-phone text-lg"></i>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-clasmo-teal focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="pb-3 lg:hidden">
+                <div class="relative">
+                    <input type="text" onkeyup="filterTestsByQuery(this.value)" placeholder="Search 50+ Tests, Blood Checks & Health Packages..." class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-slate-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Drawer -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 shadow-lg">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Home</a>
+            <a href="#tests" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Diagnostic Tests & Packages</a>
+            <a href="#portal" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Patient Health Portal</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">About Clasmo Diagnostics</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Contact Us</a>
+            <button onclick="toggleMobileMenu(); openBookingModal();" class="w-full py-3 bg-gradient-to-r from-clasmo-blue to-clasmo-teal text-white font-bold rounded-xl text-center shadow">
+                Book Sample Collection
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow z-10">
+
+        <!-- 4. Hero Section -->
+        <section id="home" class="relative bg-gradient-to-b from-clasmo-navy via-clasmo-blue to-slate-900 text-white overflow-hidden py-16 lg:py-24">
+            <!-- Animated Background Mesh -->
+            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00b4d8_1px,transparent_1px)] [background-size:24px_24px]"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Hero Content -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-clasmo-lightTeal text-xs sm:text-sm font-semibold tracking-wide shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-clasmo-emerald animate-ping"></span>
+                            NABL Standards • 100% Automated Diagnostics
+                        </div>
+
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                            Ultra-Precise Testing, <br class="hidden sm:inline">
+                            <span class="gradient-text-light">Delivered At Your Doorstep.</span>
+                        </h1>
+
+                        <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
+                            Welcome to <strong>Clasmo Diagnostics Pvt Ltd</strong>. Experience seamless pathology testing, certified pathologist verification, and same-day digital report delivery with our painless home sample pickup.
+                        </p>
+
+                        <!-- Key Feature Cards Row -->
+                        <div class="grid grid-cols-3 gap-3 pt-2 text-xs sm:text-sm">
+                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
+                                <i class="fa-solid fa-truck-medical text-clasmo-teal text-2xl"></i>
+                                <span class="font-bold">Free Home Pickup</span>
+                            </div>
+                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
+                                <i class="fa-solid fa-bolt text-clasmo-gold text-2xl"></i>
+                                <span class="font-bold">Fast 6-Hour Report</span>
+                            </div>
+                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
+                                <i class="fa-solid fa-microscope text-clasmo-emerald text-2xl"></i>
+                                <span class="font-bold">Automated Analyzers</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <button onclick="openBookingModal()" class="px-8 py-4 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white font-extrabold rounded-2xl shadow-xl shadow-clasmo-teal/30 hover:scale-105 transition-all text-sm sm:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check"></i> Book Home Collection
+                            </button>
+                            <a href="#tests" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold rounded-2xl backdrop-blur-md transition-all text-sm sm:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group"></i> Explore Health Packages
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Floating Stats Card Graphic -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md">
+                            <!-- Main Hero Glass Box -->
+                            <div class="glass-dark rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/15 animate-float-slow">
+                                <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-clasmo-teal/20 text-clasmo-teal flex items-center justify-center font-bold text-lg">
+                                            <i class="fa-solid fa-heart-pulse"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-extrabold text-sm text-white">Live Sample Tracking</div>
+                                            <div class="text-[11px] text-slate-400">Order ID: #CLS-9941</div>
+                                        </div>
+                                    </div>
+                                    <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase">Collected</span>
+                                </div>
+
+                                <div class="space-y-4 my-6 text-xs text-slate-300">
+                                    <div class="flex justify-between items-center">
+                                        <span class="flex items-center gap-2"><i class="fa-solid fa-circle text-[8px] text-clasmo-emerald"></i> Sample Barcode Generated</span>
+                                        <span class="text-slate-400">08:15 AM</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="flex items-center gap-2"><i class="fa-solid fa-circle text-[8px] text-clasmo-emerald"></i> Phlebotomist Picked Up</span>
+                                        <span class="text-slate-400">08:30 AM</span>
+                                    </div>
+                                    <div class="flex justify-between items-center font-bold text-white">
+                                        <span class="flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin text-clasmo-teal"></i> Analyzing at Lab (Roche)</span>
+                                        <span class="text-clasmo-teal">In Progress</span>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white/5 rounded-2xl p-4 border border-white/10 flex items-center justify-between text-xs">
+                                    <div>
+                                        <div class="text-slate-400">Estimated Digital Report</div>
+                                        <div class="font-bold text-clasmo-gold text-sm mt-0.5"><i class="fa-solid fa-clock mr-1"></i> Today by 4:00 PM</div>
+                                    </div>
+                                    <i class="fa-solid fa-file-pdf text-2xl text-clasmo-teal"></i>
+                                </div>
+                            </div>
+
+                            <!-- Floating Badge 1 -->
+                            <div class="absolute -top-6 -right-6 glass-card p-4 rounded-2xl shadow-xl text-slate-800 border border-white flex items-center gap-3 animate-float-reverse hidden sm:flex">
+                                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-black text-lg">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <div class="font-extrabold text-sm">99.8% Accuracy</div>
+                                    <div class="text-[10px] text-slate-500">NABL Quality Benchmarks</div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Badge 2 -->
+                            <div class="absolute -bottom-6 -left-6 glass-card p-4 rounded-2xl shadow-xl text-slate-800 border border-white flex items-center gap-3 animate-float-slow hidden sm:flex">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-black text-lg">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div>
+                                    <div class="font-extrabold text-sm">50,000+</div>
+                                    <div class="text-[10px] text-slate-500">Happy Patients Served</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats Counter Bar -->
+        <section class="bg-white py-8 border-b border-slate-200/80 shadow-sm relative z-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-2 border-r last:border-0 border-slate-100">
+                        <div class="text-3xl lg:text-4xl font-black text-clasmo-navy">200+</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Diagnostic Tests Available</div>
+                    </div>
+                    <div class="p-2 md:border-r last:border-0 border-slate-100">
+                        <div class="text-3xl lg:text-4xl font-black text-clasmo-teal">100%</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Hygienic Home Pickups</div>
+                    </div>
+                    <div class="p-2 border-r last:border-0 border-slate-100">
+                        <div class="text-3xl lg:text-4xl font-black text-clasmo-navy">6 Hours</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Average Turnaround Time</div>
+                    </div>
+                    <div class="p-2">
+                        <div class="text-3xl lg:text-4xl font-black text-clasmo-emerald">4.9 ★</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Patient Satisfaction Rating</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Search & Filterable Diagnostic Tests Section -->
+        <section id="tests" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="bg-clasmo-teal/10 text-clasmo-blue font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-clasmo-teal/20">Pathology & Scans</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-clasmo-navy mt-3">Popular Diagnostic Tests & Packages</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Select individual blood tests or comprehensive full-body checkup packages with free home collection.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button onclick="filterCategory('all')" class="cat-btn active px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-clasmo-navy text-white shadow-md" data-cat="all">All Tests</button>
+                <button onclick="filterCategory('Wellness')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Wellness">Full Body Packages</button>
+                <button onclick="filterCategory('Pathology')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Pathology">Pathology Essentials</button>
+                <button onclick="filterCategory('Diabetes')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Diabetes">Diabetes & Cardiac</button>
+                <button onclick="filterCategory('Vitamins')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Vitamins">Thyroid & Vitamins</button>
+            </div>
+
+            <!-- Dynamic Tests Grid -->
+            <div id="testsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript will inject diagnostic cards here -->
+            </div>
+        </section>
+
+        <!-- 6. Patient Health Dashboard & Report Preview Modal -->
+        <section id="portal" class="py-16 bg-gradient-to-b from-slate-100 via-white to-slate-100 border-y border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                    <div>
+                        <span class="bg-clasmo-emerald/10 text-clasmo-emerald font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-clasmo-emerald/20">Live Patient Portal</span>
+                        <h2 class="text-3xl font-black text-clasmo-navy mt-3">Interactive Patient Health Portal</h2>
+                        <p class="text-slate-600 text-sm mt-1">Access your verified digital lab reports, track pickup status, and view past health trends anytime.</p>
+                    </div>
+
+                    <!-- Profile Switcher Pill -->
+                    <div class="bg-white px-4 py-2.5 rounded-2xl shadow-sm border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-clasmo-teal text-white flex items-center justify-center font-black">RS</div>
+                        <div>
+                            <div class="font-extrabold text-slate-900">Rajesh Sharma</div>
+                            <div class="text-[10px] text-slate-500">Patient ID: CLS-88219</div>
+                        </div>
+                        <span class="ml-2 w-2 h-2 rounded-full bg-emerald-500"></span>
+                    </div>
+                </div>
+
+                <!-- Dashboard Preview Box -->
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-200/80 overflow-hidden">
+                    
+                    <!-- Top Bar inside Portal -->
+                    <div class="bg-clasmo-navy text-white px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                        <div class="flex items-center gap-3 text-sm">
+                            <span class="font-bold text-clasmo-lightTeal"><i class="fa-solid fa-chart-line mr-1.5"></i> Health Overview</span>
+                            <span class="text-slate-400">|</span>
+                            <span class="text-slate-300">Last Test: <strong>CBC & Lipid Profile</strong></span>
+                        </div>
+                        <button onclick="openSampleReport('Full Body Comprehensive Checkup', '20 Oct 2026')" class="px-3.5 py-1.5 bg-clasmo-teal hover:bg-clasmo-emerald text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-arrow-down"></i> Download Latest Report PDF
+                        </button>
+                    </div>
+
+                    <div class="p-6 lg:p-8 grid lg:grid-cols-12 gap-8">
+                        
+                        <!-- Left Active Tracker Card -->
+                        <div class="lg:col-span-5 space-y-6">
+                            
+                            <div class="bg-teal-50/80 border border-teal-200 rounded-2xl p-5 relative overflow-hidden">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-clasmo-blue">Active Pickup Status</span>
+                                    <span class="bg-teal-200 text-teal-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">Confirmed</span>
+                                </div>
+                                <h4 class="font-extrabold text-slate-800 text-base">Home Sample Collection</h4>
+                                <p class="text-xs text-slate-600 mt-1"><i class="fa-solid fa-calendar text-clasmo-teal mr-1"></i> Tomorrow • 7:30 AM - 8:30 AM</p>
+                                <p class="text-xs text-slate-600 mt-0.5"><i class="fa-solid fa-user-nurse text-clasmo-teal mr-1"></i> Phlebotomist: <strong>Sanjay Kumar</strong></p>
+
+                                <!-- Progress Tracker Steps -->
+                                <div class="mt-4 pt-3 border-t border-teal-200/60 grid grid-cols-3 gap-2 text-center text-[10px] font-bold">
+                                    <div class="text-clasmo-blue"><i class="fa-solid fa-circle-check text-clasmo-emerald"></i> Scheduled</div>
+                                    <div class="text-clasmo-teal"><i class="fa-solid fa-spinner animate-spin"></i> On The Way</div>
+                                    <div class="text-slate-400"><i class="fa-regular fa-circle"></i> Verification</div>
+                                </div>
+                            </div>
+
+                            <!-- Health Score Card -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                                    <span class="text-xs font-bold text-slate-500">HbA1c Glucose</span>
+                                    <div class="text-2xl font-black text-emerald-600 mt-1">5.7 %</div>
+                                    <span class="text-[10px] text-emerald-600 font-extrabold">Normal Range</span>
+                                </div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                                    <span class="text-xs font-bold text-slate-500">Vitamin D3</span>
+                                    <div class="text-2xl font-black text-amber-500 mt-1">24.1 ng/ml</div>
+                                    <span class="text-[10px] text-amber-600 font-extrabold">Mild Deficient</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Past Reports Table -->
+                        <div class="lg:col-span-7">
+                            <h4 class="font-extrabold text-slate-800 text-sm mb-4 flex justify-between items-center">
+                                <span>Recent Lab Diagnostic Reports</span>
+                                <span class="text-xs font-semibold text-clasmo-teal">All Reports Verified</span>
+                            </h4>
+
+                            <div class="space-y-3">
+                                
+                                <div class="p-4 rounded-2xl border border-slate-200 hover:border-clasmo-teal transition-all flex items-center justify-between bg-white shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-clasmo-blue flex items-center justify-center font-bold">
+                                            <i class="fa-solid fa-vial"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-extrabold text-sm text-slate-800">Complete Blood Count (CBC)</div>
+                                            <div class="text-xs text-slate-500">18 Oct 2026 • Verified by Pathologist</div>
+                                        </div>
+                                    </div>
+                                    <button onclick="openSampleReport('Complete Blood Count (CBC)', '18 Oct 2026')" class="px-3 py-1.5 bg-clasmo-blue hover:bg-clasmo-navy text-white text-xs font-bold rounded-xl transition-colors">
+                                        View Report
+                                    </button>
+                                </div>
+
+                                <div class="p-4 rounded-2xl border border-slate-200 hover:border-clasmo-teal transition-all flex items-center justify-between bg-white shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-teal-50 text-clasmo-teal flex items-center justify-center font-bold">
+                                            <i class="fa-solid fa-heart-pulse"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-extrabold text-sm text-slate-800">Lipid Profile & Cholesterol</div>
+                                            <div class="text-xs text-slate-500">02 Sep 2026 • Automated Roche Platform</div>
+                                        </div>
+                                    </div>
+                                    <button onclick="openSampleReport('Lipid Profile Test', '02 Sep 2026')" class="px-3 py-1.5 bg-clasmo-blue hover:bg-clasmo-navy text-white text-xs font-bold rounded-xl transition-colors">
+                                        View Report
+                                    </button>
+                                </div>
+
+                                <div class="p-4 rounded-2xl border border-slate-200 hover:border-clasmo-teal transition-all flex items-center justify-between bg-white shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                                            <i class="fa-solid fa-shield-virus"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-extrabold text-sm text-slate-800">Thyroid Profile (T3, T4, TSH)</div>
+                                            <div class="text-xs text-slate-500">14 Jul 2026 • Certified Laboratory Result</div>
+                                        </div>
+                                    </div>
+                                    <button onclick="openSampleReport('Thyroid Profile', '14 Jul 2026')" class="px-3 py-1.5 bg-clasmo-blue hover:bg-clasmo-navy text-white text-xs font-bold rounded-xl transition-colors">
+                                        View Report
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. About Clasmo Diagnostics Section (Corporate Identity) -->
+        <section id="about" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Visual Box -->
+                <div class="lg:col-span-5">
+                    <div class="relative">
+                        <div class="bg-gradient-to-tr from-clasmo-navy via-clasmo-blue to-clasmo-teal rounded-3xl p-1 shadow-2xl">
+                            <div class="bg-white rounded-[22px] p-6 sm:p-8 space-y-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-16 h-16 rounded-2xl bg-teal-50 border border-teal-200 flex items-center justify-center text-clasmo-teal text-3xl font-extrabold">
+                                        <i class="fa-solid fa-microscope"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-black text-clasmo-navy">Clasmo Diagnostics</h3>
+                                        <p class="text-xs text-slate-500 font-semibold">Pvt Ltd • Clinical Excellence</p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3 text-xs text-slate-600 font-medium">
+                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
+                                        <i class="fa-solid fa-circle-check text-clasmo-emerald text-base mt-0.5"></i>
+                                        <span>High-Precision Automated Pathology & Clinical Biochemistry</span>
+                                    </div>
+                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
+                                        <i class="fa-solid fa-circle-check text-clasmo-emerald text-base mt-0.5"></i>
+                                        <span>NABL Quality Standards & Internal Quality Control Assays</span>
+                                    </div>
+                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
+                                        <i class="fa-solid fa-circle-check text-clasmo-emerald text-base mt-0.5"></i>
+                                        <span>100% Barcoded Sample Workflow with Double Pathologist Verification</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-2 text-center">
+                                    <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all" target="_blank" class="inline-flex items-center justify-center text-xs font-bold text-clasmo-blue hover:text-clasmo-teal gap-2 transition-colors">
+                                        <i class="fa-brands fa-linkedin text-lg text-blue-600"></i> Follow Clasmo Diagnostics on LinkedIn <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description Text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="bg-clasmo-teal/10 text-clasmo-blue font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-clasmo-teal/20">Corporate Overview</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-clasmo-navy leading-tight">
+                        Advancing Healthcare Precision Through Automated Diagnostic Excellence.
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        <strong>Clasmo Diagnostics Pvt Ltd</strong> is a premier healthcare and pathology diagnostic provider committed to offering high-precision clinical testing, modern automated laboratory diagnostics, and compassionate, patient-first care.
+                    </p>
+
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        Inspired by leading diagnostic platforms, our state-of-the-art laboratory infrastructure utilizes automated analyzers and certified clinical procedures to deliver accurate, reproducible test results. From basic routine blood checks to specialized metabolic and hormonal profiles, we empower patients and physicians with reliable health insights.
+                    </p>
+
+                    <!-- Core Value Grid -->
+                    <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                        <div class="border-l-4 border-clasmo-teal pl-4 py-1">
+                            <h4 class="font-extrabold text-slate-800 text-sm">Certified Quality Control</h4>
+                            <p class="text-xs text-slate-500 mt-1">Multi-level sample verification overseen by experienced senior pathologists.</p>
+                        </div>
+                        <div class="border-l-4 border-clasmo-emerald pl-4 py-1">
+                            <h4 class="font-extrabold text-slate-800 text-sm">Painless Home Collection</h4>
+                            <p class="text-xs text-slate-500 mt-1">Vaccinated, trained phlebotomists ensuring maximum safety and hygiene.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-wrap items-center gap-6">
+                        <button onclick="openBookingModal()" class="px-6 py-3 bg-clasmo-navy hover:bg-clasmo-blue text-white font-bold rounded-xl shadow-md text-sm transition-all">
+                            Book Home Sample Collection
+                        </button>
+                        <a href="tel:9272173712" class="text-lg font-black text-clasmo-blue hover:text-clasmo-teal transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-headset text-clasmo-teal"></i> 9272173712
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 9. Footer & Social Integration -->
+    <footer id="contact" class="bg-clasmo-navy text-white pt-16 pb-8 border-t border-slate-800 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+                
+                <!-- Brand Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-clasmo-teal flex items-center justify-center text-white font-black text-xl">
+                            C
+                        </div>
+                        <div>
+                            <span class="text-xl font-black text-white block leading-none">CLASMO</span>
+                            <span class="text-[10px] font-bold text-clasmo-lightTeal tracking-widest uppercase">Diagnostics Pvt Ltd</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Clasmo Diagnostics Pvt Ltd is committed to high precision clinical diagnostics, automated pathology, and prompt home sample pickup.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all" target="_blank" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-clasmo-teal flex items-center justify-center text-slate-200 hover:text-white transition-colors" title="Official LinkedIn">
+                            <i class="fa-brands fa-linkedin text-base"></i>
+                        </a>
+                        <a href="https://wa.me/919272173712" target="_blank" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-emerald-600 flex items-center justify-center text-slate-200 hover:text-white transition-colors" title="WhatsApp Chat">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
+                        </a>
+                        <a href="tel:9272173712" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-clasmo-teal flex items-center justify-center text-slate-200 hover:text-white transition-colors" title="Call Us">
+                            <i class="fa-solid fa-phone text-base"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-clasmo-teal pl-2.5">Quick Links</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-300">
+                        <li><a href="#home" class="hover:text-clasmo-teal transition-colors">Home Page</a></li>
+                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Tests & Packages</a></li>
+                        <li><a href="#portal" class="hover:text-clasmo-teal transition-colors">Patient Health Portal</a></li>
+                        <li><a href="#about" class="hover:text-clasmo-teal transition-colors">About Clasmo Diagnostics</a></li>
+                        <li><button onclick="openBookingModal()" class="hover:text-clasmo-teal transition-colors">Book Home Collection</button></li>
+                    </ul>
+                </div>
+
+                <!-- Top Diagnostic Tests -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-clasmo-teal pl-2.5">Popular Diagnostics</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-300">
+                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Full Body Wellness Package</a></li>
+                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Complete Blood Count (CBC)</a></li>
+                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Thyroid Profile (T3 T4 TSH)</a></li>
+                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Diabetes Care (HbA1c)</a></li>
+                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Lipid Subfractions Profile</a></li>
+                    </ul>
+                </div>
+
+                <!-- Direct Contact -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-clasmo-teal pl-2.5">Contact Us</h4>
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-phone-volume text-clasmo-teal mt-0.5"></i>
+                            <div>
+                                <span class="block text-slate-400">Direct Helpline & WhatsApp:</span>
+                                <a href="tel:9272173712" class="font-extrabold text-white text-sm hover:text-clasmo-teal transition-colors">9272173712</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-brands fa-linkedin text-clasmo-teal mt-0.5"></i>
+                            <div>
+                                <span class="block text-slate-400">LinkedIn Updates:</span>
+                                <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all" target="_blank" class="hover:underline text-clasmo-teal break-all font-medium">Clasmo Diagnostics Pvt Ltd</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-clock text-clasmo-teal mt-0.5"></i>
+                            <span>Timing: Mon - Sat (7:00 AM - 8:00 PM)</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-4">
+                <div>© 2026 Clasmo Diagnostics Pvt Ltd. All rights reserved.</div>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-slate-200">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-200">Terms of Service</a>
+                    <a href="#" class="hover:text-slate-200">Quality Assured</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 2. PROMO / FESTIVE DISCOUNT POP-UP MODAL -->
+    <div id="promoModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 animate-in fade-in zoom-in duration-300">
+            <button onclick="closePromoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-4">
+                <div class="w-16 h-16 bg-gradient-to-tr from-clasmo-teal to-clasmo-emerald text-white rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold shadow-lg shadow-clasmo-teal/30">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+                <div>
+                    <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Exclusive Online Offer</span>
+                    <h3 class="text-2xl font-black text-clasmo-navy mt-2">Claim 20% Discount</h3>
+                    <p class="text-xs text-slate-600 mt-1">Applicable on Full Body Checkup Packages & Home Collections.</p>
+                </div>
+
+                <div class="bg-slate-50 border-2 border-dashed border-clasmo-teal p-3.5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase">Promo Code</div>
+                        <div class="text-xl font-black text-clasmo-blue tracking-wider">CLASMO20</div>
+                    </div>
+                    <button onclick="applyPromoCode('CLASMO20')" class="px-4 py-2 bg-clasmo-teal hover:bg-clasmo-emerald text-white text-xs font-bold rounded-xl transition-colors">
+                        Apply Code
+                    </button>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <button onclick="closePromoModal(); openBookingModal();" class="w-full py-3 bg-clasmo-navy hover:bg-clasmo-blue text-white font-bold rounded-xl shadow-md transition-all text-sm">
+                        Book Test with Discount
+                    </button>
+                    <a href="tel:9272173712" class="block w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors">
+                        <i class="fa-solid fa-phone text-clasmo-teal mr-1"></i> Call 9272173712
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. HOME SAMPLE COLLECTION MULTI-STEP BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="bg-teal-50 text-clasmo-teal text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Hassle-Free Booking</span>
+                <h3 class="text-2xl font-black text-clasmo-navy mt-1">Book Home Sample Collection</h3>
+                <p class="text-xs text-slate-500">Free Pickup • Same Day Verified Digital Report</p>
+            </div>
+
+            <form onsubmit="handleBookingSubmission(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Patient Name *</label>
+                    <input type="text" id="bookName" required placeholder="e.g. Rajesh Sharma" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal">
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Phone *</label>
+                        <input type="tel" id="bookPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Select Diagnostic Test / Package *</label>
+                        <select id="bookTest" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal font-medium">
+                            <option>Full Body Wellness Package (₹1,499)</option>
+                            <option>Complete Blood Count - CBC (₹299)</option>
+                            <option>Thyroid Profile Total (₹399)</option>
+                            <option>Diabetes Care Package (₹699)</option>
+                            <option>Lipid Profile Test (₹499)</option>
+                            <option>Vitamin D3 & B12 Combo (₹899)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Pickup Date *</label>
+                        <input type="date" id="bookDate" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Time Slot *</label>
+                        <select id="bookSlot" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal font-medium">
+                            <option>7:00 AM - 8:30 AM (Fasting Preferred)</option>
+                            <option>8:30 AM - 10:00 AM</option>
+                            <option>10:00 AM - 12:00 PM</option>
+                            <option>2:00 PM - 5:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Pickup Address *</label>
+                    <textarea id="bookAddress" rows="2" required placeholder="House No, Building, Landmark, City & Pincode" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white font-extrabold rounded-2xl shadow-lg shadow-clasmo-teal/30 hover:scale-102 transition-all text-base">
+                    <i class="fa-solid fa-circle-check mr-2"></i> Confirm Booking Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- BOOKING SUCCESS MODAL -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center space-y-4 relative border border-slate-100">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-clasmo-navy">Booking Confirmed!</h3>
+                <p class="text-xs text-slate-600 mt-1">Your home collection request has been registered.</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Booking ID:</span>
+                    <span id="resBookingId" class="font-extrabold text-clasmo-blue">#CLS-88412</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Patient:</span>
+                    <span id="resName" class="font-bold">Rajesh Sharma</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Contact:</span>
+                    <span id="resPhone" class="font-bold">9272173712</span>
+                </div>
+            </div>
+
+            <p class="text-[11px] text-slate-500">Our team will call you at <strong>9272173712</strong> to re-confirm before sample collection.</p>
+
+            <button onclick="closeSuccessModal()" class="w-full py-3 bg-clasmo-navy text-white font-bold rounded-xl text-sm">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <!-- SAMPLE REPORT PREVIEW MODAL -->
+    <div id="reportModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeSampleReport()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="border-b border-slate-200 pb-4 mb-6 flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-clasmo-teal text-white font-black text-sm flex items-center justify-center">C</span>
+                        <span class="font-extrabold text-clasmo-navy">CLASMO DIAGNOSTICS LAB REPORT</span>
+                    </div>
+                    <h3 id="reportTitle" class="text-xl font-black text-slate-800 mt-2">Test Name</h3>
+                    <p id="reportDate" class="text-xs text-slate-500">Date: </p>
+                </div>
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">NABL VERIFIED</span>
+            </div>
+
+            <!-- Report Sample Body -->
+            <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-4 text-xs font-mono">
+                <div class="grid grid-cols-2 gap-2 pb-3 border-b border-slate-200">
+                    <div>Patient Name: Rajesh Sharma (42M)</div>
+                    <div>Ref By: Self / Dr. Verma</div>
+                    <div>Sample ID: #CL-883921</div>
+                    <div>Lab Platform: Automated Analyzer</div>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="font-bold font-sans text-sm text-slate-800 underline">LABORATORY RESULTS SUMMARY</div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-200">
+                        <span>Hemoglobin (Hb)</span>
+                        <span class="font-bold text-slate-800">14.6 g/dL (Ref: 13.0 - 17.0)</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-200">
+                        <span>Total Leucocyte Count (TLC)</span>
+                        <span class="font-bold text-slate-800">6,800 /cu.mm (Ref: 4000 - 11000)</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-200">
+                        <span>Platelet Count</span>
+                        <span class="font-bold text-slate-800">2.50 Lakhs /cu.mm</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-200">
+                        <span>Fasting Blood Sugar</span>
+                        <span class="font-bold text-slate-800">94 mg/dL (Ref: &lt; 100)</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 text-[10px] text-slate-500 font-sans border-t border-slate-200 flex justify-between items-center">
+                    <span>Verified by Senior Chief Pathologist, Clasmo Diagnostics Pvt Ltd.</span>
+                    <span class="font-bold text-clasmo-blue">High Precision Result</span>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="closeSampleReport()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl">Close</button>
+                <button onclick="alert('Downloading Official Digital Report PDF...')" class="px-5 py-2.5 bg-clasmo-teal hover:bg-clasmo-emerald text-white text-xs font-bold rounded-xl shadow-md">
+                    <i class="fa-solid fa-download mr-1"></i> Download Report PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex justify-end hidden">
+        <div class="bg-white w-full max-w-md h-full p-6 shadow-2xl flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-center pb-4 border-b border-slate-200">
+                    <h3 class="text-lg font-black text-clasmo-navy flex items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping text-clasmo-teal"></i> Test Cart (<span id="cartHeaderCount">0</span>)
+                    </h3>
+                    <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <div id="cartList" class="mt-4 space-y-3 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                    <!-- Cart items JavaScript rendering -->
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200 pt-4 space-y-4">
+                <div class="flex justify-between items-center font-bold text-base text-slate-800">
+                    <span>Total Amount:</span>
+                    <span id="cartTotalPrice" class="text-clasmo-teal text-xl font-black">₹0</span>
+                </div>
+                <button onclick="toggleCartDrawer(); openBookingModal();" class="w-full py-3.5 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white text-center font-extrabold rounded-2xl shadow-lg">
+                    Proceed to Book Home Pickup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST ALERT -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-clasmo-navy text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-clasmo-emerald text-lg"></i>
+        <span id="toastText" class="text-xs font-bold">Action completed!</span>
+    </div>
+
+    <!-- Application JavaScript Code -->
+    <script>
+        // Diagnostic Tests Data
+        const testsCatalog = [
+            {
+                id: 'full-body',
+                name: 'Full Body Wellness Checkup',
+                category: 'Wellness',
+                parameters: '60+ Vital Parameters (CBC, Lipid, LFT, KFT, Thyroid)',
+                price: 1499,
+                mrp: 2999,
+                fasting: '10-12 hrs Fasting Required',
+                tat: 'Reports in 24 hrs',
+                popular: true
+            },
+            {
+                id: 'cbc',
+                name: 'Complete Blood Count (CBC)',
+                category: 'Pathology',
+                parameters: '15 Parameters (Hb, TLC, DLC, RBC, Platelets)',
+                price: 299,
+                mrp: 450,
+                fasting: 'No Fasting Required',
+                tat: 'Reports in 6 hrs',
+                popular: true
+            },
+            {
+                id: 'thyroid',
+                name: 'Thyroid Profile Total (T3, T4, TSH)',
+                category: 'Vitamins',
+                parameters: '3 Hormonal Parameters for Metabolism',
+                price: 399,
+                mrp: 750,
+                fasting: 'Morning Sample Preferred',
+                tat: 'Reports in 12 hrs',
+                popular: true
+            },
+            {
+                id: 'diabetes',
+                name: 'Diabetes Care Profile',
+                category: 'Diabetes',
+                parameters: 'HbA1c, Fasting Glucose, Urine Microalbumin',
+                price: 699,
+                mrp: 1200,
+                fasting: '8-10 hrs Fasting Required',
+                tat: 'Reports in 8 hrs',
+                popular: false
+            },
+            {
+                id: 'lipid',
+                name: 'Lipid Profile (Cardiac Health)',
+                category: 'Diabetes',
+                parameters: 'Total Cholesterol, Triglycerides, HDL, LDL',
+                price: 499,
+                mrp: 900,
+                fasting: '12 hrs Fasting Required',
+                tat: 'Reports in 12 hrs',
+                popular: false
+            },
+            {
+                id: 'vit-combo',
+                name: 'Vitamin D3 & B12 Combo',
+                category: 'Vitamins',
+                parameters: 'Bone Strength & Nerve Health Indicators',
+                price: 899,
+                mrp: 1800,
+                fasting: 'No Fasting Required',
+                tat: 'Reports in 24 hrs',
+                popular: true
+            }
+        ];
+
+        let cartItems = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTestCards(testsCatalog);
+            // Default date picker to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('bookDate').value = tomorrow.toISOString().split('T')[0];
+        });
+
+        // Render Test Cards Grid
+        function renderTestCards(data) {
+            const grid = document.getElementById('testsGrid');
+            if (!grid) return;
+
+            if (data.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-semibold">No diagnostic tests matching your search query.</div>`;
+                return;
+            }
+
+            grid.innerHTML = data.map(test => `
+                <div class="glass-card rounded-3xl p-6 card-hover-effect flex flex-col justify-between border border-slate-200/80 relative">
+                    ${test.popular ? `<span class="absolute top-4 right-4 bg-amber-100 text-amber-800 text-[10px] font-black px-3 py-0.5 rounded-full uppercase">Popular</span>` : ''}
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-clasmo-teal bg-teal-50 px-2.5 py-0.5 rounded-md border border-teal-100">${test.category}</span>
+                        <h3 class="text-lg font-black text-clasmo-navy mt-2">${test.name}</h3>
+                        <p class="text-xs text-slate-500 font-medium mt-1"><i class="fa-solid fa-vial text-clasmo-teal mr-1"></i> ${test.parameters}</p>
+
+                        <div class="mt-4 pt-3 border-t border-slate-100 space-y-1 text-xs text-slate-600 font-medium">
+                            <div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> ${test.tat}</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-utensils text-slate-400"></i> ${test.fasting}</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-2xl font-black text-clasmo-navy">₹${test.price}</span>
+                                <span class="text-xs text-slate-400 line-through">₹${test.mrp}</span>
+                            </div>
+                            <span class="text-[10px] font-extrabold text-emerald-600">${Math.round((1 - test.price/test.mrp)*100)}% DISCOUNT</span>
+                        </div>
+
+                        <button onclick="addToCart('${test.id}')" class="px-4 py-2.5 bg-clasmo-navy hover:bg-clasmo-teal text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-cart-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Category Filter
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.classList.add('bg-clasmo-navy', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-700');
+                } else {
+                    btn.classList.remove('bg-clasmo-navy', 'text-white');
+                    btn.classList.add('bg-white', 'text-slate-700');
+                }
+            });
+
+            if (cat === 'all') {
+                renderTestCards(testsCatalog);
+            } else {
+                renderTestCards(testsCatalog.filter(t => t.category === cat));
+            }
+        }
+
+        // Filter by Query
+        function filterTestsByQuery(query) {
+            const q = query.toLowerCase().trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            if (clearBtn) {
+                if (q.length > 0) clearBtn.classList.remove('hidden');
+                else clearBtn.classList.add('hidden');
+            }
+
+            const filtered = testsCatalog.filter(t => 
+                t.name.toLowerCase().includes(q) || 
+                t.parameters.toLowerCase().includes(q) || 
+                t.category.toLowerCase().includes(q)
+            );
+            renderTestCards(filtered);
+        }
+
+        // Cart Drawer Operations
+        function addToCart(testId) {
+            const test = testsCatalog.find(t => t.id === testId);
+            if (!test) return;
+
+            if (!cartItems.some(c => c.id === testId)) {
+                cartItems.push(test);
+                updateCartUI();
+                showToast(`"${test.name}" added to cart!`);
+            } else {
+                showToast('Test is already in your cart.');
+            }
+        }
+
+        function removeFromCart(testId) {
+            cartItems = cartItems.filter(c => c.id !== testId);
+            updateCartUI();
+            showToast('Test removed from cart.');
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const headerCount = document.getElementById('cartHeaderCount');
+            const cartList = document.getElementById('cartList');
+            const totalPrice = document.getElementById('cartTotalPrice');
+
+            badge.innerText = cartItems.length;
+            headerCount.innerText = cartItems.length;
+
+            if (cartItems.length > 0) badge.classList.remove('hidden');
+            else badge.classList.add('hidden');
+
+            if (cartItems.length === 0) {
+                cartList.innerHTML = `<div class="text-center py-12 text-slate-400 text-sm">Your test cart is empty.</div>`;
+                totalPrice.innerText = '₹0';
+                return;
+            }
+
+            let total = 0;
+            cartList.innerHTML = cartItems.map(item => {
+                total += item.price;
+                return `
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+                        <div>
+                            <div class="font-extrabold text-xs text-slate-800">${item.name}</div>
+                            <div class="text-xs text-clasmo-teal font-extrabold mt-0.5">₹${item.price}</div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="text-rose-500 hover:text-rose-700 text-xs p-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            totalPrice.innerText = `₹${total}`;
+        }
+
+        function toggleCartDrawer() {
+            document.getElementById('cartDrawer').classList.toggle('hidden');
+        }
+
+        // Modals Operations
+        function closePromoModal() {
+            document.getElementById('promoModal').classList.add('hidden');
+        }
+
+        function applyPromoCode(code) {
+            showToast(`Promo Code ${code} Applied! 20% Discount active.`);
+            closePromoModal();
+        }
+
+        function openBookingModal() {
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        }
+
+        function openSampleReport(title, date) {
+            document.getElementById('reportTitle').innerText = title;
+            document.getElementById('reportDate').innerText = 'Verified Date: ' + date;
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+
+        function closeSampleReport() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        // Booking Form Submission
+        function handleBookingSubmission(e) {
+            e.preventDefault();
+            const name = document.getElementById('bookName').value;
+            const phone = document.getElementById('bookPhone').value;
+            const bookingId = '#CLS-' + Math.floor(10000 + Math.random() * 90000);
+
+            document.getElementById('resBookingId').innerText = bookingId;
+            document.getElementById('resName').innerText = name;
+            document.getElementById('resPhone').innerText = phone;
+
+            closeBookingModal();
+            document.getElementById('successModal').classList.remove('hidden');
+            e.target.reset();
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
