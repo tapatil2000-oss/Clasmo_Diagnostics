@@ -77,248 +77,6 @@
             transform: translateY(-8px) scale(1.01);
             box-shadow: 0 20px 30px -10px rgba(10, 54, 99, 0.15);
         }
-        .gradient-text-light {
-            background: linear-gradient(135deg, #ffffff 0%, #caf0f8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
-</head>
-<body class="bg-slate-50 font-sans text-slate-800 antialiased flex flex-col min-h-screen overflow-x-hidden selection:bg-clasmo-teal selection:text-white">
-
-    <!-- Ambient Floating Background Blobs -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-        <div class="absolute -top-40 -left-40 w-96 h-96 bg-clasmo-teal/30 rounded-full blur-3xl animate-blob"></div>
-        <div class="absolute top-1/3 -right-40 w-96 h-96 bg-clasmo-emerald/20 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
-        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-clasmo-blue/20 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
-    </div>
-
-    <!-- 1. Top Announcement Bar -->
-    <div class="relative z-50 bg-gradient-to-r from-clasmo-navy via-clasmo-blue to-clasmo-navy text-white text-xs md:text-sm py-2.5 px-4 shadow-sm border-b border-white/10">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center gap-3">
-                <span class="inline-flex items-center gap-1.5 bg-clasmo-emerald/20 text-clasmo-emerald border border-clasmo-emerald/40 px-2.5 py-0.5 rounded-full font-bold text-[11px] animate-pulse">
-                    <i class="fa-solid fa-fire-flame-curved"></i> Special Health Offer
-                </span>
-                <span class="hidden sm:inline text-slate-200">Get <strong>20% OFF</strong> Full Body Checkup with Code: <strong class="text-clasmo-gold bg-white/10 px-1.5 py-0.5 rounded">CLASMO20</strong></span>
-            </div>
-
-            <div class="flex items-center gap-4 text-xs font-medium">
-                <a href="tel:9272173712" class="flex items-center gap-1.5 hover:text-clasmo-teal transition-colors">
-                    <i class="fa-solid fa-phone-volume text-clasmo-emerald"></i>
-                    <span>Call: <strong>9272173712</strong></span>
-                </a>
-                <a href="https://wa.me/919272173712?text=Hi%20Clasmo%20Diagnostics%2C%20I%20want%20to%20book%20a%20test" target="_blank" class="hidden md:flex items-center gap-1.5 hover:text-emerald-400 transition-colors">
-                    <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> WhatsApp Support
-                </a>
-                <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all" target="_blank" class="hover:text-clasmo-teal transition-colors flex items-center gap-1" title="LinkedIn Profile">
-                    <i class="fa-brands fa-linkedin text-sm"></i> <span class="hidden lg:inline">LinkedIn</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Header -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 transition-all h-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-6">
-            
-            <!-- Logo with Full Brand Info -->
-            <a href="#" class="flex items-center gap-3 group shrink-0">
-                <img src="image_3.png" alt="Clasmo Diagnostics Logo" class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
-            </a>
-
-            <!-- Search Bar -->
-            <div class="hidden lg:flex flex-1 max-w-md relative">
-                <input type="text" id="desktopSearchInput" onkeyup="filterTestsByQuery(this.value)" placeholder="Search CBC, Thyroid, HbA1c, Vitamin D..." class="w-full pl-11 pr-10 py-2.5 bg-slate-100/80 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal focus:bg-white transition-all shadow-inner">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-                <button onclick="filterTestsByQuery('')" class="absolute right-3 top-3 text-xs text-slate-400 hover:text-slate-600 hidden" id="clearSearchBtn"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-6 font-semibold text-sm text-slate-700">
-                <a href="#home" class="hover:text-clasmo-teal transition-colors">Home</a>
-                <a href="#tests" class="hover:text-clasmo-teal transition-colors">Tests & Packages</a>
-                <a href="#portal" class="hover:text-clasmo-teal transition-colors flex items-center gap-1.5"><i class="fa-solid fa-circle-user text-clasmo-teal"></i> Patient Portal</a>
-                <a href="#about" class="hover:text-clasmo-teal transition-colors">About Us</a>
-                <a href="#contact" class="hover:text-clasmo-teal transition-colors">Contact</a>
-            </nav>
-
-            <!-- Actions Button -->
-            <div class="flex items-center gap-3 shrink-0">
-                <button onclick="toggleCartDrawer()" class="relative p-2.5 text-slate-700 hover:text-clasmo-teal hover:bg-slate-100/80 rounded-2xl transition-all" title="View Cart">
-                    <i class="fa-solid fa-cart-shopping text-xl"></i>
-                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-clasmo-coral text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm hidden">0</span>
-                </button>
-
-                <button onclick="openBookingModal()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-clasmo-teal to-clasmo-emerald hover:opacity-95 shadow-md shadow-clasmo-teal/20 hover:scale-105 transition-all">
-                    <i class="fa-solid fa-calendar-check"></i> Book Home Pickup
-                </button>
-
-                <a href="tel:9272173712" class="sm:hidden p-2.5 text-clasmo-blue bg-blue-50 rounded-2xl" title="Call Now">
-                    <i class="fa-solid fa-phone text-lg"></i>
-                </a>
-
-                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-clasmo-teal focus:outline-none">
-                    <i class="fa-solid fa-bars-staggered text-2xl"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Nav Drawer -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Home</a>
-            <a href="#tests" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Tests & Packages</a>
-            <a href="#portal" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Patient Health Portal</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">About Us</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Contact Us</a>
-            <button onclick="toggleMobileMenu(); openBookingModal();" class="w-full py-3 bg-gradient-to-r from-clasmo-blue to-clasmo-teal text-white font-bold rounded-xl text-center shadow">
-                Book Sample Collection
-            </button>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-grow z-10">
-
-        <!-- Hero Section -->
-        <section id="home" class="relative bg-gradient-to-b from-clasmo-navy via-clasmo-blue to-slate-900 text-white overflow-hidden py-16 lg:py-24">
-            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00b4d8_1px,transparent_1px)] [background-size:24px_24px]"></div>
-            
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid lg:grid-cols-12 gap-12 items-center">
-                    
-                    <div class="lg:col-span-7 space-y-6">
-                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-clasmo-lightTeal text-xs sm:text-sm font-semibold tracking-wide shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-clasmo-emerald animate-ping"></span>
-                            NABL Standards • 100% Automated Diagnostics
-                        </div>
-
-                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                            Ultra-Precise Testing, <br class="hidden sm:inline">
-                            <span class="gradient-text-light">Delivered At Your Doorstep.</span>
-                        </h1>
-
-                        <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
-                            Welcome to <strong>Clasmo Diagnostics Pvt Ltd</strong>. Experience seamless pathology testing, certified pathologist verification, and same-day digital report delivery with our painless home sample pickup.
-                        </p>
-
-                        <div class="grid grid-cols-3 gap-3 pt-2 text-xs sm:text-sm">
-                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
-                                <i class="fa-solid fa-truck-medical text-clasmo-teal text-2xl"></i>
-                                <span class="font-bold">Free Home Pickup</span>
-                            </div>
-                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
-                                <i class="fa-solid fa-bolt text-clasmo-gold text-2xl"></i>
-                                <span class="font-bold">Fast 6-Hour Report</span>
-                            </div>
-                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
-                                <i class="fa-solid fa-microscope text-clasmo-emerald text-2xl"></i>
-                                <span class="font-bold">Automated Analyzers</span>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-4 pt-4">
-                            <button onclick="openBookingModal()" class="px-8 py-4 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white font-extrabold rounded-2xl shadow-xl shadow-clasmo-teal/30 hover:scale-105 transition-all text-sm sm:text-base flex items-center gap-2">
-                                <i class="fa-solid fa-calendar-check"></i> Book Home CollectionHere is the website code updated with your logos integrated into the design.
-
-### What I updated:
-1.  **Header:** Replaced the plain text logo with the full brand logo (image_3.png) as requested.
-2.  **About Us Section:** The visual card now features the microscope 'C' emblem (image_4.png) instead of a Font Awesome icon, making the presentation much more unique to Clasmo.
-3.  **About Us Text:** Refined the section text to incorporate the company's powerful mission statement: *"Where Accuracy Saves Lives"*.
-4.  **Footer:** Updated the footer brand information to include the 'C' emblem and mission statement.
-
-Here is the full webpage and the corresponding code:
-
-```html
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clasmo Diagnostics Pvt Ltd | Precision Diagnostics & Home Sample Collection</title>
-    <!-- Tailwind CSS -->
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
-    <!-- Google Fonts -->
-    <link href="[https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap)" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        clasmo: {
-                            navy: '#061a2e',
-                            blue: '#0a3663',
-                            accentBlue: '#1a5fb4',
-                            teal: '#00b4d8',
-                            emerald: '#06d6a0',
-                            lightTeal: '#caf0f8',
-                            gold: '#ffd166',
-                            coral: '#ff6b6b',
-                            cardBg: '#f8fafc',
-                        }
-                    },
-                    animation: {
-                        'float-slow': 'float 6s ease-in-out infinite',
-                        'float-reverse': 'floatRev 7s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 2.5s infinite',
-                        'shimmer': 'shimmer 2s linear infinite',
-                        'blob': 'blob 10s infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-14px)' },
-                        },
-                        floatRev: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(14px)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: '1', boxShadow: '0 0 25px rgba(0, 180, 216, 0.4)' },
-                            '50%': { opacity: '0.85', boxShadow: '0 0 40px rgba(6, 214, 160, 0.6)' },
-                        },
-                        shimmer: {
-                            '100%': { transform: 'translateX(100%)' }
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        /* Custom Styling for Glassmorphism and Micro-interactions */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-        .glass-dark {
-            background: rgba(6, 26, 46, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .card-hover-effect {
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .card-hover-effect:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 20px 30px -10px rgba(10, 54, 99, 0.15);
-        }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -331,15 +89,6 @@ Here is the full webpage and the corresponding code:
             background: #00b4d8;
             border-radius: 8px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #0a3663;
-        }
-        /* Gradient Text Helper */
-        .gradient-text {
-            background: linear-gradient(135deg, #0a3663 0%, #00b4d8 50%, #06d6a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
         .gradient-text-light {
             background: linear-gradient(135deg, #ffffff 0%, #caf0f8 100%);
             -webkit-background-clip: text;
@@ -349,105 +98,96 @@ Here is the full webpage and the corresponding code:
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 antialiased flex flex-col min-h-screen overflow-x-hidden selection:bg-clasmo-teal selection:text-white">
 
-    <!-- Ambient Floating Background Blobs -->
+    <!-- INITIAL POP-UP MODAL (Loads immediately on startup) -->
+    <div id="startupPopupModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 transform transition-all animate-in fade-in zoom-in duration-300">
+            <button onclick="closeStartupPopup()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-4">
+                <div class="w-16 h-16 bg-gradient-to-tr from-clasmo-teal to-clasmo-emerald text-white rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold shadow-lg shadow-clasmo-teal/30">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+                <div>
+                    <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Welcome Offer</span>
+                    <h3 class="text-2xl font-black text-clasmo-navy mt-2">Get 20% OFF</h3>
+                    <p class="text-xs text-slate-600 mt-1">Claim your special discount on Full Body Health Packages & Free Home Sample Collection.</p>
+                </div>
+
+                <div class="bg-slate-50 border-2 border-dashed border-clasmo-teal p-3.5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase">Promo Code</div>
+                        <div class="text-xl font-black text-clasmo-blue tracking-wider">CLASMO20</div>
+                    </div>
+                    <button onclick="applyPromoCode('CLASMO20')" class="px-4 py-2 bg-clasmo-teal hover:bg-clasmo-emerald text-white text-xs font-bold rounded-xl transition-colors">
+                        Apply Code
+                    </button>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <button onclick="closeStartupPopup(); openBookingModal();" class="w-full py-3.5 bg-clasmo-navy hover:bg-clasmo-blue text-white font-bold rounded-xl shadow-md transition-all text-sm">
+                        Book Test with Discount
+                    </button>
+                    <button onclick="closeStartupPopup()" class="block w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors">
+                        Explore Website First
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ambient Background Blobs -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
         <div class="absolute -top-40 -left-40 w-96 h-96 bg-clasmo-teal/30 rounded-full blur-3xl animate-blob"></div>
         <div class="absolute top-1/3 -right-40 w-96 h-96 bg-clasmo-emerald/20 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
-        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-clasmo-blue/20 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
     </div>
 
-    <!-- 1. Top Announcement Bar -->
-    <div class="relative z-50 bg-gradient-to-r from-clasmo-navy via-clasmo-blue to-clasmo-navy text-white text-xs md:text-sm py-2.5 px-4 shadow-sm border-b border-white/10">
+    <!-- Top Announcement Bar -->
+    <div class="relative z-40 bg-gradient-to-r from-clasmo-navy via-clasmo-blue to-clasmo-navy text-white text-xs md:text-sm py-2.5 px-4 shadow-sm border-b border-white/10">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
             <div class="flex items-center gap-3">
                 <span class="inline-flex items-center gap-1.5 bg-clasmo-emerald/20 text-clasmo-emerald border border-clasmo-emerald/40 px-2.5 py-0.5 rounded-full font-bold text-[11px] animate-pulse">
-                    <i class="fa-solid fa-fire-flame-curved"></i> Special Health Offer
+                    <i class="fa-solid fa-fire-flame-curved"></i> Special Offer
                 </span>
-                <span class="hidden sm:inline text-slate-200">Get <strong>20% OFF</strong> Full Body Checkup with Code: <strong class="text-clasmo-gold bg-white/10 px-1.5 py-0.5 rounded">CLASMO20</strong></span>
+                <span class="hidden sm:inline text-slate-200">Use Code <strong class="text-clasmo-gold bg-white/10 px-1.5 py-0.5 rounded">CLASMO20</strong> for 20% OFF</span>
             </div>
-
             <div class="flex items-center gap-4 text-xs font-medium">
                 <a href="tel:9272173712" class="flex items-center gap-1.5 hover:text-clasmo-teal transition-colors">
-                    <i class="fa-solid fa-phone-volume text-clasmo-emerald"></i>
-                    <span>Call: <strong>9272173712</strong></span>
-                </a>
-                <a href="[https://wa.me/919272173712?text=Hi%20Clasmo%20Diagnostics%2C%20I%20want%20to%20book%20a%20test](https://wa.me/919272173712?text=Hi%20Clasmo%20Diagnostics%2C%20I%20want%20to%20book%20a%20test)" target="_blank" class="hidden md:flex items-center gap-1.5 hover:text-emerald-400 transition-colors">
-                    <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> WhatsApp Support
-                </a>
-                <a href="[https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all](https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/?feedView=all)" target="_blank" class="hover:text-clasmo-teal transition-colors flex items-center gap-1" title="LinkedIn Profile">
-                    <i class="fa-brands fa-linkedin text-sm"></i> <span class="hidden lg:inline">LinkedIn</span>
+                    <i class="fa-solid fa-phone-volume text-clasmo-emerald"></i> Call: <strong>9272173712</strong>
                 </a>
             </div>
         </div>
     </div>
 
     <!-- Navigation Header -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24 gap-4">
-                
-                <!-- Updated Logo with Full Brand Info -->
-                <a href="#" class="flex items-center group">
-                    <img src="image_3.png" alt="Clasmo Diagnostics Logo" class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
-                </a>
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 transition-all h-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-6">
+            <a href="#" class="flex items-center group shrink-0">
+                <img src="1000752014.png" alt="Clasmo Diagnostics Logo" class="h-12 sm:h-14 w-auto group-hover:scale-105 transition-transform duration-300">
+            </a>
 
-                <!-- Search Bar -->
-                <div class="hidden lg:flex flex-1 max-w-md mx-6 relative">
-                    <input type="text" id="desktopSearchInput" onkeyup="filterTestsByQuery(this.value)" placeholder="Search CBC, Thyroid, HbA1c, Vitamin D, Scans..." class="w-full pl-11 pr-10 py-2.5 bg-slate-100/80 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal focus:bg-white transition-all shadow-inner">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-                    <button onclick="filterTestsByQuery('')" class="absolute right-3 top-3 text-xs text-slate-400 hover:text-slate-600 hidden" id="clearSearchBtn"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-
-                <!-- Desktop Nav Links -->
-                <nav class="hidden md:flex items-center gap-6 font-semibold text-sm text-slate-700">
-                    <a href="#home" class="hover:text-clasmo-teal transition-colors">Home</a>
-                    <a href="#tests" class="hover:text-clasmo-teal transition-colors">Tests & Packages</a>
-                    <a href="#portal" class="hover:text-clasmo-teal transition-colors flex items-center gap-1.5"><i class="fa-solid fa-circle-user text-clasmo-teal"></i> Patient Portal</a>
-                    <a href="#about" class="hover:text-clasmo-teal transition-colors">About Us</a>
-                    <a href="#contact" class="hover:text-clasmo-teal transition-colors">Contact</a>
-                </nav>
-
-                <!-- Actions Button -->
-                <div class="flex items-center gap-3">
-                    <button onclick="toggleCartDrawer()" class="relative p-2.5 text-slate-700 hover:text-clasmo-teal hover:bg-slate-100/80 rounded-2xl transition-all" title="View Cart">
-                        <i class="fa-solid fa-cart-shopping text-xl"></i>
-                        <span id="cartBadge" class="absolute -top-1 -right-1 bg-clasmo-coral text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm hidden">0</span>
-                    </button>
-
-                    <button onclick="openBookingModal()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-clasmo-teal to-clasmo-emerald hover:opacity-95 shadow-md shadow-clasmo-teal/20 hover:scale-105 transition-all">
-                        <i class="fa-solid fa-calendar-check"></i> Book Home Pickup
-                    </button>
-
-                    <a href="tel:9272173712" class="sm:hidden p-2.5 text-clasmo-blue bg-blue-50 rounded-2xl" title="Call Now">
-                        <i class="fa-solid fa-phone text-lg"></i>
-                    </a>
-
-                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-clasmo-teal focus:outline-none">
-                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
-                    </button>
-                </div>
-
+            <div class="hidden lg:flex flex-1 max-w-md relative">
+                <input type="text" id="desktopSearchInput" onkeyup="filterTestsByQuery(this.value)" placeholder="Search CBC, Thyroid, HbA1c, Vitamin D..." class="w-full pl-11 pr-10 py-2.5 bg-slate-100/80 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
             </div>
 
-            <!-- Mobile Search Bar -->
-            <div class="pb-3 lg:hidden">
-                <div class="relative">
-                    <input type="text" onkeyup="filterTestsByQuery(this.value)" placeholder="Search 50+ Tests, Blood Checks & Health Packages..." class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-clasmo-teal">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-slate-400"></i>
-                </div>
-            </div>
-        </div>
+            <nav class="hidden md:flex items-center gap-6 font-semibold text-sm text-slate-700">
+                <a href="#home" class="hover:text-clasmo-teal transition-colors">Home</a>
+                <a href="#tests" class="hover:text-clasmo-teal transition-colors">Tests & Packages</a>
+                <a href="#portal" class="hover:text-clasmo-teal transition-colors">Patient Portal</a>
+                <a href="#about" class="hover:text-clasmo-teal transition-colors">About Us</a>
+            </nav>
 
-        <!-- Mobile Nav Drawer -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Home</a>
-            <a href="#tests" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Diagnostic Tests & Packages</a>
-            <a href="#portal" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Patient Health Portal</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">About Clasmo Diagnostics</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold hover:text-clasmo-teal">Contact Us</a>
-            <button onclick="toggleMobileMenu(); openBookingModal();" class="w-full py-3 bg-gradient-to-r from-clasmo-blue to-clasmo-teal text-white font-bold rounded-xl text-center shadow">
-                Book Sample Collection
-            </button>
+            <div class="flex items-center gap-3 shrink-0">
+                <button onclick="toggleCartDrawer()" class="relative p-2.5 text-slate-700 hover:text-clasmo-teal hover:bg-slate-100 rounded-2xl transition-all" title="View Cart">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-clasmo-coral text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm hidden">0</span>
+                </button>
+                <button onclick="openBookingModal()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-clasmo-teal to-clasmo-emerald shadow-md hover:scale-105 transition-all">
+                    <i class="fa-solid fa-calendar-check"></i> Book Home Pickup
+                </button>
+            </div>
         </div>
     </header>
 
@@ -456,93 +196,27 @@ Here is the full webpage and the corresponding code:
 
         <!-- Hero Section -->
         <section id="home" class="relative bg-gradient-to-b from-clasmo-navy via-clasmo-blue to-slate-900 text-white overflow-hidden py-16 lg:py-24">
-            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00b4d8_1px,transparent_1px)] [background-size:24px_24px]"></div>
-            
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid lg:grid-cols-12 gap-12 items-center">
-                    
                     <div class="lg:col-span-7 space-y-6">
-                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-clasmo-lightTeal text-xs sm:text-sm font-semibold tracking-wide shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-clasmo-emerald animate-ping"></span>
-                            NABL Standards • 100% Automated Diagnostics
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-clasmo-lightTeal text-xs sm:text-sm font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-clasmo-emerald animate-ping"></span> NABL Standards • 100% Automated Diagnostics
                         </div>
-
                         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                            Ultra-Precise Testing, <br class="hidden sm:inline">
-                            <span class="gradient-text-light">Delivered At Your Doorstep.</span>
+                            Ultra-Precise Testing, <br><span class="gradient-text-light">Delivered At Your Doorstep.</span>
                         </h1>
-
                         <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
-                            Welcome to <strong>Clasmo Diagnostics Pvt Ltd</strong>. Experience seamless pathology testing, certified pathologist verification, and same-day digital report delivery with our painless home sample pickup.
+                            Welcome to <strong>Clasmo Diagnostics Pvt Ltd</strong> — <em>Where Accuracy Saves Lives</em>[span_0](start_span)[span_0](end_span). Experience seamless pathology testing and report delivery with our painless home sample pickup.
                         </p>
-
-                        <div class="grid grid-cols-3 gap-3 pt-2 text-xs sm:text-sm">
-                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
-                                <i class="fa-solid fa-truck-medical text-clasmo-teal text-2xl"></i>
-                                <span class="font-bold">Free Home Pickup</span>
-                            </div>
-                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
-                                <i class="fa-solid fa-bolt text-clasmo-gold text-2xl"></i>
-                                <span class="font-bold">Fast 6-Hour Report</span>
-                            </div>
-                            <div class="glass-dark p-3.5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-1 hover:border-clasmo-teal transition-all">
-                                <i class="fa-solid fa-microscope text-clasmo-emerald text-2xl"></i>
-                                <span class="font-bold">Automated Analyzers</span>
-                            </div>
-                        </div>
-
                         <div class="flex flex-wrap gap-4 pt-4">
-                            <button onclick="openBookingModal()" class="px-8 py-4 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white font-extrabold rounded-2xl shadow-xl shadow-clasmo-teal/30 hover:scale-105 transition-all text-sm sm:text-base flex items-center gap-2">
-                                <i class="fa-solid fa-calendar-check"></i> Book Home Collection
+                            <button onclick="openBookingModal()" class="px-8 py-4 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white font-extrabold rounded-2xl shadow-xl hover:scale-105 transition-all">
+                                Book Home Collection
                             </button>
-                            <a href="#tests" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold rounded-2xl backdrop-blur-md transition-all text-sm sm:text-base flex items-center gap-2">
-                                <i class="fa-solid fa-layer-group"></i> Explore Health Packages
-                            </a>
+                            <button onclick="openStartupPopup()" class="px-6 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold rounded-2xl backdrop-blur-md transition-all">
+                                View 20% Offer Popup
+                            </button>
                         </div>
                     </div>
-
-                    <div class="lg:col-span-5 relative">
-                        <div class="relative mx-auto max-w-md">
-                            <div class="glass-dark rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/15 animate-float-slow">
-                                <div class="flex items-center justify-between pb-4 border-b border-white/10">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-xl bg-clasmo-teal/20 text-clasmo-teal flex items-center justify-center font-bold text-lg">
-                                            <i class="fa-solid fa-heart-pulse"></i>
-                                        </div>
-                                        <div>
-                                            <div class="font-extrabold text-sm text-white">Live Sample Tracking</div>
-                                            <div class="text-[11px] text-slate-400">Order ID: #CLS-9941</div>
-                                        </div>
-                                    </div>
-                                    <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase">Collected</span>
-                                </div>
-
-                                <div class="space-y-4 my-6 text-xs text-slate-300">
-                                    <div class="flex justify-between items-center">
-                                        <span class="flex items-center gap-2"><i class="fa-solid fa-circle text-[8px] text-clasmo-emerald"></i> Sample Barcode Generated</span>
-                                        <span class="text-slate-400">08:15 AM</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="flex items-center gap-2"><i class="fa-solid fa-circle text-[8px] text-clasmo-emerald"></i> Phlebotomist Picked Up</span>
-                                        <span class="text-slate-400">08:30 AM</span>
-                                    </div>
-                                    <div class="flex justify-between items-center font-bold text-white">
-                                        <span class="flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin text-clasmo-teal"></i> Analyzing at Lab (Roche)</span>
-                                        <span class="text-clasmo-teal">In Progress</span>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white/5 rounded-2xl p-4 border border-white/10 flex items-center justify-between text-xs">
-                                    <div>
-                                        <div class="text-slate-400">Estimated Digital Report</div>
-                                        <div class="font-bold text-clasmo-gold text-sm mt-0.5"><i class="fa-solid fa-clock mr-1"></i> Today by 4:00 PM</div>
-                                    </div>
-                                    <i class="fa-solid fa-file-pdf text-2xl text-clasmo-teal"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -552,146 +226,164 @@ Here is the full webpage and the corresponding code:
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="bg-clasmo-teal/10 text-clasmo-blue font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-clasmo-teal/20">Pathology & Scans</span>
                 <h2 class="text-3xl sm:text-4xl font-black text-clasmo-navy mt-3">Popular Diagnostic Tests & Packages</h2>
-                <p class="text-slate-600 text-sm sm:text-base mt-2">Select individual blood tests or comprehensive full-body checkup packages with free home collection.</p>
             </div>
-
-            <div class="flex flex-wrap justify-center gap-2 mb-10">
-                <button onclick="filterCategory('all')" class="cat-btn active px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-clasmo-navy text-white shadow-md" data-cat="all">All Tests</button>
-                <button onclick="filterCategory('Wellness')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Wellness">Full Body Packages</button>
-                <button onclick="filterCategory('Pathology')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Pathology">Pathology Essentials</button>
-                <button onclick="filterCategory('Diabetes')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Diabetes">Diabetes & Cardiac</button>
-                <button onclick="filterCategory('Vitamins')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-cat="Vitamins">Thyroid & Vitamins</button>
-            </div>
-
             <div id="testsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- About Clasmo Diagnostics Section with Logo Showcase -->
+        <!-- About Section with Emblem -->
         <section id="about" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
-                
                 <div class="lg:col-span-5">
-                    <div class="relative">
-                        <div class="bg-gradient-to-tr from-clasmo-navy via-clasmo-blue to-clasmo-teal rounded-3xl p-1 shadow-2xl">
-                            <div class="bg-white rounded-[22px] p-6 sm:p-8 space-y-6">
-                                <div class="flex items-center gap-4">
-                                    <!-- Updated with 'C' Microscope Emblem image_4.png -->
-                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-50 to-teal-50 border border-clasmo-teal/30 flex items-center justify-center p-2 shadow-innershrink-0">
-                                        <img src="image_4.png" alt="Clasmo Emblem" class="w-full h-auto">
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-black text-clasmo-navy leading-tight">CLASMO DIAGNOSTICS</h3>
-                                        <p class="text-xs font-bold text-clasmo-teal uppercase tracking-wider">Pvt Ltd • Clinical Excellence</p>
-                                        <p class="text-[11px] text-slate-500 italic mt-0.5 font-semibold">Where Accuracy Saves Lives</p>
-                                    </div>
+                    <div class="bg-gradient-to-tr from-clasmo-navy via-clasmo-blue to-clasmo-teal rounded-3xl p-1 shadow-2xl">
+                        <div class="bg-white rounded-[22px] p-6 sm:p-8 space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-50 to-teal-50 border border-clasmo-teal/30 flex items-center justify-center p-2 shrink-0">
+                                    <img src="1000752015.png" alt="Clasmo Emblem" class="w-full h-auto object-contain">
                                 </div>
-
-                                <div class="space-y-3 text-xs text-slate-600 font-medium">
-                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                        <i class="fa-solid fa-circle-check text-clasmo-emerald text-base mt-0.5"></i>
-                                        <span>High-Precision Automated Pathology & Clinical Biochemistry</span>
-                                    </div>
-                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                        <i class="fa-solid fa-circle-check text-clasmo-emerald text-base mt-0.5"></i>
-                                        <span>NABL Quality Standards & Internal Quality Control Assays</span>
-                                    </div>
-                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                        <i class="fa-solid fa-circle-check text-clasmo-emerald text-base mt-0.5"></i>
-                                        <span>100% Barcoded Sample Workflow with Double Pathologist Verification</span>
-                                    </div>
+                                <div>
+                                    <h3 class="text-xl font-black text-clasmo-navy leading-tight">CLASMO DIAGNOSTICS</h3>
+                                    <p class="text-[11px] text-slate-500 italic mt-0.5 font-semibold">Where Accuracy Saves Lives[span_1](start_span)[span_1](end_span)</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="lg:col-span-7 space-y-6">
-                    <span class="bg-clasmo-teal/10 text-clasmo-blue font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-clasmo-teal/20">Corporate Overview</span>
-                    <h2 class="text-3xl sm:text-4xl font-black text-clasmo-navy leading-tight">
-                        Advancing Healthcare Precision Through Automated Diagnostic Excellence.
-                    </h2>
-                    
+                    <h2 class="text-3xl sm:text-4xl font-black text-clasmo-navy">Advancing Healthcare Precision</h2>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                        <strong>Clasmo Diagnostics Pvt Ltd</strong> operates under the guiding mission <em>"Where Accuracy Saves Lives"</em>. We are a premier healthcare diagnostic provider committed to offering high-precision clinical testing, modern automated laboratory diagnostics, and compassionate home sample pickup.
+                        Clasmo Diagnostics Pvt Ltd operates under the guiding mission <em>"Where Accuracy Saves Lives"</em>[span_2](start_span)[span_2](end_span). We provide high-precision clinical testing, automated laboratory diagnostics, and prompt home sample pickup.
                     </p>
-
-                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                        Inspired by leading diagnostic platforms, our state-of-the-art laboratory infrastructure utilizes automated analyzers and certified clinical procedures to deliver accurate, reproducible test results. From basic routine blood checks to specialized metabolic and hormonal profiles, we empower patients and physicians with reliable health insights.
-                    </p>
-
-                    <div class="pt-4 flex flex-wrap items-center gap-6">
-                        <button onclick="openBookingModal()" class="px-6 py-3 bg-clasmo-navy hover:bg-clasmo-blue text-white font-bold rounded-xl shadow-md text-sm transition-all">
-                            Book Home Sample Collection
-                        </button>
-                        <a href="tel:9272173712" class="text-lg font-black text-clasmo-blue hover:text-clasmo-teal transition-colors flex items-center gap-2">
-                            <i class="fa-solid fa-headset text-clasmo-teal"></i> 9272173712
-                        </a>
-                    </div>
                 </div>
-
             </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer id="contact" class="bg-clasmo-navy text-white pt-16 pb-8 border-t border-slate-800 relative z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
-                
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        <!-- Updated with microscope 'C' emblem image_4.png -->
-                        <div class="w-10 h-10 rounded-xl bg-clasmo-teal flex items-center justify-center p-1.5 text-white shrunk-0">
-                            <img src="image_4.png" alt="Clasmo Emblem" class="w-full h-auto filter brightness-0 invert">
-                        </div>
-                        <div>
-                            <span class="text-xl font-black text-white block leading-none">CLASMO</span>
-                            <span class="text-[10px] font-bold text-clasmo-lightTeal tracking-widest uppercase">Diagnostics Pvt Ltd</span>
-                            <span class="text-[9px] text-slate-400 italic block mt-0.5">Where Accuracy Saves Lives</span>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Clasmo Diagnostics Pvt Ltd is committed to high precision clinical diagnostics, automated pathology, and prompt home sample pickup.
-                    </p>
-                </div>
+    <footer class="bg-clasmo-navy text-white pt-12 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400">
+            © 2026 Clasmo Diagnostics Pvt Ltd. Where Accuracy Saves Lives[span_3](start_span)[span_3](end_span). All rights reserved.
+        </div>
+    </footer>
 
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-clasmo-teal pl-2.5">Quick Links</h4>
-                    <ul class="space-y-2.5 text-xs text-slate-300">
-                        <li><a href="#home" class="hover:text-clasmo-teal transition-colors">Home Page</a></li>
-                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Tests & Packages</a></li>
-                        <li><a href="#portal" class="hover:text-clasmo-teal transition-colors">Patient Health Portal</a></li>
-                        <li><a href="#about" class="hover:text-clasmo-teal transition-colors">About Clasmo Diagnostics</a></li>
-                    </ul>
-                </div>
+    <!-- BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative border">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-black text-clasmo-navy mb-4">Book Home Sample Collection</h3>
+            <form onsubmit="handleBookingSubmission(event)" class="space-y-4">
+                <input type="text" id="bookName" required placeholder="Patient Name" class="w-full px-4 py-3 bg-slate-50 border rounded-xl text-sm">
+                <input type="tel" id="bookPhone" required placeholder="Mobile Phone" class="w-full px-4 py-3 bg-slate-50 border rounded-xl text-sm">
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-clasmo-teal to-clasmo-emerald text-white font-extrabold rounded-2xl shadow-lg">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
 
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-clasmo-teal pl-2.5">Popular Diagnostics</h4>
-                    <ul class="space-y-2.5 text-xs text-slate-300">
-                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Full Body Wellness Package</a></li>
-                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Complete Blood Count (CBC)</a></li>
-                        <li><a href="#tests" class="hover:text-clasmo-teal transition-colors">Thyroid Profile (T3 T4 TSH)</a></li>
-                    </ul>
+    <!-- CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex justify-end hidden">
+        <div class="bg-white w-full max-w-md h-full p-6 shadow-2xl flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-center pb-4 border-b">
+                    <h3 class="text-lg font-black text-clasmo-navy">Test Cart (<span id="cartHeaderCount">0</span>)</h3>
+                    <button onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark text-xl"></i></button>
                 </div>
-
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-clasmo-teal pl-2.5">Contact Us</h4>
-                    <ul class="space-y-3 text-xs text-slate-300">
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-phone-volume text-clasmo-teal mt-0.5"></i>
-                            <div>
-                                <span class="block text-slate-400">Helpline & WhatsApp:</span>
-                                <a href="tel:9272173712" class="font-extrabold text-white text-sm hover:text-clasmo-teal transition-colors">9272173712</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
+                <div id="cartList" class="mt-4 space-y-3 max-h-[60vh] overflow-y-auto"></div>
             </div>
+            <button onclick="toggleCartDrawer(); openBookingModal();" class="w-full py-3.5 bg-clasmo-teal text-white font-extrabold rounded-2xl shadow-lg">Proceed to Book</button>
+        </div>
+    </div>
 
-            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-4">
-                <div>© 2026 Clasmo Diagnostics Pvt Ltd. All rights reserved.
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-clasmo-navy text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-clasmo-emerald text-lg"></i>
+        <span id="toastText" class="text-xs font-bold">Action completed!</span>
+    </div>
 
-http://googleusercontent.com/generated_image_content/0
+    <!-- JavaScript logic -->
+    <script>
+        const testsCatalog = [
+            { id: 'full-body', name: 'Full Body Wellness Checkup', category: 'Wellness', parameters: '60+ Parameters', price: 1499, mrp: 2999, popular: true },
+            { id: 'cbc', name: 'Complete Blood Count (CBC)', category: 'Pathology', parameters: '15 Parameters', price: 299, mrp: 450, popular: true },
+            { id: 'thyroid', name: 'Thyroid Profile Total', category: 'Vitamins', parameters: '3 Parameters', price: 399, mrp: 750, popular: true }
+        ];
 
+        let cartItems = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTestCards(testsCatalog);
+        });
+
+        function closeStartupPopup() {
+            document.getElementById('startupPopupModal').classList.add('hidden');
+        }
+
+        function openStartupPopup() {
+            document.getElementById('startupPopupModal').classList.remove('hidden');
+        }
+
+        function applyPromoCode(code) {
+            showToast(`Promo Code ${code} Applied! 20% Discount active.`);
+            closeStartupPopup();
+        }
+
+        function renderTestCards(data) {
+            const grid = document.getElementById('testsGrid');
+            if (!grid) return;
+            grid.innerHTML = data.map(test => `
+                <div class="glass-card rounded-3xl p-6 card-hover-effect flex flex-col justify-between border relative">
+                    ${test.popular ? `<span class="absolute top-4 right-4 bg-amber-100 text-amber-800 text-[10px] font-black px-3 py-0.5 rounded-full uppercase">Popular</span>` : ''}
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-clasmo-teal bg-teal-50 px-2.5 py-0.5 rounded-md border">${test.category}</span>
+                        <h3 class="text-lg font-black text-clasmo-navy mt-2">${test.name}</h3>
+                        <p class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-vial text-clasmo-teal mr-1"></i> ${test.parameters}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-black text-clasmo-navy">₹${test.price}</span>
+                            <span class="text-xs text-slate-400 line-through">₹${test.mrp}</span>
+                        </div>
+                        <button onclick="addToCart('${test.id}')" class="px-4 py-2.5 bg-clasmo-navy hover:bg-clasmo-teal text-white text-xs font-bold rounded-xl shadow-md transition-all">Add</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(testId) {
+            const test = testsCatalog.find(t => t.id === testId);
+            if (!cartItems.some(c => c.id === testId)) {
+                cartItems.push(test);
+                updateCartUI();
+                showToast(`"${test.name}" added to cart!`);
+            }
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            badge.innerText = cartItems.length;
+            badge.classList.toggle('hidden', cartItems.length === 0);
+            document.getElementById('cartHeaderCount').innerText = cartItems.length;
+            document.getElementById('cartList').innerHTML = cartItems.map(item => `
+                <div class="flex justify-between items-center p-3.5 bg-slate-50 rounded-2xl border">
+                    <div><div class="font-extrabold text-xs">${item.name}</div><div class="text-xs text-clasmo-teal font-extrabold">₹${item.price}</div></div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('hidden'); }
+        function openBookingModal() { document.getElementById('bookingModal').classList.remove('hidden'); }
+        function closeBookingModal() { document.getElementById('bookingModal').classList.add('hidden'); }
+        function handleBookingSubmission(e) {
+            e.preventDefault();
+            closeBookingModal();
+            showToast('Booking Confirmed Successfully!');
+            e.target.reset();
+        }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+    </script>
+</body>
+</html>
