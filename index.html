@@ -3,1366 +3,796 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clasmo Diagnostics Pvt Ltd | Precision Diagnostics, Compassionate Care</title>
+    <title>Clasmo Diagnostics | Advanced Pathology & Health Checkup</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brandDarkBlue: '#0A192F',
-                        brandNavy: '#002B49',
-                        brandNavyLight: '#003366',
-                        brandSkyBlue: '#00A8E8',
-                        brandSkyLight: '#38B6FF',
-                        brandSkyBg: '#F0F8FF',
-                        brandSkySoft: '#E6F7FF',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        darkBlue: '#002B49',
+                        deepNavy: '#0A192F',
+                        skyAccent: '#00A8E8',
+                        lightSky: '#E6F7FF',
+                        brightBlue: '#38B6FF'
                     }
                 }
             }
         }
     </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F0F8FF; }
-        
-        .hero-gradient {
-            background: linear-gradient(135deg, #0A192F 0%, #002B49 50%, #003366 100%);
+        @keyframes floatRBC {
+            0% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-30px) translateX(20px) rotate(180deg); opacity: 1; }
+            100% { transform: translateY(0px) translateX(0px) rotate(360deg); opacity: 0.7; }
         }
-        .sky-gradient-btn {
-            background: linear-gradient(135deg, #00A8E8 0%, #38B6FF 100%);
-        }
-        .sky-gradient-btn:hover {
-            background: linear-gradient(135deg, #0082B4 0%, #00A8E8 100%);
-        }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 168, 232, 0.2);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #E2E8F0; }
-        ::-webkit-scrollbar-thumb { background: #00A8E8; border-radius: 4px; }
-
-        /* Blood Test Animations */
-        @keyframes floatDrop {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
+        .animate-rbc {
+            animation: floatRBC 6s ease-in-out infinite;
         }
         @keyframes fillTube {
-            0% { height: 15%; }
-            50% { height: 75%; }
-            100% { height: 15%; }
+            0% { height: 10%; }
+            50% { height: 85%; }
+            100% { height: 85%; }
         }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 10px rgba(0, 168, 232, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(0, 168, 232, 0.8); }
+        .animate-tube {
+            animation: fillTube 4s ease-in-out infinite alternate;
         }
-        @keyframes bloodPulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.15); opacity: 1; }
-        }
-        .animate-blood-drop { animation: floatDrop 3.5s ease-in-out infinite; }
-        .animate-blood-pulse { animation: bloodPulse 1.8s infinite; }
-        .tube-fill-animation { animation: fillTube 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
-        .glow-pulse { animation: pulseGlow 2.5s infinite; }
     </style>
 </head>
-<body class="text-slate-800 antialiased overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-brandDarkBlue text-white py-2 px-4 text-xs font-medium border-b border-brandNavyLight">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-            <div class="flex items-center space-x-4">
-                <a href="tel:9272173712" class="flex items-center gap-1.5 hover:text-brandSkyLight transition-colors">
-                    <i class="fa-solid fa-phone text-brandSkyBlue animate-pulse"></i> 
-                    <span class="font-bold">Helpline: 9272173712</span>
-                </a>
-                <span class="hidden md:inline text-slate-500">|</span>
-                <span class="hidden md:flex items-center gap-1.5"><i class="fa-solid fa-clock text-brandSkyBlue"></i> 07:00 AM - 09:00 PM (Mon-Sun)</span>
-                <span class="hidden lg:inline text-slate-500">|</span>
-                <span class="hidden lg:flex items-center gap-1.5 text-brandSkyLight"><i class="fa-solid fa-certificate"></i> NABL Standard Guidelines Compliant</span>
+    <!-- PROMOTIONAL POP-UP MODAL -->
+    <div id="promo-popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white w-11/12 max-w-lg rounded-2xl shadow-2xl border-4 border-skyAccent overflow-hidden transform transition-all scale-100 relative">
+            <button onclick="closePromoPopup()" class="absolute top-3 right-3 bg-darkBlue text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-skyAccent hover:text-darkBlue transition-colors font-bold z-10 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="bg-gradient-to-r from-darkBlue to-deepNavy p-6 text-white text-center relative">
+                <div class="absolute -top-10 -left-10 w-32 h-32 bg-skyAccent/20 rounded-full blur-2xl"></div>
+                <span class="bg-skyAccent/30 text-skyAccent text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Special Health Offer</span>
+                <h3 class="text-2xl font-black mt-2">Comprehensive Full Body Checkup</h3>
+                <p class="text-sky-200 text-sm mt-1">75+ Essential Tests + Free Home Sample Collection</p>
             </div>
-            <div class="flex items-center space-x-4">
-                <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/" target="_blank" rel="noopener noreferrer" class="hover:text-brandSkyLight transition-colors flex items-center gap-1">
-                    <i class="fa-brands fa-linkedin text-sm"></i> <span class="hidden sm:inline">LinkedIn</span>
-                </a>
-                <a href="https://maps.app.goo.gl/pm8WjvHN1AqmuN2h9" target="_blank" rel="noopener noreferrer" class="hover:text-brandSkyLight transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-location-dot text-sm text-red-400"></i> <span class="hidden sm:inline">Google Maps</span>
-                </a>
+            <div class="p-6 space-y-4 text-center">
+                <div class="flex items-center justify-center space-x-3">
+                    <span class="text-slate-400 line-through text-lg">₹2,500</span>
+                    <span class="text-4xl font-extrabold text-skyAccent">₹999</span>
+                    <span class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded-md">Save 60%</span>
+                </div>
+                <p class="text-sm text-slate-600">Book your sample collection today and get expert doctor consultation insights instantly!</p>
+                <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                    <button onclick="closePromoPopup(); openModal('home-collection')" class="flex-1 bg-skyAccent hover:bg-sky-500 text-darkBlue font-bold py-3 px-4 rounded-xl shadow-lg transition-transform hover:scale-105 cursor-pointer">
+                        <i class="fa-solid fa-house-medical mr-2"></i> Book Home Collection
+                    </button>
+                    <button onclick="closePromoPopup()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl transition-colors cursor-pointer">
+                        Explore Packages
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Navigation Bar -->
-    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                
-                <!-- Official Logo -->
-                <a href="#" class="flex items-center space-x-3 group">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandNavy via-brandNavyLight to-brandSkyBlue flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-all">
-                        <i class="fa-solid fa-dna text-2xl text-brandSkyLight"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-1">
-                            <span class="text-2xl font-black tracking-tight text-brandNavy">CLASMO</span>
-                            <span class="text-2xl font-black tracking-tight text-brandSkyBlue">DIAGNOSTICS</span>
-                        </div>
-                        <p class="text-[10px] font-bold tracking-widest text-slate-500 uppercase -mt-1">Where Accuracy Saves Lives</p>
-                    </div>
-                </a>
-
-                <!-- Nav Links Desktop -->
-                <div class="hidden lg:flex items-center space-x-6 text-xs font-bold text-slate-700 uppercase tracking-wide">
-                    <a href="#home" class="hover:text-brandSkyBlue transition-colors">Home</a>
-                    <a href="#packages" class="hover:text-brandSkyBlue transition-colors">Health Packages</a>
-                    <a href="#upload-analyzer" class="hover:text-brandSkyBlue transition-colors text-brandSkyBlue flex items-center gap-1">
-                        <i class="fa-solid fa-file-medical"></i> Upload Report & Doctor Risk
-                    </a>
-                    <a href="#portal" class="hover:text-brandSkyBlue transition-colors">Download Report</a>
-                    <a href="#join-clasmo" class="hover:text-brandSkyBlue transition-colors flex items-center gap-1">
-                        <i class="fa-solid fa-handshake text-brandSkyBlue"></i> Come N Join
-                    </a>
-                    <a href="#about" class="hover:text-brandSkyBlue transition-colors">About Us</a>
-                </div>
-
-                <!-- Right Action Controls -->
-                <div class="flex items-center space-x-3">
-                    <button onclick="toggleCartDrawer()" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-brandSkyBg text-brandNavy transition-all">
-                        <i class="fa-solid fa-shopping-bag text-lg"></i>
-                        <span id="cartBadge" class="absolute -top-1 -right-1 bg-brandSkyBlue text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">0</span>
-                    </button>
-
-                    <button onclick="openHomeCollectionModal()" class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-xl font-bold text-xs text-white sky-gradient-btn shadow-md transition-all transform active:scale-95">
-                        <i class="fa-solid fa-house-medical mr-1.5"></i> Book Home Sample
-                    </button>
-
-                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-700 hover:text-brandNavy">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                </div>
+    <!-- TOP HEADER -->
+    <div class="bg-deepNavy text-white text-xs py-2 px-4 border-b border-skyAccent/20">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-4">
+                <span><i class="fa-solid fa-location-dot text-skyAccent mr-1"></i> Central Lab: Satana, Maharashtra</span>
+                <span><i class="fa-solid fa-phone text-skyAccent mr-1"></i> +91 99225 77080</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sky-300"><i class="fa-solid fa-clock mr-1"></i> Open 24/7 for Emergency & Home Collection</span>
+                <a href="#join-clasmo" class="text-skyAccent hover:underline font-semibold">Join As Partner / Job</a>
             </div>
         </div>
+    </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 text-sm font-bold text-slate-700">
-            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">Home</a>
-            <a href="#packages" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">Health Packages</a>
-            <a href="#upload-analyzer" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue text-brandSkyBlue">Upload Report & Doctor Risk</a>
-            <a href="#portal" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">Download Reports & Upload Prescription</a>
-            <a href="#join-clasmo" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">COME N JOIN WITH CLASMO</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">About Us</a>
-            <button onclick="toggleMobileMenu(); openHomeCollectionModal();" class="w-full text-center py-2.5 rounded-xl font-bold text-xs text-white sky-gradient-btn">
-                Book Home Sample Pickup
-            </button>
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-40 bg-darkBlue/95 backdrop-blur-md shadow-lg border-b border-skyAccent/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-12 h-12 bg-gradient-to-br from-skyAccent to-brightBlue rounded-xl flex items-center justify-center text-darkBlue font-black text-2xl shadow-lg group-hover:rotate-6 transition-transform">
+                    <i class="fa-solid fa-dna animate-pulse"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-black text-white tracking-wide">CLASMO</span>
+                    <span class="text-xs block text-skyAccent font-bold tracking-widest uppercase">Diagnostics Pvt Ltd</span>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-200">
+                <a href="#packages" class="hover:text-skyAccent transition-colors">Health Packages</a>
+                <a href="#analyzer" class="hover:text-skyAccent transition-colors">Upload & Risk Analysis</a>
+                <a href="#join-clasmo" class="hover:text-skyAccent transition-colors">Join Clasmo</a>
+                <a href="#contact" class="hover:text-skyAccent transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal('home-collection')" class="bg-gradient-to-r from-skyAccent to-brightBlue hover:opacity-90 text-darkBlue font-bold px-5 py-2.5 rounded-xl shadow-md transition-transform hover:scale-105 flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Book Test</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-gradient text-white py-16 lg:py-20 relative overflow-hidden">
-        <!-- Interactive Canvas Background for Floating Red Blood Cells & Particles -->
-        <canvas id="bloodCellCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-30 z-0"></canvas>
+    <!-- HERO SECTION WITH BLOOD CELL ANIMATION -->
+    <header class="relative bg-gradient-to-br from-deepNavy via-darkBlue to-slate-900 text-white overflow-hidden py-20 lg:py-28">
+        <!-- Animated Blood Cells & Particles Background -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+            <div class="absolute top-10 left-1/4 w-16 h-16 rounded-full bg-skyAccent blur-xl animate-rbc"></div>
+            <div class="absolute bottom-12 right-1/3 w-24 h-24 rounded-full bg-blue-500 blur-2xl animate-rbc" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 right-10 w-20 h-20 rounded-full bg-cyan-400 blur-xl animate-rbc" style="animation-delay: 4s;"></div>
+        </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                
-                <!-- Left Hero Text -->
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-brandSkyLight text-xs font-bold border border-brandSkyLight/30">
-                        <i class="fa-solid fa-droplet text-red-400 animate-blood-pulse"></i> NABL Standard Accredited Diagnostic Lab
-                    </div>
-
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight">
-                        Precision Diagnostics, <br>
-                        <span class="text-brandSkyLight">Compassionate Care.</span>
-                    </h1>
-
-                    <p class="text-slate-200 text-sm md:text-base leading-relaxed max-w-xl">
-                        Clasmo Diagnostics Pvt Ltd delivers accurate, automated clinical testing with same-day digital reports and doorstep phlebotomy sample pickup.
-                    </p>
-
-                    <!-- Quick Interactive Test Search Bar -->
-                    <div class="bg-white p-2 rounded-2xl shadow-xl flex flex-col sm:flex-row items-center gap-2 max-w-2xl">
-                        <div class="flex items-center gap-2 px-3 w-full text-slate-700">
-                            <i class="fa-solid fa-magnifying-glass text-brandSkyBlue text-lg"></i>
-                            <input type="text" id="heroSearchInput" onkeyup="filterByHeroSearch()" placeholder="Search test or package (e.g., CBC, Thyroid, Diabetes, Lipid)..." class="w-full py-2.5 text-xs font-semibold outline-none text-slate-800">
-                        </div>
-                        <a href="#packages" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white text-xs font-bold whitespace-nowrap text-center transition-all">
-                            Find Test
-                        </a>
-                    </div>
-
-                    <!-- Quick Feature Highlights -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
-                            <i class="fa-solid fa-vial text-red-400 text-xl mb-1 animate-blood-drop"></i>
-                            <p class="text-[11px] font-bold">30-Min Pickup</p>
-                        </div>
-                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
-                            <i class="fa-solid fa-file-pdf text-brandSkyLight text-xl mb-1"></i>
-                            <p class="text-[11px] font-bold">Same-Day Digital Report</p>
-                        </div>
-                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
-                            <i class="fa-solid fa-microscope text-brandSkyLight text-xl mb-1"></i>
-                            <p class="text-[11px] font-bold">Automated Analyzers</p>
-                        </div>
-                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
-                            <i class="fa-solid fa-hand-holding-medical text-brandSkyLight text-xl mb-1"></i>
-                            <p class="text-[11px] font-bold">Expert Pathologists</p>
-                        </div>
-                    </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="bg-skyAccent/20 text-skyAccent font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider border border-skyAccent/30 inline-block">
+                    <i class="fa-solid fa-shield-heart mr-1.5"></i> Advanced Pathology & Diagnostics
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
+                    Precision Diagnostics & <span class="text-transparent bg-clip-text bg-gradient-to-r from-skyAccent to-brightBlue">Smart Health Care</span>
+                </h1>
+                <p class="text-slate-300 text-lg leading-relaxed">
+                    Experience state-of-the-art lab testing, doorstep home sample collection, AI-powered health risk reports, and instant doctor consultations with Clasmo Diagnostics.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button onclick="openModal('home-collection')" class="bg-skyAccent hover:bg-sky-400 text-darkBlue font-extrabold px-8 py-4 rounded-xl shadow-xl transition-transform hover:scale-105 flex items-center justify-center space-x-2 cursor-pointer">
+                        <i class="fa-solid fa-house-medical text-lg"></i>
+                        <span>Book Home Sample Collection</span>
+                    </button>
+                    <a href="#analyzer" class="border-2 border-skyAccent/60 hover:border-skyAccent text-white font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-2 hover:bg-skyAccent/10">
+                        <i class="fa-solid fa-file-waveform text-skyAccent"></i>
+                        <span>Analyze Your Report</span>
+                    </a>
                 </div>
+            </div>
 
-                <!-- Right Hero Card with Animated Blood Test Graphic -->
-                <div class="lg:col-span-5">
-                    <div class="bg-white rounded-3xl p-6 shadow-2xl text-slate-800 border-2 border-brandSkyBlue/30 relative glow-pulse">
-                        <span class="absolute -top-3 right-6 bg-brandSkyBlue text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow flex items-center gap-1">
-                            <i class="fa-solid fa-bolt text-yellow-300"></i> POPULAR CHOICE
-                        </span>
-
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-12 h-12 bg-brandSkyBg text-brandSkyBlue rounded-2xl flex items-center justify-center text-xl font-bold">
-                                    <i class="fa-solid fa-heart-pulse text-red-500 animate-blood-pulse"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-extrabold text-lg text-brandNavy">Fitness Smart Checkup</h3>
-                                    <p class="text-xs text-slate-500 font-medium">80+ Essential Body Parameters</p>
-                                </div>
+            <!-- Interactive Blood Test Animation Graphic Card -->
+            <div class="relative flex justify-center">
+                <div class="w-full max-w-md bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-skyAccent/30 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-skyAccent/20 rounded-full blur-2xl"></div>
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg bg-skyAccent flex items-center justify-center text-darkBlue font-bold">
+                                <i class="fa-solid fa-vial"></i>
                             </div>
-
-                            <!-- Animated Blood Drop Fill SVG Graphic -->
-                            <div class="relative w-12 h-16 bg-slate-100 rounded-b-2xl rounded-t-lg overflow-hidden border-2 border-brandSkyBlue/40 flex items-end shadow-inner">
-                                <div class="w-full bg-gradient-to-t from-red-600 to-red-400 tube-fill-animation relative">
-                                    <div class="absolute inset-x-0 top-0 h-1 bg-red-300/60 animate-pulse"></div>
-                                </div>
-                                <i class="fa-solid fa-droplet text-red-500 absolute top-1 left-1/2 -translate-x-1/2 text-xs animate-blood-pulse"></i>
-                            </div>
-                        </div>
-
-                        <div class="bg-brandSkyBg p-4 rounded-2xl border border-slate-200 mb-4 flex justify-between items-center">
                             <div>
-                                <span class="text-xs text-slate-400 line-through">₹4,500</span>
-                                <div class="text-2xl font-black text-brandNavy">₹1,999</div>
+                                <h4 class="font-bold text-white">Live Sample Analyzer</h4>
+                                <span class="text-xs text-sky-300">Automated CBC & Biochemistry</span>
                             </div>
-                            <span class="bg-sky-100 text-sky-800 font-bold text-xs px-2.5 py-1 rounded-lg">55% OFF</span>
                         </div>
+                        <span class="bg-green-500/20 text-green-400 text-xs font-bold px-2.5 py-1 rounded-full flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-green-400 animate-ping mr-1.5"></span> Active Lab
+                        </span>
+                    </div>
 
-                        <div class="space-y-2 text-xs text-slate-600 mb-6 font-semibold">
-                            <div class="flex items-center"><i class="fa-solid fa-vial text-red-500 mr-2"></i> Complete Blood Count (CBC)</div>
-                            <div class="flex items-center"><i class="fa-solid fa-check text-brandSkyBlue mr-2"></i> Thyroid Profile - 3 (T3, T4, TSH)</div>
-                            <div class="flex items-center"><i class="fa-solid fa-check text-brandSkyBlue mr-2"></i> HbA1c & Fasting Glucose</div>
-                            <div class="flex items-center"><i class="fa-solid fa-check text-brandSkyBlue mr-2"></i> Liver & Kidney Profiles</div>
+                    <!-- Test Tube Animation Widget -->
+                    <div class="bg-deepNavy/80 rounded-2xl p-6 flex flex-col items-center justify-center h-56 relative border border-slate-700">
+                        <div class="w-12 h-40 border-4 border-slate-400 rounded-b-2xl relative overflow-hidden flex flex-col justify-end bg-slate-800/50 shadow-inner">
+                            <div class="w-full bg-gradient-to-t from-red-600 via-skyAccent to-blue-500 animate-tube rounded-b-xl opacity-90 relative">
+                                <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                            </div>
                         </div>
+                        <span class="text-xs text-slate-300 mt-3 font-mono">Centrifuging & Processing Sample...</span>
+                    </div>
 
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="openPackageDetailModal(1)" class="py-2.5 rounded-xl border border-brandNavy text-brandNavy hover:bg-brandSkyBg font-bold text-xs transition-colors">
-                                View Included Tests
-                            </button>
-                            <button onclick="addToCart(1)" class="py-2.5 rounded-xl text-white sky-gradient-btn font-bold text-xs transition-all shadow">
-                                Add To Cart
-                            </button>
+                    <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-deepNavy/60 p-3 rounded-xl border border-slate-700">
+                            <span class="block text-xs text-slate-400">Accuracy</span>
+                            <span class="text-lg font-black text-skyAccent">99.9%</span>
+                        </div>
+                        <div class="bg-deepNavy/60 p-3 rounded-xl border border-slate-700">
+                            <span class="block text-xs text-slate-400">Turnaround</span>
+                            <span class="text-lg font-black text-skyAccent">6 Hours</span>
+                        </div>
+                        <div class="bg-deepNavy/60 p-3 rounded-xl border border-slate-700">
+                            <span class="block text-xs text-slate-400">Parameters</span>
+                            <span class="text-lg font-black text-skyAccent">75+</span>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </header>
 
+    <!-- SEARCH & FILTER BAR -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+        <div class="bg-white rounded-2xl shadow-xl p-6 border border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+            <div class="relative md:col-span-2">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400"></i>
+                <input type="text" id="test-search" oninput="filterPackages()" placeholder="Search health packages, CBC, Lipid, Diabetes, Thyroid..." class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-skyAccent text-sm">
+            </div>
+            <div>
+                <select id="category-filter" onchange="filterPackages()" class="w-full py-3 px-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-skyAccent text-sm font-medium">
+                    <option value="all">All Categories</option>
+                    <option value="preventive">Preventive Health</option>
+                    <option value="diabetes">Diabetes Care</option>
+                    <option value="cardiac">Cardiac Risk</option>
+                </select>
+            </div>
+            <div>
+                <button onclick="filterPackages()" class="w-full bg-darkBlue hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-xl transition-colors text-sm shadow-md cursor-pointer">
+                    <i class="fa-solid fa-filter mr-2 text-skyAccent"></i> Filter Tests
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Search & Filter Bar Section -->
-    <section id="packages" class="py-12 bg-brandSkyBg border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-8">
-                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200">Catalog Search</span>
-                <h2 class="text-2xl sm:text-3xl font-black text-brandNavy mt-2">Health Packages & Individual Profiles</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Filter diagnostic profiles by health category, budget, or test keywords.</p>
-            </div>
+    <!-- HEALTH PACKAGES -->
+    <section id="packages" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-skyAccent font-bold text-sm tracking-widest uppercase">Comprehensive Profiles</span>
+            <h2 class="text-3xl font-black text-darkBlue mt-1">Popular Health Checkup Packages</h2>
+            <p class="text-slate-600 mt-2">Choose from our physician-approved diagnostic packages with free home collection.</p>
+        </div>
 
-            <!-- Controls -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-8 space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                    
-                    <!-- Input Search -->
-                    <div class="md:col-span-5 relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                        <input type="text" id="catalogSearchInput" oninput="filterCatalog()" placeholder="Search CBC, Lipid, Diabetes, Vitamin D..." class="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:ring-2 focus:ring-brandSkyBlue outline-none">
+        <div id="packages-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Package 1 -->
+            <div class="package-card bg-white rounded-3xl shadow-lg border border-slate-200 hover:border-skyAccent transition-all hover:shadow-2xl flex flex-col justify-between overflow-hidden group" data-category="preventive" data-name="full body checkup platinum">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-sky-100 text-darkBlue text-xs font-extrabold px-3 py-1 rounded-full uppercase">Most Popular</span>
+                        <span class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-vial text-skyAccent mr-1"></i> 75 Tests</span>
                     </div>
-
-                    <!-- Category Filter -->
-                    <div class="md:col-span-4">
-                        <select id="categoryFilter" onchange="filterCatalog()" class="w-full px-3.5 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 focus:ring-2 focus:ring-brandSkyBlue outline-none">
-                            <option value="ALL">All Categories</option>
-                            <option value="Full Body">Full Body Checkups</option>
-                            <option value="Cardiac">Cardiac & Diabetes</option>
-                            <option value="Specialized">Hair & Skin Profiles</option>
-                            <option value="Women">Women's Health / PCOD</option>
-                        </select>
+                    <h3 class="text-xl font-black text-darkBlue group-hover:text-skyAccent transition-colors">Clasmo Platinum Full Body Checkup</h3>
+                    <p class="text-slate-500 text-sm mt-2">Comprehensive health screening for vital organ functions, diabetes, and vitamins.</p>
+                    <ul class="mt-4 space-y-2 text-xs text-slate-600">
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Complete Blood Count (CBC)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Lipid Profile & Liver Function (LFT)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Kidney Function & Thyroid (TSH)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Vitamin D & B12 Screening</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-6 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block line-through">₹3,500</span>
+                        <span class="text-2xl font-black text-darkBlue">₹1,499</span>
                     </div>
-
-                    <!-- Price Filter -->
-                    <div class="md:col-span-3">
-                        <select id="priceFilter" onchange="filterCatalog()" class="w-full px-3.5 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 focus:ring-2 focus:ring-brandSkyBlue outline-none">
-                            <option value="ALL">All Price Ranges</option>
-                            <option value="UNDER_2000">Under ₹2,000</option>
-                            <option value="2000_TO_4000">₹2,000 - ₹4,000</option>
-                            <option value="ABOVE_4000">Above ₹4,000</option>
-                        </select>
-                    </div>
-
+                    <button onclick="openModal('home-collection')" class="bg-skyAccent hover:bg-sky-400 text-darkBlue font-bold px-5 py-2.5 rounded-xl shadow transition-transform hover:scale-105 cursor-pointer">
+                        Book Now
+                    </button>
                 </div>
             </div>
 
-            <!-- Health Packages Grid Dynamic Container -->
-            <div id="packagesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Dynamic Package Render -->
+            <!-- Package 2 -->
+            <div class="package-card bg-white rounded-3xl shadow-lg border border-slate-200 hover:border-skyAccent transition-all hover:shadow-2xl flex flex-col justify-between overflow-hidden group" data-category="diabetes" data-name="diabetes care panel">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Specialist Care</span>
+                        <span class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-vial text-skyAccent mr-1"></i> 25 Tests</span>
+                    </div>
+                    <h3 class="text-xl font-black text-darkBlue group-hover:text-skyAccent transition-colors">Clasmo Advanced Diabetes Panel</h3>
+                    <p class="text-slate-500 text-sm mt-2">Monitor blood glucose levels, HbA1c, average blood sugar, and kidney complications.</p>
+                    <ul class="mt-4 space-y-2 text-xs text-slate-600">
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Fasting Blood Sugar & HbA1c</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Average Blood Glucose (eAG)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Urine Routine & Microalbumin</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Serum Creatinine & BUN</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-6 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block line-through">₹1,800</span>
+                        <span class="text-2xl font-black text-darkBlue">₹799</span>
+                    </div>
+                    <button onclick="openModal('home-collection')" class="bg-skyAccent hover:bg-sky-400 text-darkBlue font-bold px-5 py-2.5 rounded-xl shadow transition-transform hover:scale-105 cursor-pointer">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Package 3 -->
+            <div class="package-card bg-white rounded-3xl shadow-lg border border-slate-200 hover:border-skyAccent transition-all hover:shadow-2xl flex flex-col justify-between overflow-hidden group" data-category="cardiac" data-name="cardiac risk profile">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-red-100 text-red-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Heart Health</span>
+                        <span class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-vial text-skyAccent mr-1"></i> 35 Tests</span>
+                    </div>
+                    <h3 class="text-xl font-black text-darkBlue group-hover:text-skyAccent transition-colors">Clasmo Cardiac Risk Profile</h3>
+                    <p class="text-slate-500 text-sm mt-2">Assess heart health markers, cholesterol ratios, homocysteine, and lipid profiles.</p>
+                    <ul class="mt-4 space-y-2 text-xs text-slate-600">
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Complete Lipid Profile (Cholesterol)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Homocysteine & Lipoprotein(a)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> High Sensitivity CRP (hs-CRP)</li>
+                        <li><i class="fa-solid fa-check text-skyAccent mr-2"></i> Fasting Blood Glucose</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-6 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block line-through">₹2,200</span>
+                        <span class="text-2xl font-black text-darkBlue">₹999</span>
+                    </div>
+                    <button onclick="openModal('home-collection')" class="bg-skyAccent hover:bg-sky-400 text-darkBlue font-bold px-5 py-2.5 rounded-xl shadow transition-transform hover:scale-105 cursor-pointer">
+                        Book Now
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW FEATURE: UPLOAD REPORT & HEALTH RISK ANALYZER WITH DOCTOR SUGGESTIONS -->
-    <section id="upload-analyzer" class="py-16 bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-brandSkyBg px-3 py-1 rounded-full border border-brandSkyBlue/30">AI Powered Diagnostic Assistant</span>
-                <h2 class="text-3xl font-black text-brandNavy mt-2">Upload Lab Report & Health Risk Analysis</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Upload your existing blood report image or PDF. Our parser identifies High, Medium, and Low risk markers and recommends appropriate doctor specialists.</p>
-            </div>
+    <!-- UPLOAD REPORT & HEALTH RISK ANALYSIS FEATURE -->
+    <section id="analyzer" class="py-16 bg-gradient-to-b from-slate-100 to-white border-y border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-2xl border border-skyAccent/30 p-8 lg:p-12">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="bg-sky-100 text-darkBlue font-bold px-4 py-1 rounded-full text-xs uppercase tracking-wider">AI Medical Assistant</span>
+                    <h2 class="text-3xl font-black text-darkBlue mt-2">Upload Report & Suggest Doctor</h2>
+                    <p class="text-slate-600 text-sm mt-2">Upload your lab report or prescription to instantly calculate high, medium, and low health risk parameters and get doctor specialist suggestions.</p>
+                </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Left: File Upload Box -->
-                <div class="lg:col-span-5 bg-brandSkyBg p-6 rounded-3xl border-2 border-brandSkyBlue/30 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-2xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-xl shadow">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-extrabold text-brandNavy text-base">Upload Report Image / PDF</h3>
-                            <p class="text-xs text-slate-500 font-medium">Supports CBC, Lipid, HbA1c, LFT, KFT reports</p>
-                        </div>
+                <!-- Upload Dropzone -->
+                <div id="dropzone" onclick="document.getElementById('report-file').click()" class="border-2 border-dashed border-skyAccent/60 hover:border-skyAccent bg-sky-50/50 rounded-2xl p-8 text-center cursor-pointer transition-all">
+                    <input type="file" id="report-file" class="hidden" accept=".pdf,image/*" onchange="handleFileSelect(event)">
+                    <div class="w-16 h-16 bg-skyAccent/20 text-darkBlue rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
                     </div>
-
-                    <div class="border-2 border-dashed border-brandSkyBlue/50 bg-white p-6 rounded-2xl text-center space-y-3 cursor-pointer hover:bg-slate-50 transition-all">
-                        <i class="fa-solid fa-file-medical text-3xl text-brandSkyBlue"></i>
-                        <p class="text-xs font-bold text-slate-700">Drag and drop your report or click to browse</p>
-                        <p class="text-[10px] text-slate-400">PNG, JPG, JPEG or PDF (Max size 10MB)</p>
-                        <input type="file" id="reportUploadInput" accept="image/*,.pdf" onchange="processUploadedReport(event)" class="hidden">
-                        <button onclick="document.getElementById('reportUploadInput').click()" type="button" class="px-4 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs shadow">
-                            Select File
-                        </button>
-                    </div>
-
-                    <!-- File Attached Info -->
-                    <div id="fileAttachedBox" class="hidden bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-file-pdf text-red-500 text-lg"></i>
-                            <span id="attachedFileName" class="font-bold text-slate-700 truncate max-w-[180px]">Report.pdf</span>
-                        </div>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">Ready to Analyze</span>
-                    </div>
-
-                    <button onclick="simulateReportAnalysis()" class="w-full py-3.5 rounded-xl sky-gradient-btn text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-microscope text-sm"></i> Analyze Report & Calculate Health Risk
+                    <h4 class="font-bold text-darkBlue text-lg">Click to Upload or Drag & Drop Report</h4>
+                    <p class="text-xs text-slate-500 mt-1">Supports PDF, JPG, PNG files up to 25MB</p>
+                    <button type="button" class="mt-4 bg-darkBlue text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-skyAccent hover:text-darkBlue transition-colors">
+                        Browse File
                     </button>
                 </div>
 
-                <!-- Right: Risk Breakdown & Doctor Suggestion Output -->
-                <div class="lg:col-span-7 bg-brandSkyBg/50 p-6 rounded-3xl border border-slate-200 relative">
-                    <div id="analysisPlaceholder" class="text-center py-12 text-slate-400 space-y-3">
-                        <i class="fa-solid fa-laptop-medical text-4xl text-brandSkyBlue/50"></i>
-                        <h4 class="font-bold text-slate-600 text-sm">No Report Analyzed Yet</h4>
-                        <p class="text-xs max-w-sm mx-auto">Upload a medical lab report on the left or click "Analyze Report" to view risk breakdown and suggested specialist doctors.</p>
-                    </div>
+                <!-- Analysis Button & Loader -->
+                <div class="mt-6 text-center">
+                    <button onclick="simulateAnalysis()" id="analyze-btn" class="bg-gradient-to-r from-skyAccent to-brightBlue text-darkBlue font-extrabold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-microscope mr-2"></i> Analyze Report & Calculate Health Risk
+                    </button>
+                </div>
 
-                    <!-- Animated Blood Testing Progress Loader -->
-                    <div id="analysisLoader" class="hidden text-center py-12 space-y-4">
-                        <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
-                            <div class="absolute inset-0 rounded-full border-4 border-slate-200 border-t-red-500 border-r-brandSkyBlue animate-spin"></div>
-                            <i class="fa-solid fa-vial text-2xl text-red-500 animate-blood-pulse"></i>
-                        </div>
+                <!-- Loading Animation Container -->
+                <div id="analysis-loader" class="hidden mt-8 text-center space-y-4">
+                    <div class="w-12 h-12 border-4 border-skyAccent border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p class="text-sm font-bold text-darkBlue">Centrifuging and scanning report biomarkers with AI...</p>
+                </div>
+
+                <!-- Risk Analysis Results Dashboard -->
+                <div id="analysis-results" class="hidden mt-10 space-y-8 border-t border-slate-200 pt-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-center bg-slate-50 p-6 rounded-2xl border border-slate-200 gap-4">
                         <div>
-                            <h4 class="font-black text-brandNavy text-sm">Centrifuging & Analyzing Blood Markers...</h4>
-                            <p class="text-xs text-slate-500 mt-1">Checking parameter values against standard laboratory reference ranges</p>
+                            <h3 class="font-bold text-darkBlue text-lg">Biomarker Risk Assessment Summary</h3>
+                            <p class="text-xs text-slate-500">Based on standard medical reference ranges</p>
                         </div>
-                        <div class="w-48 bg-slate-200 h-1.5 mx-auto rounded-full overflow-hidden">
-                            <div class="bg-gradient-to-r from-red-500 to-brandSkyBlue h-full w-full animate-pulse"></div>
-                        </div>
-                    </div>
-
-                    <!-- Results Container -->
-                    <div id="analysisResultsBox" class="hidden space-y-6">
-                        
-                        <!-- Risk Summary Badges -->
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
-                            <h4 class="font-black text-brandNavy text-xs uppercase tracking-wider mb-3">Overall Parameter Risk Breakdown</h4>
-                            <div class="grid grid-cols-3 gap-3 text-center">
-                                <div class="p-3 bg-red-50 border border-red-200 rounded-xl">
-                                    <span class="text-2xl font-black text-red-600" id="highRiskCount">2</span>
-                                    <p class="text-[10px] font-black uppercase text-red-700 mt-0.5">High Risk</p>
-                                </div>
-                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
-                                    <span class="text-2xl font-black text-amber-600" id="medRiskCount">1</span>
-                                    <p class="text-[10px] font-black uppercase text-amber-700 mt-0.5">Medium Risk</p>
-                                </div>
-                                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
-                                    <span class="text-2xl font-black text-emerald-600" id="lowRiskCount">12</span>
-                                    <p class="text-[10px] font-black uppercase text-emerald-700 mt-0.5">Low / Normal</p>
-                                </div>
+                        <div class="flex gap-4">
+                            <div class="bg-red-50 border border-red-200 px-4 py-2 rounded-xl text-center">
+                                <span class="block text-xs font-bold text-red-600">High Risk</span>
+                                <span id="high-risk-count" class="text-xl font-black text-red-700">2</span>
+                            </div>
+                            <div class="bg-amber-50 border border-amber-200 px-4 py-2 rounded-xl text-center">
+                                <span class="block text-xs font-bold text-amber-600">Medium Risk</span>
+                                <span id="medium-risk-count" class="text-xl font-black text-amber-700">3</span>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 px-4 py-2 rounded-xl text-center">
+                                <span class="block text-xs font-bold text-green-600">Low / Normal</span>
+                                <span id="low-risk-count" class="text-xl font-black text-green-700">12</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Detected Abnormal Parameters -->
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
-                            <h4 class="font-black text-brandNavy text-xs uppercase tracking-wider mb-2">Detected Risk Markers</h4>
-                            
-                            <div class="p-2.5 bg-red-50 rounded-xl border border-red-100 flex items-center justify-between text-xs">
-                                <div>
-                                    <span class="font-extrabold text-slate-800">HbA1c (Glycated Hemoglobin)</span>
-                                    <p class="text-[10px] text-slate-500">Value: <strong class="text-red-600">8.4 %</strong> (Normal: &lt; 5.7 %)</p>
-                                </div>
-                                <span class="bg-red-600 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase">High Risk</span>
+                    <!-- Suggested Doctor Section -->
+                    <div class="bg-gradient-to-r from-deepNavy to-darkBlue text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-14 h-14 bg-skyAccent rounded-2xl flex items-center justify-center text-darkBlue text-2xl font-bold">
+                                <i class="fa-solid fa-user-doctor"></i>
                             </div>
-
-                            <div class="p-2.5 bg-red-50 rounded-xl border border-red-100 flex items-center justify-between text-xs">
-                                <div>
-                                    <span class="font-extrabold text-slate-800">Serum Triglycerides (Lipid Profile)</span>
-                                    <p class="text-[10px] text-slate-500">Value: <strong class="text-red-600">260 mg/dL</strong> (Normal: &lt; 150 mg/dL)</p>
-                                </div>
-                                <span class="bg-red-600 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase">High Risk</span>
-                            </div>
-
-                            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-100 flex items-center justify-between text-xs">
-                                <div>
-                                    <span class="font-extrabold text-slate-800">TSH (Thyroid Stimulating Hormone)</span>
-                                    <p class="text-[10px] text-slate-500">Value: <strong class="text-amber-600">5.8 mIU/L</strong> (Normal: 0.4 - 4.2 mIU/L)</p>
-                                </div>
-                                <span class="bg-amber-500 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase">Medium Risk</span>
+                            <div>
+                                <span class="bg-skyAccent/20 text-skyAccent text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">Suggested Specialist</span>
+                                <h4 class="text-xl font-black mt-1">Dr. Rajesh Sharma, MD (Consultant Physician & Endocrinologist)</h4>
+                                <p class="text-xs text-sky-200 mt-1">Recommended due to elevated blood sugar & cholesterol markers.</p>
                             </div>
                         </div>
-
-                        <!-- Doctor Specialist Suggestions Engine -->
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
-                            <div class="flex items-center space-x-2 text-brandNavy">
-                                <i class="fa-solid fa-user-doctor text-brandSkyBlue text-lg"></i>
-                                <h4 class="font-extrabold text-xs uppercase tracking-wider">Suggested Doctor Consultations</h4>
-                            </div>
-
-                            <div class="space-y-2">
-                                <!-- Doctor 1 -->
-                                <div class="p-3 bg-brandSkyBg rounded-xl border border-brandSkyBlue/30 flex items-center justify-between">
-                                    <div class="space-y-0.5">
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="font-extrabold text-xs text-brandNavy">Diabetologist / Endocrinologist</span>
-                                            <span class="text-[9px] font-bold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">For High HbA1c & TSH</span>
-                                        </div>
-                                        <p class="text-[10px] text-slate-500 font-medium">Evaluates blood sugar control, insulin resistance, and thyroid gland regulation.</p>
-                                    </div>
-                                    <a href="https://wa.me/919272173712?text=Hello%20Clasmo,%20I%20need%20a%20Diabetologist/Endocrinologist%20consultation%20based%20on%20my%20report." target="_blank" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] whitespace-nowrap transition-colors flex items-center gap-1">
-                                        <i class="fa-brands fa-whatsapp"></i> Book Doctor
-                                    </a>
-                                </div>
-
-                                <!-- Doctor 2 -->
-                                <div class="p-3 bg-brandSkyBg rounded-xl border border-brandSkyBlue/30 flex items-center justify-between">
-                                    <div class="space-y-0.5">
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="font-extrabold text-xs text-brandNavy">Cardiologist / General Physician</span>
-                                            <span class="text-[9px] font-bold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">For High Triglycerides</span>
-                                        </div>
-                                        <p class="text-[10px] text-slate-500 font-medium">Recommends dietary, statin lipid management, and cardiovascular risk screening.</p>
-                                    </div>
-                                    <a href="https://wa.me/919272173712?text=Hello%20Clasmo,%20I%20need%20a%20Cardiologist%20consultation%20based%20on%20my%20high%20triglycerides%20report." target="_blank" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] whitespace-nowrap transition-colors flex items-center gap-1">
-                                        <i class="fa-brands fa-whatsapp"></i> Book Doctor
-                                    </a>
-                                </div>
-                            </div>
+                        <div class="flex gap-3 w-full md:w-auto">
+                            <button onclick="alert('Connecting to Dr. Rajesh Sharma consultation helpline...')" class="flex-1 md:flex-none bg-skyAccent hover:bg-sky-400 text-darkBlue font-bold px-6 py-3 rounded-xl transition-colors shadow cursor-pointer">
+                                <i class="fa-solid fa-phone mr-2"></i> Consult Doctor
+                            </button>
                         </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- COME AND JOIN WITH CLASMO SECTION -->
-    <section id="join-clasmo" class="py-16 bg-gradient-to-b from-brandSkyBg to-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-xs font-extrabold text-brandNavy uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200 shadow-xs">Partner & Career Opportunities</span>
-                <h2 class="text-3xl font-black text-brandNavy mt-2">COME N JOIN WITH CLASMO</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Expand your healthcare business with us or start your professional career at a CLASMO Diagnostic branch.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <!-- Option A: FRANCHISE -->
-                <div class="bg-white rounded-3xl p-8 border-2 border-brandSkyBlue/40 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-brandSkyBlue/10 rounded-full group-hover:scale-125 transition-transform"></div>
-                    <div class="space-y-4 relative z-10">
-                        <div class="w-14 h-14 rounded-2xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-2xl shadow-md">
-                            <i class="fa-solid fa-store"></i>
-                        </div>
-                        <span class="inline-block bg-brandSkyBg text-brandSkyBlue font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider border border-brandSkyBlue/30">PART A • FRANCHISE</span>
-                        <h3 class="text-2xl font-black text-brandNavy">FRANCHISE</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Register as a CLASMO Brand Partner or Self-Operated Lab. Partner with India's trusted diagnostic brand to leverage automated lab infrastructure, brand visibility, and full technical support.
-                        </p>
-                        
-                        <div class="space-y-2 pt-2 text-xs font-semibold text-slate-700">
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandSkyBlue"></i> CLASMO Brand Partner Franchise</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandSkyBlue"></i> Self-Operated Sample Collection Center</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandSkyBlue"></i> Complete Logistics & Software Support</div>
-                        </div>
-                    </div>
-
-                    <div class="pt-8 relative z-10">
-                        <button onclick="openFranchiseModal()" class="w-full py-3.5 rounded-xl sky-gradient-btn text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-signature text-sm"></i> Register As Brand Partner or Lab
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Option B: JOB VACANCY -->
-                <div class="bg-white rounded-3xl p-8 border-2 border-brandNavy/20 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-brandNavy/10 rounded-full group-hover:scale-125 transition-transform"></div>
-                    <div class="space-y-4 relative z-10">
-                        <div class="w-14 h-14 rounded-2xl bg-brandSkyBlue text-white flex items-center justify-center text-2xl shadow-md">
-                            <i class="fa-solid fa-user-doctor"></i>
-                        </div>
-                        <span class="inline-block bg-brandNavy/10 text-brandNavy font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">PART B • JOB VACANCY</span>
-                        <h3 class="text-2xl font-black text-brandNavy">JOB VACANCY</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Apply for a position at an existing CLASMO branch. Build a fulfilling career in diagnostic technology, patient care, phlebotomy, or healthcare management.
-                        </p>
-                        
-                        <div class="space-y-2 pt-2 text-xs font-semibold text-slate-700">
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandNavy"></i> Openings for Phlebotomists & Lab Techs</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandNavy"></i> Front Desk & Marketing Executive Roles</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandNavy"></i> Competitive Salary & Career Growth</div>
-                        </div>
-                    </div>
-
-                    <div class="pt-8 relative z-10">
-                        <button onclick="openJobVacancyModal()" class="w-full py-3.5 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white font-extrabold text-xs shadow-md transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-briefcase text-sm"></i> Apply For Position At CLASMO
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Patient Portal / Report Downloader & Upload Prescription -->
-    <section id="portal" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-brandSkyBg px-3 py-1 rounded-full">Patient Services</span>
-                <h2 class="text-3xl font-black text-brandNavy mt-2">Download Reports & Upload Prescription</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Access your diagnostic results securely or upload your doctor's prescription for home sample pickup.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
-                <!-- Report Downloader Box -->
-                <div class="p-6 md:p-8 bg-brandSkyBg rounded-3xl border border-slate-200 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-lg">
-                            <i class="fa-solid fa-file-arrow-down"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-extrabold text-slate-900 text-lg">Online Report Download</h3>
-                            <p class="text-xs text-slate-500 font-medium">Enter Sample ID or Registered Mobile Number</p>
-                        </div>
-                    </div>
-
-                    <form onsubmit="handleReportSearch(event)" class="space-y-3 pt-2">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Sample ID / Booking Reference *</label>
-                            <input type="text" id="reportSampleId" required placeholder="e.g., CLM-98241" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Registered Phone Number *</label>
-                            <input type="tel" id="reportPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-                        </div>
-
-                        <button type="submit" class="w-full py-3 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white font-bold text-xs transition-colors shadow">
-                            <i class="fa-solid fa-magnifying-glass mr-1"></i> Retrieve Diagnostic Report
-                        </button>
-                    </form>
-
-                    <!-- Result Output Box -->
-                    <div id="reportStatusOutput" class="hidden p-4 bg-white rounded-2xl border border-slate-200 text-xs space-y-2">
-                        <div class="flex justify-between items-center text-emerald-700 font-bold">
-                            <span><i class="fa-solid fa-circle-check"></i> Report Available</span>
-                            <span class="text-[10px] text-slate-400">Sample ID: <span id="outSampleId"></span></span>
-                        </div>
-                        <p class="text-slate-600 font-medium">Patient Name: <strong>Rahul Sharma</strong></p>
-                        <p class="text-slate-600 font-medium">Test: <strong>Fitness Smart Checkup Profile</strong></p>
-                        <button onclick="showToast('Downloading verified PDF report...')" class="w-full py-2 bg-brandSkyBlue hover:bg-brandSkyLight text-white font-bold rounded-lg text-xs transition-colors">
-                            <i class="fa-solid fa-download mr-1"></i> Download Verified PDF
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Prescription Upload Box -->
-                <div class="p-6 md:p-8 bg-brandSkyBg rounded-3xl border border-slate-200 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-lg">
-                            <i class="fa-solid fa-file-prescription"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-extrabold text-slate-900 text-lg">Upload Doctor's Prescription</h3>
-                            <p class="text-xs text-slate-500 font-medium">Our phlebotomist will contact you to arrange tests based on your prescription.</p>
-                        </div>
-                    </div>
-
-                    <form onsubmit="handlePrescriptionSubmit(event)" class="space-y-3 pt-2">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Your Full Name *</label>
-                            <input type="text" id="rxName" required placeholder="Enter full name" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number *</label>
-                            <input type="tel" id="rxPhone" required pattern="[0-9]{10}" placeholder="10-digit phone number" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Upload Prescription Photo/File *</label>
-                            <input type="file" id="rxFile" accept="image/*,.pdf" onchange="previewPrescription(event)" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brandNavy file:text-white hover:file:bg-brandNavyLight">
-                        </div>
-
-                        <!-- Image Preview Box -->
-                        <div id="rxPreviewBox" class="hidden p-2 bg-white rounded-xl border border-slate-200 flex items-center space-x-3">
-                            <img id="rxPreviewImg" src="" class="w-12 h-12 object-cover rounded-lg border">
-                            <span class="text-xs text-slate-600 font-medium">Prescription File Attached</span>
-                        </div>
-
-                        <button type="submit" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-bold text-xs transition-all shadow">
-                            <i class="fa-solid fa-paper-plane mr-1"></i> Submit Prescription For Callback
-                        </button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Individual Tests Grid -->
-    <section id="tests" class="py-16 bg-brandSkyBg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200">Individual Parameters</span>
-                <h2 class="text-3xl font-black text-brandNavy mt-2">Popular Single Blood Tests</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Need a standalone test? Book individual diagnostic tests with doorstep pickup.</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Test 1 -->
-                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Hematology</span>
-                        <h3 class="font-extrabold text-base text-slate-900 mt-2">Complete Blood Count (CBC)</h3>
-                        <p class="text-xs text-slate-500 mt-1">28 Parameters including Hb, TLC, DLC, Platelets & RBC Indices.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-slate-400 line-through">₹400</span>
-                            <div class="text-lg font-black text-brandNavy">₹299</div>
-                        </div>
-                        <button onclick="addSingleTestToCart('Complete Blood Count (CBC)', 299)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
-                            <i class="fa-solid fa-plus"></i> Add
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Test 2 -->
-                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Diabetic Profile</span>
-                        <h3 class="font-extrabold text-base text-slate-900 mt-2">HbA1c (Glycated Hb)</h3>
-                        <p class="text-xs text-slate-500 mt-1">Gold standard marker for average 3-month blood sugar control.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-slate-400 line-through">₹600</span>
-                            <div class="text-lg font-black text-brandNavy">₹399</div>
-                        </div>
-                        <button onclick="addSingleTestToCart('HbA1c (Glycated Hb)', 399)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
-                            <i class="fa-solid fa-plus"></i> Add
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Test 3 -->
-                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Endocrinology</span>
-                        <h3 class="font-extrabold text-base text-slate-900 mt-2">Thyroid Profile (T3, T4, TSH)</h3>
-                        <p class="text-xs text-slate-500 mt-1">Evaluates thyroid gland activity and metabolic hormone levels.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-slate-400 line-through">₹700</span>
-                            <div class="text-lg font-black text-brandNavy">₹450</div>
-                        </div>
-                        <button onclick="addSingleTestToCart('Thyroid Profile (T3, T4, TSH)', 450)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
-                            <i class="fa-solid fa-plus"></i> Add
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Test 4 -->
-                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Vitamins</span>
-                        <h3 class="font-extrabold text-base text-slate-900 mt-2">Vitamin D3 (25-OH)</h3>
-                        <p class="text-xs text-slate-500 mt-1">Assesses bone density support and immune health parameters.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-slate-400 line-through">₹1,500</span>
-                            <div class="text-lg font-black text-brandNavy">₹699</div>
-                        </div>
-                        <button onclick="addSingleTestToCart('Vitamin D3 (25-OH)', 699)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
-                            <i class="fa-solid fa-plus"></i> Add
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Us & Accreditation Features Section -->
-    <section id="about" class="py-16 bg-brandSkyBg border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200">Quality Assured</span>
-                <h2 class="text-3xl font-black text-brandNavy mt-2">Why Choose Clasmo Diagnostics?</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Clinical precision, modern automation, and patient-first care.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
-                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
-                        <i class="fa-solid fa-certificate"></i>
-                    </div>
-                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">NABL Standard Process</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Standardized clinical guidelines and double-check pathologist report verification.</p>
-                </div>
-
-                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
-                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
-                        <i class="fa-solid fa-microscope"></i>
-                    </div>
-                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">Fully Automated Analyzers</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Equipped with robotic clinical systems minimizing manual margin of error.</p>
-                </div>
-
-                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
-                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
-                        <i class="fa-solid fa-house-chimney-medical"></i>
-                    </div>
-                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">Safe Home Pickup</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Sterile blood sample collection by certified phlebotomists within 30-60 mins.</p>
-                </div>
-
-                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
-                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">Rapid Digital Turnaround</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Receive verified PDF lab reports directly on WhatsApp and Email on the same day.</p>
-                </div>
-            </div>
+    <!-- COME N JOIN WITH CLASMO (FRANCHISE & JOB VACANCY) -->
+    <section id="join-clasmo" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-skyAccent font-bold text-sm tracking-widest uppercase">Grow With Us</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-darkBlue mt-1">COME N JOIN WITH CLASMO</h2>
+            <p class="text-slate-600 mt-2">Partner with India’s trusted diagnostic network or build your career with our expanding team.</p>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-brandDarkBlue text-white pt-12 pb-8 border-t-4 border-brandSkyBlue">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-brandNavyLight text-xs">
-                
-                <div class="md:col-span-5 space-y-3">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-brandSkyBlue flex items-center justify-center text-white">
-                            <i class="fa-solid fa-dna text-lg text-white"></i>
-                        </div>
-                        <span class="text-lg font-black tracking-tight text-white">CLASMO <span class="text-brandSkyLight">DIAGNOSTICS</span></span>
-                    </div>
-                    <p class="text-slate-300 leading-relaxed max-w-sm">
-                        Clasmo Diagnostics Pvt Ltd is dedicated to bringing accurate, accessible, and timely clinical testing with seamless sample collection.
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- PART A: FRANCHISE -->
+            <div class="bg-gradient-to-br from-darkBlue to-deepNavy text-white rounded-3xl p-8 lg:p-10 shadow-xl border border-skyAccent/30 flex flex-col justify-between">
+                <div>
+                    <span class="bg-skyAccent/20 text-skyAccent font-bold px-3.5 py-1 rounded-full text-xs uppercase tracking-wider">Part A</span>
+                    <h3 class="text-2xl font-black mt-3">FRANCHISE PARTNERSHIP</h3>
+                    <p class="text-slate-300 text-sm mt-3 leading-relaxed">
+                        Register as a CLASMO Brand Partner or Self-Operated Lab. Enjoy high ROI, complete operational support, advanced diagnostic software, and trusted brand backing.
                     </p>
-                    <p class="text-brandSkyLight font-bold italic">"Where Accuracy Saves Lives"</p>
+                    <ul class="mt-6 space-y-3 text-sm text-slate-200">
+                        <li><i class="fa-solid fa-circle-check text-skyAccent mr-2"></i> Low Capital Investment & High Returns</li>
+                        <li><i class="fa-solid fa-circle-check text-skyAccent mr-2"></i> Technical & Marketing Training Provided</li>
+                        <li><i class="fa-solid fa-circle-check text-skyAccent mr-2"></i> Centralized Lab & Logistics Support</li>
+                    </ul>
                 </div>
-
-                <div class="md:col-span-3 space-y-2">
-                    <p class="font-extrabold text-brandSkyLight uppercase tracking-wider text-sm mb-3">Quick Navigation</p>
-                    <p><a href="#home" class="hover:underline text-slate-300">Home</a></p>
-                    <p><a href="#packages" class="hover:underline text-slate-300">Health Checkup Packages</a></p>
-                    <p><a href="#upload-analyzer" class="hover:underline text-slate-300">Upload Report & Risk Analyzer</a></p>
-                    <p><a href="#portal" class="hover:underline text-slate-300">Download Reports / Upload Prescription</a></p>
-                    <p><a href="#join-clasmo" class="hover:underline text-slate-300">COME N JOIN WITH CLASMO</a></p>
+                <div class="mt-8">
+                    <button onclick="openModal('franchise')" class="w-full bg-skyAccent hover:bg-sky-400 text-darkBlue font-extrabold py-3.5 px-6 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center justify-center space-x-2 cursor-pointer">
+                        <span>Register as Franchise Partner</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
+            </div>
 
-                <div class="md:col-span-4 space-y-2">
-                    <p class="font-extrabold text-brandSkyLight uppercase tracking-wider text-sm mb-3">Contact Details</p>
-                    <p class="flex items-center gap-2 text-slate-300"><i class="fa-solid fa-phone text-brandSkyBlue"></i> Helpline: <a href="tel:9272173712" class="font-bold underline text-white">9272173712</a></p>
-                    <p class="flex items-center gap-2 text-slate-300"><i class="fa-solid fa-clock text-brandSkyBlue"></i> Working Hours: 07:00 AM - 09:00 PM (Mon-Sun)</p>
-                    <div class="pt-3 flex items-center space-x-3">
-                        <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/" target="_blank" class="w-8 h-8 rounded-full bg-brandNavyLight hover:bg-brandSkyBlue flex items-center justify-center text-white transition-colors">
-                            <i class="fa-brands fa-linkedin text-sm"></i>
-                        </a>
-                        <a href="https://maps.app.goo.gl/pm8WjvHN1AqmuN2h9" target="_blank" class="w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-white transition-colors">
-                            <i class="fa-solid fa-location-dot text-sm"></i>
-                        </a>
-                        <a href="https://wa.me/919272173712" target="_blank" class="w-8 h-8 rounded-full bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center text-white transition-colors">
-                            <i class="fa-brands fa-whatsapp text-sm"></i>
-                        </a>
+            <!-- PART B: JOB VACANCY -->
+            <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                    <span class="bg-sky-100 text-darkBlue font-bold px-3.5 py-1 rounded-full text-xs uppercase tracking-wider">Part B</span>
+                    <h3 class="text-2xl font-black text-darkBlue mt-3">JOB VACANCY & CAREERS</h3>
+                    <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+                        Apply for a position at an existing CLASMO branch. We are hiring phlebotomists, lab technicians, front desk receptionists, marketing executives, and branch managers.
+                    </p>
+                    <ul class="mt-6 space-y-3 text-sm text-slate-700">
+                        <li><i class="fa-solid fa-circle-check text-skyAccent mr-2"></i> Phlebotomists & Lab Technicians (DMLT / BMLT)</li>
+                        <li><i class="fa-solid fa-circle-check text-skyAccent mr-2"></i> Sales & Marketing Executives</li>
+                        <li><i class="fa-solid fa-circle-check text-skyAccent mr-2"></i> Branch Managers & Customer Support</li>
+                    </ul>
+                </div>
+                <div class="mt-8">
+                    <button onclick="openModal('job')" class="w-full bg-darkBlue hover:bg-slate-900 text-white font-extrabold py-3.5 px-6 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center justify-center space-x-2 cursor-pointer">
+                        <span>Apply for Job Vacancy</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-deepNavy text-white pt-16 pb-12 border-t border-skyAccent/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-10 h-10 bg-skyAccent rounded-xl flex items-center justify-center text-darkBlue font-black text-xl">
+                        <i class="fa-solid fa-dna"></i>
                     </div>
+                    <span class="text-2xl font-black text-white">CLASMO</span>
                 </div>
-
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Advanced pathology, accurate diagnostic reports, and reliable home sample collection services across Maharashtra.
+                </p>
             </div>
-
-            <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-400 font-medium">
-                <p>&copy; 2026 Clasmo Diagnostics Pvt Ltd. All rights reserved.</p>
-                <p class="mt-2 sm:mt-0">Clasmo Diagnostics | Precision Diagnostics, Compassionate Care</p>
+            <div>
+                <h4 class="text-skyAccent font-bold text-lg mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-slate-300">
+                    <li><a href="#packages" class="hover:text-skyAccent transition-colors">Health Packages</a></li>
+                    <li><a href="#analyzer" class="hover:text-skyAccent transition-colors">Report Risk Analyzer</a></li>
+                    <li><a href="#join-clasmo" class="hover:text-skyAccent transition-colors">Franchise & Jobs</a></li>
+                </ul>
             </div>
+            <div>
+                <h4 class="text-skyAccent font-bold text-lg mb-4">Top Tests</h4>
+                <ul class="space-y-2 text-sm text-slate-300">
+                    <li><span>Full Body Checkup</span></li>
+                    <li><span>Diabetes HbA1c Panel</span></li>
+                    <li><span>Lipid Profile & Thyroid</span></li>
+                    <li><span>CBC & Vitamin Screening</span></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-skyAccent font-bold text-lg mb-4">Contact Central Lab</h4>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li><i class="fa-solid fa-location-dot text-skyAccent mr-2"></i> Central Lab, Satana, Maharashtra 423301</li>
+                    <li><i class="fa-solid fa-phone text-skyAccent mr-2"></i> +91 99225 77080</li>
+                    <li><i class="fa-solid fa-envelope text-skyAccent mr-2"></i> support@clasmodiagnostics.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
+            &copy; 2026 Clasmo Diagnostics Pvt Ltd. All Rights Reserved. Designed with precision & care.
         </div>
     </footer>
 
-    <!-- FLOATING DIRECT CALL & WHATSAPP BUTTONS -->
-    <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
-        <!-- AI Chatbot Toggle Button -->
-        <button onclick="toggleChatbot()" class="w-14 h-14 bg-brandNavy hover:bg-brandNavyLight text-brandSkyLight rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-110 border-2 border-brandSkyBlue group relative" title="Chat with Clasmo AI Assistant">
-            <i class="fa-solid fa-robot text-2xl group-hover:rotate-12 transition-transform"></i>
-            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-ping"></span>
-            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
-        <a href="https://wa.me/919272173712?text=Hello%20Clasmo%20Diagnostics,%20I%20want%20to%20book%20a%20test." target="_blank" class="w-13 h-13 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-110">
-            <i class="fa-brands fa-whatsapp text-2xl"></i>
-        </a>
-        <a href="tel:9272173712" class="w-13 h-13 bg-brandSkyBlue hover:bg-brandSkyLight text-white rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-110">
-            <i class="fa-solid fa-phone text-xl"></i>
-        </a>
-    </div>
+    <!-- MODALS -->
 
-    <!-- INTELLIGENT AI CHATBOT DRAWER / WINDOW -->
-    <div id="chatbotWindow" class="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border-2 border-brandSkyBlue/40 overflow-hidden transform scale-95 opacity-0 pointer-events-none transition-all duration-300 flex flex-col h-[500px]">
-        
-        <!-- Chat Header -->
-        <div class="bg-brandDarkBlue p-4 text-white flex items-center justify-between border-b border-brandNavyLight">
-            <div class="flex items-center space-x-3">
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-2xl bg-brandSkyBlue flex items-center justify-center text-white font-bold shadow">
-                        <i class="fa-solid fa-robot text-xl"></i>
-                    </div>
-                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-brandDarkBlue"></span>
-                </div>
-                <div>
-                    <h3 class="font-black text-sm tracking-wide">Clasmo AI Assistant</h3>
-                    <p class="text-[10px] text-brandSkyLight font-medium">Online • 24/7 Diagnostic Support</p>
-                </div>
-            </div>
-            <button onclick="toggleChatbot()" class="w-8 h-8 rounded-full bg-brandNavy hover:bg-brandNavyLight text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+    <!-- Home Collection Modal -->
+    <div id="home-collection-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white w-11/12 max-w-lg rounded-3xl shadow-2xl p-6 lg:p-8 relative">
+            <button onclick="closeModal('home-collection')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-        </div>
-
-        <!-- Quick Topic Chips -->
-        <div class="bg-brandSkyBg px-3 py-2 border-b border-slate-200 flex gap-1.5 overflow-x-auto text-[10px] font-bold text-slate-700 whitespace-nowrap scrollbar-none">
-            <button onclick="sendQuickPrompt('Book Home Sample')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">🏠 Book Sample</button>
-            <button onclick="sendQuickPrompt('Health Packages')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">📦 Packages</button>
-            <button onclick="sendQuickPrompt('Franchise Partner')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">🤝 Franchise</button>
-            <button onclick="sendQuickPrompt('Job Vacancy')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">💼 Jobs</button>
-            <button onclick="sendQuickPrompt('Report Risk Analysis')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">🔬 Report Risk</button>
-        </div>
-
-        <!-- Chat Message Log -->
-        <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs bg-slate-50">
-            <!-- Greeting Message -->
-            <div class="flex items-start space-x-2">
-                <div class="w-7 h-7 rounded-full bg-brandSkyBlue text-white flex items-center justify-center text-[10px] shrink-0 font-bold">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-                <div class="bg-white p-3 rounded-2xl rounded-tl-sm border border-slate-200 shadow-xs text-slate-800 max-w-[80%] space-y-1">
-                    <p class="font-bold text-brandNavy">Hello! Welcome to Clasmo Diagnostics AI Assistant. 🧬</p>
-                    <p>How can I help you today? You can ask about our health checkup packages, home collection, lab report analysis, franchise registration, or open job vacancies!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Typing Indicator -->
-        <div id="chatTyping" class="hidden px-4 py-2 text-[10px] text-slate-400 italic flex items-center gap-1.5 bg-slate-50">
-            <span class="w-1.5 h-1.5 bg-brandSkyBlue rounded-full animate-bounce"></span>
-            <span class="w-1.5 h-1.5 bg-brandSkyBlue rounded-full animate-bounce [animation-delay:0.2s]"></span>
-            <span class="w-1.5 h-1.5 bg-brandSkyBlue rounded-full animate-bounce [animation-delay:0.4s]"></span>
-            <span>Clasmo AI is typing...</span>
-        </div>
-
-        <!-- Chat Input Form -->
-        <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
-            <input type="text" id="chatInput" placeholder="Type your health or booking question..." autocomplete="off" class="flex-1 px-3.5 py-2 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-            <button type="submit" class="w-10 h-10 rounded-xl sky-gradient-btn text-white flex items-center justify-center shadow transition-all hover:scale-105 shrink-0">
-                <i class="fa-solid fa-paper-plane text-xs"></i>
-            </button>
-        </form>
-
-    </div>
-
-    <!-- FRANCHISE APPLICATION MODAL -->
-    <div id="franchiseModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="franchiseModalCard" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandSkyBlue max-h-[90vh] overflow-y-auto">
-            <button onclick="closeFranchiseModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="text-center mb-4">
-                <div class="w-10 h-10 bg-brandSkyBg text-brandSkyBlue rounded-2xl flex items-center justify-center text-xl mx-auto mb-2 font-bold">
-                    <i class="fa-solid fa-handshake"></i>
-                </div>
-                <h3 class="text-lg font-black text-brandNavy">CLASMO Franchise Partner Registration</h3>
-                <p class="text-xs text-slate-500 font-medium">Register as a Brand Partner or Self-Operated Diagnostic Lab.</p>
-            </div>
-
-            <form onsubmit="handleFranchiseSubmit(event)" class="space-y-3 text-xs">
+            <h3 class="text-2xl font-black text-darkBlue mb-2">Book Home Sample Collection</h3>
+            <p class="text-xs text-slate-500 mb-6">Our certified phlebotomist will visit your home at your preferred time slot.</p>
+            <form onsubmit="handleBooking(event)" class="space-y-4">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Applicant / Organization Name *</label>
-                    <input type="text" id="franName" required placeholder="Enter full name or firm name" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                    <input type="text" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-skyAccent">
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Phone Number *</label>
-                        <input type="tel" id="franPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Email Address *</label>
-                        <input type="email" id="franEmail" required placeholder="email@domain.com" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
-                    </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number</label>
+                    <input type="tel" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-skyAccent" placeholder="9922577080">
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Complete Address / City</label>
+                    <textarea required rows="2" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-skyAccent" placeholder="House no, Street, Satana/Pune..."></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Preferred City / Location *</label>
-                        <input type="text" id="franLocation" required placeholder="e.g., Pune, Mumbai" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Preferred Date</label>
+                        <input type="date" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-skyAccent">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Franchise Model *</label>
-                        <select id="franType" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
-                            <option value="CLASMO Brand Partner Center">CLASMO Brand Partner</option>
-                            <option value="Self-Operated Collection Lab">Self-Operated Collection Lab</option>
-                            <option value="Hospital/Clinic Diagnostic Tie-up">Clinic / Hospital Tie-up</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Time Slot</label>
+                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-skyAccent">
+                            <option>06:00 AM - 09:00 AM (Fasting)</option>
+                            <option>09:00 AM - 12:00 PM</option>
+                            <option>04:00 PM - 07:00 PM</option>
                         </select>
                     </div>
                 </div>
-
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Investment Capacity</label>
-                    <select id="franInvestment" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
-                        <option>₹2 Lakhs - ₹5 Lakhs</option>
-                        <option>₹5 Lakhs - ₹10 Lakhs</option>
-                        <option>₹10 Lakhs - ₹25 Lakhs</option>
-                        <option>Above ₹25 Lakhs</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Additional Details / Space Availability</label>
-                    <textarea id="franComments" rows="2" placeholder="Mention commercial space size (sq ft), medical background, etc." class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue"></textarea>
-                </div>
-
-                <button type="submit" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-black text-xs transition-all shadow">
-                    Submit Franchise Partner Application
+                <button type="submit" class="w-full bg-skyAccent hover:bg-sky-400 text-darkBlue font-extrabold py-3.5 rounded-xl shadow-lg transition-transform hover:scale-105 cursor-pointer">
+                    Confirm Booking
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- JOB VACANCY APPLICATION MODAL -->
-    <div id="jobVacancyModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="jobModalCard" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandNavy max-h-[90vh] overflow-y-auto">
-            <button onclick="closeJobVacancyModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
+    <!-- Franchise Modal -->
+    <div id="franchise-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white w-11/12 max-w-lg rounded-3xl shadow-2xl p-6 lg:p-8 relative">
+            <button onclick="closeModal('franchise')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-
-            <div class="text-center mb-4">
-                <div class="w-10 h-10 bg-brandNavy text-brandSkyLight rounded-2xl flex items-center justify-center text-xl mx-auto mb-2 font-bold">
-                    <i class="fa-solid fa-briefcase"></i>
-                </div>
-                <h3 class="text-lg font-black text-brandNavy">Apply For Position at CLASMO</h3>
-                <p class="text-xs text-slate-500 font-medium">Join our team across existing diagnostic branches.</p>
-            </div>
-
-            <form onsubmit="handleJobSubmit(event)" class="space-y-3 text-xs">
+            <h3 class="text-2xl font-black text-darkBlue mb-2">Franchise Partnership Form</h3>
+            <p class="text-xs text-slate-500 mb-6">Register as a CLASMO Brand Partner or Self-Operated Lab.</p>
+            <form onsubmit="handleFormSubmit(event, 'Franchise application submitted successfully! Our team will contact you shortly.', 'franchise')" class="space-y-4">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Full Applicant Name *</label>
-                    <input type="text" id="jobName" required placeholder="Full legal name" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Full Name / Organization</label>
+                    <input type="text" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Phone Number *</label>
-                        <input type="tel" id="jobPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number</label>
+                        <input type="tel" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Email Address *</label>
-                        <input type="email" id="jobEmail" required placeholder="email@domain.com" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Preferred City / Location</label>
+                        <input type="text" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
                     </div>
                 </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Franchise Model</label>
+                    <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                        <option>Brand Partner Collection Center</option>
+                        <option>Self-Operated Diagnostic Lab</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-darkBlue hover:bg-slate-900 text-white font-extrabold py-3.5 rounded-xl shadow-lg cursor-pointer">
+                    Submit Franchise Request
+                </button>
+            </form>
+        </div>
+    </div>
 
-                <div class="grid grid-cols-2 gap-3">
+    <!-- Job Vacancy Modal -->
+    <div id="job-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white w-11/12 max-w-lg rounded-3xl shadow-2xl p-6 lg:p-8 relative">
+            <button onclick="closeModal('job')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-2xl font-black text-darkBlue mb-2">Apply for Job Vacancy</h3>
+            <p class="text-xs text-slate-500 mb-6">Join our team at an existing CLASMO branch.</p>
+            <form onsubmit="handleFormSubmit(event, 'Job application submitted successfully! Our HR team will contact you.', 'job')" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                    <input type="text" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Position Applied For *</label>
-                        <select id="jobRole" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
-                            <option value="Phlebotomist (Sample Collector)">Phlebotomist</option>
-                            <option value="Lab Technician (DMLT/BMLT)">Lab Technician</option>
-                            <option value="Receptionist / Front Desk Executive">Receptionist / Front Desk</option>
-                            <option value="Business Development / Marketing Executive">Marketing Executive</option>
-                            <option value="Branch Manager">Branch Manager</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number</label>
+                        <input type="tel" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Role Applying For</label>
+                        <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <option>Phlebotomist</option>
+                            <option>Lab Technician (DMLT/BMLT)</option>
+                            <option>Receptionist / Front Desk</option>
+                            <option>Sales & Marketing Executive</option>
+                            <option>Branch Manager</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Experience Level *</label>
-                        <select id="jobExp" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
-                            <option>Fresher (0 Years)</option>
-                            <option>1 - 3 Years</option>
-                            <option>3 - 5 Years</option>
-                            <option>5+ Years</option>
-                        </select>
-                    </div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Highest Qualification *</label>
-                        <input type="text" id="jobQual" required placeholder="e.g. DMLT, BMLT, BSc, MBA" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Preferred Branch / City *</label>
-                        <input type="text" id="jobBranch" required placeholder="e.g. Main Lab / Pune" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
-                    </div>
-                </div>
-
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Attach Resume / CV *</label>
-                    <input type="file" id="jobResume" accept=".pdf,.doc,.docx" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brandNavy file:text-white hover:file:bg-brandNavyLight">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Upload Resume (PDF / Doc)</label>
+                    <input type="file" required class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
                 </div>
-
-                <button type="submit" class="w-full py-3 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white font-black text-xs transition-all shadow">
+                <button type="submit" class="w-full bg-darkBlue hover:bg-slate-900 text-white font-extrabold py-3.5 rounded-xl shadow-lg cursor-pointer">
                     Submit Job Application
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- PACKAGE DETAILS & TEST BREAKDOWN MODAL -->
-    <div id="packageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="packageModalCard" class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandSkyBlue max-h-[85vh] overflow-y-auto">
-            <button onclick="closePackageDetailModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="modalPackageContent">
-                <!-- Dynamic Content -->
-            </div>
-        </div>
-    </div>
-
-    <!-- HOME SAMPLE COLLECTION MODAL -->
-    <div id="homeCollectionModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="modalCard" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandNavy">
-            <button onclick="closeHomeCollectionModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="text-center mb-4">
-                <div class="w-10 h-10 bg-brandSkyBg text-brandSkyBlue rounded-2xl flex items-center justify-center text-xl mx-auto mb-2 font-bold">
-                    <i class="fa-solid fa-house-medical"></i>
-                </div>
-                <h3 class="text-lg font-black text-brandNavy">Book Doorstep Sample Collection</h3>
-                <p class="text-xs text-slate-500 font-medium">Select your preferred date & slot for sample pickup.</p>
-            </div>
-
-            <form onsubmit="handleModalFormSubmit(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Patient Name *</label>
-                    <input type="text" id="modalName" required placeholder="Full name" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Phone Number *</label>
-                        <input type="tel" id="modalPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Preferred Slot *</label>
-                        <select id="modalSlot" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
-                            <option>07:00 AM - 09:00 AM</option>
-                            <option>09:00 AM - 11:00 AM</option>
-                            <option>11:00 AM - 01:00 PM</option>
-                            <option>04:00 PM - 06:00 PM</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Address / Landmark *</label>
-                    <input type="text" id="modalAddress" required placeholder="Complete home address" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none">
-                </div>
-
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Selected Test / Package</label>
-                    <select id="modalPackage" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
-                        <option value="Fitness Smart Checkup (₹1,999)">Fitness Smart Checkup (₹1,999)</option>
-                        <option value="Fitness Advance Package (₹2,999)">Fitness Advance Package (₹2,999)</option>
-                        <option value="Hairfall Profile (₹2,999)">Hairfall Profile (₹2,999)</option>
-                        <option value="PCOD Extended Profile (₹5,999)">PCOD Extended Profile (₹5,999)</option>
-                        <option value="Custom Blood Test">Custom Blood Test</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-black text-xs transition-all shadow">
-                    Confirm Home Pickup Request
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- CART DRAWER -->
-    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden opacity-0 pointer-events-none transition-opacity duration-300">
-        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
-        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
-                
-                <div class="p-5 bg-brandNavy text-white flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <i class="fa-solid fa-shopping-bag text-brandSkyLight text-lg"></i>
-                        <h3 class="font-extrabold text-base">Your Cart Items</h3>
-                    </div>
-                    <button onclick="toggleCartDrawer()" class="text-slate-300 hover:text-white p-1">
-                        <i class="fa-solid fa-xmark text-lg"></i>
-                    </button>
-                </div>
-
-                <div id="cartItemsContainer" class="p-5 overflow-y-auto flex-1 space-y-3 text-xs">
-                    <!-- Dynamic cart list -->
-                </div>
-
-                <div class="p-5 bg-brandSkyBg border-t border-slate-200">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs text-slate-500 font-semibold">Subtotal</span>
-                        <span id="cartSubtotal" class="text-lg font-black text-brandNavy">₹0</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-4 text-emerald-600 text-xs font-bold">
-                        <span>Doorstep Collection Fee</span>
-                        <span>FREE</span>
-                    </div>
-
-                    <button onclick="checkoutCart()" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-black text-xs transition-all shadow">
-                        Proceed To Checkout <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-6 left-6 z-50 bg-brandDarkBlue text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 border border-brandSkyBlue">
-        <i class="fa-solid fa-circle-check text-brandSkyLight text-base"></i>
-        <span id="toastMessage">Done!</span>
-    </div>
-
-    <!-- JavaScript Master Application Code -->
-    <script>
-        // ... existing JavaScript code ...
-
-        // Intelligent Chatbot State & Logic
-        let isChatOpen = false;
-
-        function toggleChatbot() {
-            isChatOpen = !isChatOpen;
-            const chatWin = document.getElementById('chatbotWindow');
-            if (isChatOpen) {
-                chatWin.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
-                chatWin.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
-                document.getElementById('chatInput').focus();
-            } else {
-                chatWin.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
-                chatWin.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
-            }
-        }
-
-        function sendQuickPrompt(promptText) {
-            document.getElementById('chatInput').value = promptText;
-            handleChatSubmit(new Event('submit'));
-        }
-
-        function handleChatSubmit(e) {
-            e.preventDefault();
-            const inputField = document.getElementById('chatInput');
-            const userMsg = inputField.value.trim();
-            if (!userMsg) return;
-
-            appendMessage(userMsg, 'user');
-            inputField.value = '';
-
-            // Show typing indicator
-            const typing = document.getElementById('chatTyping');
-            typing.classList.remove('hidden');
-            const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            setTimeout(() => {
-                typing.classList.add('hidden');
-                const botReply = generateBotResponse(userMsg);
-                appendMessage(botReply, 'bot');
-            }, 900);
-        }
-
-        function appendMessage(text, sender) {
-            const container = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-
-            if (sender === 'user') {
-                messageDiv.className = 'flex items-end justify-end space-x-2';
-                messageDiv.innerHTML = `
-                    <div class="bg-brandNavy text-white p-3 rounded-2xl rounded-tr-sm shadow-xs max-w-[80%]">
-                        <p>${escapeHtml(text)}</p>
-                    </div>
-                `;
-            } else {
-                messageDiv.className = 'flex items-start space-x-2';
-                messageDiv.innerHTML = `
-                    <div class="w-7 h-7 rounded-full bg-brandSkyBlue text-white flex items-center justify-center text-[10px] shrink-0 font-bold">
+    <!-- FLOATING CHATBOT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div id="chatbot-window" class="hidden bg-white w-80 sm:w-96 rounded-3xl shadow-2xl border border-slate-200 mb-4 overflow-hidden flex flex-col transition-all">
+            <div class="bg-gradient-to-r from-darkBlue to-deepNavy p-4 text-white flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full bg-skyAccent flex items-center justify-center text-darkBlue font-bold text-sm">
                         <i class="fa-solid fa-robot"></i>
                     </div>
-                    <div class="bg-white p-3 rounded-2xl rounded-tl-sm border border-slate-200 shadow-xs text-slate-800 max-w-[80%] space-y-1">
-                        <p>${text}</p>
+                    <div>
+                        <h4 class="font-bold text-sm">ClasmoBot Support</h4>
+                        <span class="text-xs text-green-400 flex items-center"><span class="w-2 h-2 rounded-full bg-green-400 inline-block mr-1"></span> Online 24/7</span>
                     </div>
-                `;
-            }
+                </div>
+                <button onclick="toggleChatbot()" class="text-slate-300 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="chat-messages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slate-50 text-xs">
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 max-w-[85%]">
+                    Hello! Welcome to Clasmo Diagnostics. How can I assist you today with tests, home collection, franchise, or report analysis?
+                </div>
+            </div>
+            <!-- Quick Chips -->
+            <div class="p-2 bg-slate-100 flex gap-1 overflow-x-auto text-[11px]">
+                <button onclick="sendQuickChat('Book Home Collection')" class="bg-white border border-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap hover:bg-skyAccent hover:border-skyAccent cursor-pointer">🏠 Home Collection</button>
+                <button onclick="sendQuickChat('Franchise Enquiry')" class="bg-white border border-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap hover:bg-skyAccent hover:border-skyAccent cursor-pointer">🤝 Franchise</button>
+                <button onclick="sendQuickChat('Job Vacancy')" class="bg-white border border-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap hover:bg-skyAccent hover:border-skyAccent cursor-pointer">💼 Jobs</button>
+            </div>
+            <div class="p-3 bg-white border-t border-slate-200 flex gap-2">
+                <input type="text" id="chat-input" onkeypress="if(event.key==='Enter') sendUserMessage()" placeholder="Type your query..." class="flex-1 p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-skyAccent">
+                <button onclick="sendUserMessage()" class="bg-skyAccent text-darkBlue px-4 py-2 rounded-xl font-bold text-xs cursor-pointer"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button onclick="toggleChatbot()" class="w-14 h-14 bg-gradient-to-r from-skyAccent to-brightBlue text-darkBlue rounded-full shadow-2xl flex items-center justify-center text-2xl hover:scale-110 transition-transform cursor-pointer">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+    </div>
 
-            container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
+    <!-- JavaScript Actions -->
+    <script>
+        // Promo Popup Control
+        function closePromoPopup() {
+            const popup = document.getElementById('promo-popup');
+            if (popup) popup.style.display = 'none';
+        }
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const popup = document.getElementById('promo-popup');
+                if(popup) popup.style.display = 'flex';
+            }, 800);
+        });
+
+        // Modals Control
+        function openModal(modalType) {
+            const modal = document.getElementById(modalType + '-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+        function closeModal(modalType) {
+            const modal = document.getElementById(modalType + '-modal');
+            if (modal) modal.classList.add('hidden');
         }
 
-        function escapeHtml(text) {
-            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-        }
+        // Package Filter
+        function filterPackages() {
+            const searchInput = document.getElementById('test-search');
+            const categorySelect = document.getElementById('category-filter');
+            if (!searchInput || !categorySelect) return;
 
-        function generateBotResponse(query) {
-            const q = query.toLowerCase();
+            const query = searchInput.value.toLowerCase();
+            const category = categorySelect.value;
+            const cards = document.querySelectorAll('.package-card');
 
-            if (q.includes('book') || q.includes('home') || q.includes('collection') || q.includes('pickup')) {
-                return `We offer free doorstep sample collection within 30-60 minutes! You can click <a href="#" onclick="openHomeCollectionModal(); toggleChatbot();" class="text-brandSkyBlue font-extrabold underline">Book Home Sample</a> or call our helpline at <a href="tel:9272173712" class="font-bold underline text-brandNavy">9272173712</a>.`;
-            }
-            if (q.includes('package') || q.includes('price') || q.includes('cost') || q.includes('checkup') || q.includes('fitness')) {
-                return `Our top packages include: <br>• <strong>Fitness Smart Checkup (80+ parameters)</strong> for <strong>₹1,999</strong> (was ₹4,500)<br>• <strong>Fitness Advance Package</strong> for <strong>₹2,999</strong><br>Check out our Health Packages section above to explore all options!`;
-            }
-            if (q.includes('franchise') || q.includes('partner') || q.includes('lab') || q.includes('business')) {
-                return `Want to partner with Clasmo Diagnostics? You can register as a Brand Partner or Self-Operated Lab! Click <a href="#" onclick="openFranchiseModal(); toggleChatbot();" class="text-brandSkyBlue font-extrabold underline">Register Franchise</a> to fill out our partnership application.`;
-            }
-            if (q.includes('job') || q.includes('vacancy') || q.includes('career') || q.includes('hire') || q.includes('phlebotomist')) {
-                return `We have exciting openings for Phlebotomists, Lab Technicians, Receptionists, and Marketing Executives at our branches. Click <a href="#" onclick="openJobVacancyModal(); toggleChatbot();" class="text-brandSkyBlue font-extrabold underline">Apply For Position</a> to submit your resume!`;
-            }
-            if (q.includes('report') || q.includes('download') || q.includes('result') || q.includes('pdf')) {
-                return `You can download your verified PDF report instantly in our <a href="#portal" onclick="toggleChatbot()" class="text-brandSkyBlue font-extrabold underline">Download Report</a> portal by entering your Sample ID and mobile number.`;
-            }
-            if (q.includes('risk') || q.includes('analyze') || q.includes('doctor') || q.includes('ai')) {
-                return `Try our AI-powered <strong>Upload Report & Health Risk Analysis</strong> tool on the website! Upload your report image or PDF to instantly get High/Medium/Low risk counts and suggested specialist doctor consultations.`;
-            }
-            if (q.includes('contact') || q.includes('phone') || q.includes('helpline') || q.includes('address') || q.includes('location')) {
-                return `Clasmo Diagnostics Helpline: <a href="tel:9272173712" class="font-bold underline text-brandNavy">9272173712</a>. Working hours: 07:00 AM - 09:00 PM (Mon-Sun). You can also chat with us on WhatsApp anytime!`;
-            }
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                const cat = card.getAttribute('data-category') || '';
+                const matchQuery = name.includes(query);
+                const matchCat = (category === 'all' || cat === category);
 
-            return `Thank you for asking! For immediate assistance with your query, please call our 24/7 helpline at <strong>9272173712</strong> or connect with us on WhatsApp via the floating button below.`;
-        }
-
-        // Blood Cell Canvas Interactive Animation
-        function initBloodCellCanvas() {
-            const canvas = document.getElementById('bloodCellCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            let width = (canvas.width = canvas.parentElement.offsetWidth);
-            let height = (canvas.height = canvas.parentElement.offsetHeight);
-
-            window.addEventListener('resize', () => {
-                if (canvas.parentElement) {
-                    width = canvas.width = canvas.parentElement.offsetWidth;
-                    height = canvas.height = canvas.parentElement.offsetHeight;
+                if (matchQuery && matchCat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
                 }
             });
-
-            const cells = [];
-            const numCells = 28;
-
-            for (let i = 0; i < numCells; i++) {
-                cells.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 8 + 6,
-                    color: Math.random() > 0.3 ? 'rgba(239, 68, 68, 0.45)' : 'rgba(0, 168, 232, 0.45)', // Red blood cells and Sky Blue particles
-                    speedX: (Math.random() - 0.5) * 0.8,
-                    speedY: (Math.random() - 0.5) * 0.8,
-                    pulse: Math.random() * Math.PI
-                });
-            }
-
-            function animateCanvas() {
-                ctx.clearRect(0, 0, width, height);
-
-                cells.forEach(cell => {
-                    cell.x += cell.speedX;
-                    cell.y += cell.speedY;
-                    cell.pulse += 0.03;
-
-                    if (cell.x < 0) cell.x = width;
-                    if (cell.x > width) cell.x = 0;
-                    if (cell.y < 0) cell.y = height;
-                    if (cell.y > height) cell.y = 0;
-
-                    const r = cell.radius + Math.sin(cell.pulse) * 1.5;
-
-                    ctx.beginPath();
-                    ctx.arc(cell.x, cell.y, r, 0, Math.PI * 2);
-                    ctx.fillStyle = cell.color;
-                    ctx.fill();
-
-                    // Inner cell ring / core
-                    ctx.beginPath();
-                    ctx.arc(cell.x, cell.y, r * 0.4, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
-                    ctx.fill();
-                });
-
-                requestAnimationFrame(animateCanvas);
-            }
-
-            animateCanvas();
         }
 
-        // Initial Load
-        window.addEventListener('DOMContentLoaded', () => {
-            renderCatalog(healthPackages);
-            initBloodCellCanvas();
-        });
+        // Report Analysis Simulation
+        function handleFileSelect(e) {
+            if(e.target.files.length > 0) {
+                const dropzone = document.getElementById('dropzone');
+                if (dropzone) {
+                    dropzone.innerHTML = `
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+                        <h4 class="font-bold text-darkBlue text-sm">${e.target.files[0].name} uploaded successfully!</h4>
+                        <p class="text-xs text-slate-500 mt-1">Ready for biomarker risk scanning</p>
+                    `;
+                }
+            }
+        }
+
+        function simulateAnalysis() {
+            const loader = document.getElementById('analysis-loader');
+            const results = document.getElementById('analysis-results');
+            if (!loader || !results) return;
+
+            loader.classList.remove('hidden');
+            results.classList.add('hidden');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                results.classList.remove('hidden');
+                
+                const high = document.getElementById('high-risk-count');
+                const med = document.getElementById('medium-risk-count');
+                const low = document.getElementById('low-risk-count');
+                
+                if (high) high.innerText = Math.floor(Math.random() * 2) + 1;
+                if (med) med.innerText = Math.floor(Math.random() * 3) + 2;
+                if (low) low.innerText = Math.floor(Math.random() * 5) + 10;
+            }, 2500);
+        }
+
+        // Form Submission Handlers
+        function handleBooking(e) {
+            e.preventDefault();
+            alert('Home sample collection booked successfully! Our executive will contact you shortly.');
+            closeModal('home-collection');
+            e.target.reset();
+        }
+
+        function handleFormSubmit(e, message, modalType) {
+            e.preventDefault();
+            alert(message);
+            closeModal(modalType);
+            e.target.reset();
+        }
+
+        // Chatbot Logic
+        function toggleChatbot() {
+            const chat = document.getElementById('chatbot-window');
+            if (chat) chat.classList.toggle('hidden');
+        }
+
+        function sendQuickChat(text) {
+            const chatMessages = document.getElementById('chat-messages');
+            if (!chatMessages) return;
+
+            chatMessages.innerHTML += `<div class="bg-sky-100 text-darkBlue p-3 rounded-2xl shadow-sm ml-auto max-w-[85%] text-right font-medium">${text}</div>`;
+            setTimeout(() => {
+                let reply = "Thank you for reaching out! You can easily book a test or register via our website menus, or call us directly at +91 99225 77080.";
+                if(text.includes('Home Collection')) reply = "You can book home collection instantly by clicking the 'Book Test' button at the top!";
+                else if(text.includes('Franchise')) {
+                    reply = "To register as a franchise partner, check out Part A in our 'Join Clasmo' section!";
+                    openModal('franchise');
+                }
+                else if(text.includes('Job')) {
+                    reply = "We are currently hiring! Check out Part B under 'Join Clasmo' to submit your resume.";
+                    openModal('job');
+                }
+                
+                chatMessages.innerHTML += `<div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 max-w-[85%]">${reply}</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 600);
+        }
+
+        function sendUserMessage() {
+            const input = document.getElementById('chat-input');
+            const chatMessages = document.getElementById('chat-messages');
+            if(!input || !chatMessages || !input.value.trim()) return;
+
+            const text = input.value;
+            input.value = '';
+            chatMessages.innerHTML += `<div class="bg-sky-100 text-darkBlue p-3 rounded-2xl shadow-sm ml-auto max-w-[85%] text-right font-medium">${text}</div>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                chatMessages.innerHTML += `<div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 max-w-[85%]">Thank you for your query. Our support team will get back to you promptly, or you can call us at +91 99225 77080.</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 600);
+        }
     </script>
 </body>
 </html>
