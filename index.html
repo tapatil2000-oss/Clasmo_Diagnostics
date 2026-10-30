@@ -1,1640 +1,1368 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clasmo Diagnostics | Ultra-Precise Testing, Delivered At Your Doorstep</title>
-<meta name="description" content="Book pathology tests & full body checkups online with home sample collection across India. Fast 6-hour average reports by Clasmo Diagnostics.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasmo Diagnostics Pvt Ltd | Precision Diagnostics, Compassionate Care</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- 
-================================================================================
-PLACEHOLDERS & CONFIGURATION CHECKLIST (PLEASE REPLACE BEFORE GOING LIVE)
-================================================================================
-1. [ADD LAB ADDRESS] -> Replace in Section 9 (About) & Section 11 (Contact) & JSON-LD
-2. [ADD NABL CERTIFICATE NO.] -> Replace in Section 9 (About & Trust)
-3. [ADD PATHOLOGIST NAME & REG. NO.] -> Replace in Section 8 (Portal Demo) & Section 9
-4. [BACKEND API ENDPOINT] -> Replace in JS form submission function (search for BACKEND_HOOK)
-5. Google Maps Embed URL -> Replace in Section 11 (Contact) map placeholder iframe
-================================================================================
--->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDarkBlue: '#0A192F',
+                        brandNavy: '#002B49',
+                        brandNavyLight: '#003366',
+                        brandSkyBlue: '#00A8E8',
+                        brandSkyLight: '#38B6FF',
+                        brandSkyBg: '#F0F8FF',
+                        brandSkySoft: '#E6F7FF',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F0F8FF; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #0A192F 0%, #002B49 50%, #003366 100%);
+        }
+        .sky-gradient-btn {
+            background: linear-gradient(135deg, #00A8E8 0%, #38B6FF 100%);
+        }
+        .sky-gradient-btn:hover {
+            background: linear-gradient(135deg, #0082B4 0%, #00A8E8 100%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 168, 232, 0.2);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #E2E8F0; }
+        ::-webkit-scrollbar-thumb { background: #00A8E8; border-radius: 4px; }
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "MedicalBusiness",
-  "name": "Clasmo Diagnostics Pvt Ltd",
-  "image": "https://wa.me/919272173712",
-  "telephone": "+91-9272173712",
-  "priceRange": "₹299 - ₹1499",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "[ADD LAB ADDRESS]",
-    "addressCountry": "IN"
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    "opens": "07:00",
-    "closes": "20:00"
-  }
-}
-</script>
-
-<style>
-/* CSS VARIABLES & SYSTEM ARCHITECTURE */
-:root {
-  --primary: #0F766E;
-  --primary-hover: #0D645E;
-  --navy: #0B2A4A;
-  --accent: #F97316;
-  --accent-hover: #EA580C;
-  --bg: #F8FAFC;
-  --surface: #FFFFFF;
-  --surface-alt: #F1F5F9;
-  --text: #0F172A;
-  --text-muted: #475569;
-  --border: #E2E8F0;
-  --success: #16A34A;
-  --warning: #D97706;
-  --danger: #DC2626;
-  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -1px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --header-height: 72px;
-}
-
-body.dark-mode {
-  --bg: #0F172A;
-  --surface: #1E293B;
-  --surface-alt: #334155;
-  --text: #F8FAFC;
-  --text-muted: #94A3B8;
-  --border: #334155;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light-mode) {
-    --bg: #0F172A;
-    --surface: #1E293B;
-    --surface-alt: #334155;
-    --text: #F8FAFC;
-    --text-muted: #94A3B8;
-    --border: #334155;
-  }
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; font-size: 16px; color: var(--text); background: var(--bg); }
-body { line-height: 1.6; overflow-x: hidden; }
-
-/* TYPOGRAPHY */
-h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; line-height: 1.15; color: var(--navy); }
-body.dark-mode h1 { color: var(--text); }
-h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 700; line-height: 1.25; color: var(--navy); }
-body.dark-mode h2 { color: var(--text); }
-h3 { font-size: clamp(1.15rem, 2.5vw, 1.5rem); font-weight: 600; }
-p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-muted); }
-a { color: var(--primary); text-decoration: none; transition: var(--transition); }
-a:hover { color: var(--primary-hover); }
-
-/* REUSABLE UTILITIES */
-.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: var(--radius-md); font-weight: 600; font-size: 0.95rem; cursor: pointer; border: none; transition: var(--transition); text-align: center; }
-.btn-primary { background: var(--primary); color: #FFF; }
-.btn-primary:hover { background: var(--primary-hover); }
-.btn-accent { background: var(--accent); color: #FFF; }
-.btn-accent:hover { background: var(--accent-hover); }
-.btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
-.btn-outline:hover { background: var(--primary); color: #FFF; }
-.btn-sm { padding: 8px 16px; font-size: 0.875rem; border-radius: var(--radius-sm); }
-.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; background: rgba(15, 118, 110, 0.1); color: var(--primary); }
-
-/* TOP ANNOUNCEMENT BAR */
-.top-bar { background: var(--navy); color: #FFF; padding: 8px 0; font-size: 0.85rem; transition: var(--transition); }
-.top-bar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-.top-bar-offer { display: flex; align-items: center; gap: 10px; }
-.top-bar-actions { display: flex; align-items: center; gap: 16px; }
-.top-bar-actions a { color: #FFF; opacity: 0.9; display: inline-flex; align-items: center; gap: 4px; }
-.top-bar-actions a:hover { opacity: 1; text-decoration: underline; }
-.copy-btn { background: rgba(255, 255, 255, 0.2); border: none; color: #FFF; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
-
-/* HEADER & NAVBAR */
-.header { position: sticky; top: 0; z-index: 1000; background: var(--surface); border-bottom: 1px solid var(--border); transition: var(--transition); height: var(--header-height); }
-.header.shrink { height: 60px; box-shadow: var(--shadow-md); }
-.header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.35rem; color: var(--navy); }
-body.dark-mode .logo { color: #FFF; }
-.nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
-.nav-links a { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; }
-.nav-links a.active, .nav-links a:hover { color: var(--primary); }
-.header-actions { display: flex; align-items: center; gap: 16px; }
-.cart-icon-btn { position: relative; background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; }
-.cart-badge { position: absolute; top: 0; right: 0; background: var(--accent); color: #FFF; font-size: 0.7rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.theme-toggle { background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--text); }
-
-/* HERO SECTION */
-.hero { padding: 60px 0 80px; background: linear-gradient(135deg, rgba(15, 118, 110, 0.05) 0%, rgba(11, 42, 74, 0.03) 100%); position: relative; }
-.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-.hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 32px; }
-.hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
-
-/* LIVE SAMPLE TRACKING CARD (DEMO) */
-.tracking-card { background: var(--surface); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
-.tracking-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-.stepper { display: flex; flex-direction: column; gap: 16px; position: relative; }
-.stepper-item { display: flex; gap: 16px; align-items: flex-start; position: relative; }
-.stepper-item::before { content: ''; position: absolute; left: 15px; top: 30px; bottom: -16px; width: 2px; background: var(--border); }
-.stepper-item:last-child::before { display: none; }
-.stepper-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-alt); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; z-index: 1; transition: var(--transition); }
-.stepper-item.completed .stepper-icon { background: var(--success); border-color: var(--success); color: #FFF; }
-.stepper-item.active .stepper-icon { background: var(--primary); border-color: var(--primary); color: #FFF; animation: pulse 2s infinite; }
-.stepper-content h4 { font-size: 0.95rem; margin-bottom: 2px; }
-.stepper-content p { font-size: 0.8rem; }
-
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(15, 118, 110, 0); } 100% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); } }
-
-/* TRUST STRIP */
-.trust-strip { background: var(--navy); color: #FFF; padding: 40px 0; margin-top: 40px; }
-.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
-.stat-number { font-size: 2.5rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 4px; }
-.stat-label { font-size: 0.9rem; opacity: 0.85; }
-
-/* HOW IT WORKS */
-.section-padding { padding: 80px 0; }
-.section-header { text-align: center; max-width: 650px; margin: 0 auto 50px; }
-.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.step-card { background: var(--surface); padding: 28px 20px; border-radius: var(--radius-md); border: 1px solid var(--border); text-align: center; transition: var(--transition); }
-.step-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-.step-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(15, 118, 110, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-
-/* TESTS & PACKAGES */
-.filter-container { display: flex; flex-direction: column; gap: 20px; margin-bottom: 32px; }
-.search-box { position: relative; max-width: 500px; margin: 0 auto; width: 100%; }
-.search-box input { width: 100%; padding: 14px 20px 14px 44px; border-radius: 99px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.95rem; }
-.search-box svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-.chips-wrapper { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.chip { padding: 8px 18px; border-radius: 99px; background: var(--surface-alt); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
-.chip.active, .chip:hover { background: var(--primary); color: #FFF; border-color: var(--primary); }
-
-.tests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-.test-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px; display: flex; flex-direction: column; justify-space-between; transition: var(--transition); position: relative; }
-.test-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary); }
-.test-header { margin-bottom: 12px; }
-.test-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; color: var(--navy); }
-body.dark-mode .test-title { color: #FFF; }
-.test-price { font-size: 1.35rem; font-weight: 800; color: var(--primary); margin: 12px 0; }
-.test-meta { display: flex; gap: 12px; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; flex-wrap: wrap; }
-.test-actions { display: flex; gap: 10px; margin-top: auto; }
-
-/* CART DRAWER */
-.drawer-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; opacity: 0; pointer-events: none; transition: var(--transition); }
-.drawer-overlay.active { opacity: 1; pointer-events: auto; }
-.drawer { position: fixed; top: 0; right: -420px; width: 100%; max-width: 420px; height: 100%; background: var(--surface); z-index: 2001; transition: var(--transition); display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
-.drawer.active { right: 0; }
-.drawer-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.drawer-body { padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px; }
-.drawer-footer { padding: 20px; border-top: 1px solid var(--border); background: var(--surface-alt); }
-.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
-
-/* BOOKING FORM */
-.booking-section { background: var(--surface-alt); }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-.form-group.full { grid-column: span 2; }
-.form-group label { font-size: 0.875rem; font-weight: 600; }
-.form-group input, .form-group select, .form-group textarea { padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; }
-.form-group .error-text { font-size: 0.75rem; color: var(--danger); display: none; }
-.form-group.error input, .form-group.error select { border-color: var(--danger); }
-.form-group.error .error-text { display: block; }
-
-/* PATIENT PORTAL DEMO */
-.portal-tabs { display: flex; gap: 10px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-.tab-btn { padding: 10px 20px; background: none; border: none; border-bottom: 2px solid transparent; font-weight: 600; color: var(--text-muted); cursor: pointer; }
-.tab-btn.active { border-color: var(--primary); color: var(--primary); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* MODALS */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000; opacity: 0; pointer-events: none; transition: var(--transition); display: flex; align-items: center; justify-content: center; padding: 20px; }
-.modal-overlay.active { opacity: 1; pointer-events: auto; }
-.modal { background: var(--surface); max-width: 650px; width: 100%; max-height: 90vh; border-radius: var(--radius-lg); overflow-y: auto; padding: 32px; position: relative; box-shadow: var(--shadow-lg); }
-
-/* FLOATING WIDGETS */
-.floating-whatsapp { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: #25D366; color: #FFF; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 999; transition: var(--transition); }
-.floating-whatsapp:hover { transform: scale(1.1); }
-.mobile-sticky-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 20px; z-index: 998; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
-
-/* TOAST NOTIFICATIONS */
-.toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 4000; display: flex; flex-direction: column; gap: 10px; }
-.toast { background: var(--navy); color: #FFF; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 0.9rem; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s forwards; }
-@keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-
-/* ACCORDION (FAQ) */
-.faq-item { border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; background: var(--surface); }
-.faq-trigger { width: 100%; text-align: left; padding: 18px 20px; background: none; border: none; font-weight: 600; font-size: 1rem; color: var(--text); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-.faq-panel { padding: 0 20px 18px; display: none; color: var(--text-muted); font-size: 0.95rem; }
-.faq-item.active .faq-panel { display: block; }
-
-/* PRINT STYLES */
-@media print {
-  body * { visibility: hidden; }
-  #report-print-area, #report-print-area * { visibility: visible; }
-  #report-print-area { position: absolute; left: 0; top: 0; width: 100%; color: #000; background: #FFF; }
-}
-
-/* RESPONSIVE BREAKPOINTS */
-@media (max-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .steps-grid { grid-template-columns: repeat(2, 1fr); }
-  .trust-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 768px) {
-  .nav-links { display: none; position: absolute; top: var(--header-height); left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); }
-  .nav-links.active { display: flex; }
-  .mobile-menu-btn { display: block; }
-  .mobile-sticky-bar { display: flex; justify-content: space-between; align-items: center; }
-  .form-grid { grid-template-columns: 1fr; }
-  .form-group.full { grid-column: span 1; }
-}
-
-@media (max-width: 480px) {
-  .steps-grid { grid-template-columns: 1fr; }
-  .trust-grid { grid-template-columns: 1fr; }
-  .top-bar-actions { display: none; }
-}
-</style>
+        /* Blood Test Animations */
+        @keyframes floatDrop {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        @keyframes fillTube {
+            0% { height: 15%; }
+            50% { height: 75%; }
+            100% { height: 15%; }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 168, 232, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(0, 168, 232, 0.8); }
+        }
+        @keyframes bloodPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+        .animate-blood-drop { animation: floatDrop 3.5s ease-in-out infinite; }
+        .animate-blood-pulse { animation: bloodPulse 1.8s infinite; }
+        .tube-fill-animation { animation: fillTube 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .glow-pulse { animation: pulseGlow 2.5s infinite; }
+    </style>
 </head>
-<body>
+<body class="text-slate-800 antialiased overflow-x-hidden">
 
-<!-- 1. TOP OFFER BAR -->
-<div class="top-bar" id="top-offer-bar">
-  <div class="container">
-    <div class="top-bar-offer">
-      <span class="badge" style="background: var(--accent); color: #FFF;">SPECIAL OFFER</span>
-      <span>Get <strong>20% OFF</strong> Full Body Checkup with code <strong id="promo-code-text">CLASMO20</strong></span>
-      <button class="copy-btn" id="copy-code-btn" aria-label="Copy Promo Code">Copy Code</button>
+    <!-- Top Announcement Bar -->
+    <div class="bg-brandDarkBlue text-white py-2 px-4 text-xs font-medium border-b border-brandNavyLight">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-4">
+                <a href="tel:9272173712" class="flex items-center gap-1.5 hover:text-brandSkyLight transition-colors">
+                    <i class="fa-solid fa-phone text-brandSkyBlue animate-pulse"></i> 
+                    <span class="font-bold">Helpline: 9272173712</span>
+                </a>
+                <span class="hidden md:inline text-slate-500">|</span>
+                <span class="hidden md:flex items-center gap-1.5"><i class="fa-solid fa-clock text-brandSkyBlue"></i> 07:00 AM - 09:00 PM (Mon-Sun)</span>
+                <span class="hidden lg:inline text-slate-500">|</span>
+                <span class="hidden lg:flex items-center gap-1.5 text-brandSkyLight"><i class="fa-solid fa-certificate"></i> NABL Standard Guidelines Compliant</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/" target="_blank" rel="noopener noreferrer" class="hover:text-brandSkyLight transition-colors flex items-center gap-1">
+                    <i class="fa-brands fa-linkedin text-sm"></i> <span class="hidden sm:inline">LinkedIn</span>
+                </a>
+                <a href="https://maps.app.goo.gl/pm8WjvHN1AqmuN2h9" target="_blank" rel="noopener noreferrer" class="hover:text-brandSkyLight transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot text-sm text-red-400"></i> <span class="hidden sm:inline">Google Maps</span>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="top-bar-actions">
-      <a href="tel:9272173712">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Call: 9272173712
-      </a>
-      <a href="https://wa.me/919272173712" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        WhatsApp
-      </a>
-      <button onclick="document.getElementById('top-offer-bar').style.display='none'" style="background:none;border:none;color:#fff;cursor:pointer;opacity:0.7;" aria-label="Dismiss Offer Bar">✕</button>
-    </div>
-  </div>
-</div>
 
-<!-- 2. HEADER / NAV -->
-<header class="header" id="main-header">
-  <div class="container">
-    <a href="#" class="logo" aria-label="Clasmo Diagnostics Home">
-      <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
-        <rect width="100" height="100" rx="20" fill="#0F766E"/>
-        <path d="M65 35 C 55 20, 30 25, 30 50 C 30 75, 55 80, 65 65" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none"/>
-        <circle cx="65" cy="35" r="6" fill="#F97316"/>
-      </svg>
-      <span>CLASMO<span style="color:var(--primary)">.</span></span>
-    </a>
+    <!-- Main Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                
+                <!-- Official Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandNavy via-brandNavyLight to-brandSkyBlue flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-all">
+                        <i class="fa-solid fa-dna text-2xl text-brandSkyLight"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1">
+                            <span class="text-2xl font-black tracking-tight text-brandNavy">CLASMO</span>
+                            <span class="text-2xl font-black tracking-tight text-brandSkyBlue">DIAGNOSTICS</span>
+                        </div>
+                        <p class="text-[10px] font-bold tracking-widest text-slate-500 uppercase -mt-1">Where Accuracy Saves Lives</p>
+                    </div>
+                </a>
 
-    <nav aria-label="Main Navigation">
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#tests">Tests & Packages</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#portal">Patient Portal</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+                <!-- Nav Links Desktop -->
+                <div class="hidden lg:flex items-center space-x-6 text-xs font-bold text-slate-700 uppercase tracking-wide">
+                    <a href="#home" class="hover:text-brandSkyBlue transition-colors">Home</a>
+                    <a href="#packages" class="hover:text-brandSkyBlue transition-colors">Health Packages</a>
+                    <a href="#upload-analyzer" class="hover:text-brandSkyBlue transition-colors text-brandSkyBlue flex items-center gap-1">
+                        <i class="fa-solid fa-file-medical"></i> Upload Report & Doctor Risk
+                    </a>
+                    <a href="#portal" class="hover:text-brandSkyBlue transition-colors">Download Report</a>
+                    <a href="#join-clasmo" class="hover:text-brandSkyBlue transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-handshake text-brandSkyBlue"></i> Come N Join
+                    </a>
+                    <a href="#about" class="hover:text-brandSkyBlue transition-colors">About Us</a>
+                </div>
+
+                <!-- Right Action Controls -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleCartDrawer()" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-brandSkyBg text-brandNavy transition-all">
+                        <i class="fa-solid fa-shopping-bag text-lg"></i>
+                        <span id="cartBadge" class="absolute -top-1 -right-1 bg-brandSkyBlue text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">0</span>
+                    </button>
+
+                    <button onclick="openHomeCollectionModal()" class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-xl font-bold text-xs text-white sky-gradient-btn shadow-md transition-all transform active:scale-95">
+                        <i class="fa-solid fa-house-medical mr-1.5"></i> Book Home Sample
+                    </button>
+
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-700 hover:text-brandNavy">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 text-sm font-bold text-slate-700">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">Home</a>
+            <a href="#packages" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">Health Packages</a>
+            <a href="#upload-analyzer" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue text-brandSkyBlue">Upload Report & Doctor Risk</a>
+            <a href="#portal" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">Download Reports & Upload Prescription</a>
+            <a href="#join-clasmo" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">COME N JOIN WITH CLASMO</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandSkyBlue">About Us</a>
+            <button onclick="toggleMobileMenu(); openHomeCollectionModal();" class="w-full text-center py-2.5 rounded-xl font-bold text-xs text-white sky-gradient-btn">
+                Book Home Sample Pickup
+            </button>
+        </div>
     </nav>
 
-    <div class="header-actions">
-      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle Dark Mode">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-      </button>
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient text-white py-16 lg:py-20 relative overflow-hidden">
+        <!-- Interactive Canvas Background for Floating Red Blood Cells & Particles -->
+        <canvas id="bloodCellCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-30 z-0"></canvas>
 
-      <button class="cart-icon-btn" id="open-cart-btn" aria-label="Open Shopping Cart">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cart-badge" id="cart-badge-count">0</span>
-      </button>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Hero Text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-brandSkyLight text-xs font-bold border border-brandSkyLight/30">
+                        <i class="fa-solid fa-droplet text-red-400 animate-blood-pulse"></i> NABL Standard Accredited Diagnostic Lab
+                    </div>
 
-      <a href="#booking" class="btn btn-primary btn-sm" style="display: var(--display-desktop, inline-flex);">Book Home Pickup</a>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight">
+                        Precision Diagnostics, <br>
+                        <span class="text-brandSkyLight">Compassionate Care.</span>
+                    </h1>
 
-      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-</header>
+                    <p class="text-slate-200 text-sm md:text-base leading-relaxed max-w-xl">
+                        Clasmo Diagnostics Pvt Ltd delivers accurate, automated clinical testing with same-day digital reports and doorstep phlebotomy sample pickup.
+                    </p>
 
-<!-- 3. HERO -->
-<section id="home" class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div>
-        <span class="badge">NABL Standards Compliant Workflow</span>
-        <h1 style="margin-top: 12px;">Ultra-Precise Testing, Delivered At Your Doorstep.</h1>
-        <p style="margin-top: 16px;">Certified diagnostic accuracy with hassle-free home sample collection. Get digital reports delivered within 6 hours.</p>
-        
-        <div class="hero-badges">
-          <span class="badge">✓ Free Home Pickup</span>
-          <span class="badge">✓ 6-Hour Average Reports</span>
-          <span class="badge">✓ Automated Analyzers</span>
-        </div>
+                    <!-- Quick Interactive Test Search Bar -->
+                    <div class="bg-white p-2 rounded-2xl shadow-xl flex flex-col sm:flex-row items-center gap-2 max-w-2xl">
+                        <div class="flex items-center gap-2 px-3 w-full text-slate-700">
+                            <i class="fa-solid fa-magnifying-glass text-brandSkyBlue text-lg"></i>
+                            <input type="text" id="heroSearchInput" onkeyup="filterByHeroSearch()" placeholder="Search test or package (e.g., CBC, Thyroid, Diabetes, Lipid)..." class="w-full py-2.5 text-xs font-semibold outline-none text-slate-800">
+                        </div>
+                        <a href="#packages" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white text-xs font-bold whitespace-nowrap text-center transition-all">
+                            Find Test
+                        </a>
+                    </div>
 
-        <div class="hero-cta">
-          <a href="#booking" class="btn btn-accent">Book Home Collection</a>
-          <a href="#tests" class="btn btn-outline">Explore Packages</a>
-        </div>
-      </div>
+                    <!-- Quick Feature Highlights -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
+                            <i class="fa-solid fa-vial text-red-400 text-xl mb-1 animate-blood-drop"></i>
+                            <p class="text-[11px] font-bold">30-Min Pickup</p>
+                        </div>
+                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
+                            <i class="fa-solid fa-file-pdf text-brandSkyLight text-xl mb-1"></i>
+                            <p class="text-[11px] font-bold">Same-Day Digital Report</p>
+                        </div>
+                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
+                            <i class="fa-solid fa-microscope text-brandSkyLight text-xl mb-1"></i>
+                            <p class="text-[11px] font-bold">Automated Analyzers</p>
+                        </div>
+                        <div class="p-3 bg-white/10 backdrop-blur-md rounded-xl text-center border border-white/10 hover:border-brandSkyLight transition-colors">
+                            <i class="fa-solid fa-hand-holding-medical text-brandSkyLight text-xl mb-1"></i>
+                            <p class="text-[11px] font-bold">Expert Pathologists</p>
+                        </div>
+                    </div>
+                </div>
 
-      <!-- LIVE SAMPLE TRACKING DEMO CARD -->
-      <div class="tracking-card">
-        <div class="tracking-card-header">
-          <div>
-            <h3 style="font-size:1.1rem; color:var(--navy)">Live Sample Tracking</h3>
-            <p style="font-size:0.8rem;">Sample ID: #CLS-98421</p>
-          </div>
-          <span class="badge" style="background:rgba(249, 115, 22, 0.1); color:var(--accent);">DEMO</span>
-        </div>
+                <!-- Right Hero Card with Animated Blood Test Graphic -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-3xl p-6 shadow-2xl text-slate-800 border-2 border-brandSkyBlue/30 relative glow-pulse">
+                        <span class="absolute -top-3 right-6 bg-brandSkyBlue text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow flex items-center gap-1">
+                            <i class="fa-solid fa-bolt text-yellow-300"></i> POPULAR CHOICE
+                        </span>
 
-        <div class="stepper">
-          <div class="stepper-item completed">
-            <div class="stepper-icon">✓</div>
-            <div class="stepper-content">
-              <h4>Barcode Generated</h4>
-              <p>07:30 AM · Sample registered safely</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-brandSkyBg text-brandSkyBlue rounded-2xl flex items-center justify-center text-xl font-bold">
+                                    <i class="fa-solid fa-heart-pulse text-red-500 animate-blood-pulse"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-lg text-brandNavy">Fitness Smart Checkup</h3>
+                                    <p class="text-xs text-slate-500 font-medium">80+ Essential Body Parameters</p>
+                                </div>
+                            </div>
+
+                            <!-- Animated Blood Drop Fill SVG Graphic -->
+                            <div class="relative w-12 h-16 bg-slate-100 rounded-b-2xl rounded-t-lg overflow-hidden border-2 border-brandSkyBlue/40 flex items-end shadow-inner">
+                                <div class="w-full bg-gradient-to-t from-red-600 to-red-400 tube-fill-animation relative">
+                                    <div class="absolute inset-x-0 top-0 h-1 bg-red-300/60 animate-pulse"></div>
+                                </div>
+                                <i class="fa-solid fa-droplet text-red-500 absolute top-1 left-1/2 -translate-x-1/2 text-xs animate-blood-pulse"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-brandSkyBg p-4 rounded-2xl border border-slate-200 mb-4 flex justify-between items-center">
+                            <div>
+                                <span class="text-xs text-slate-400 line-through">₹4,500</span>
+                                <div class="text-2xl font-black text-brandNavy">₹1,999</div>
+                            </div>
+                            <span class="bg-sky-100 text-sky-800 font-bold text-xs px-2.5 py-1 rounded-lg">55% OFF</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs text-slate-600 mb-6 font-semibold">
+                            <div class="flex items-center"><i class="fa-solid fa-vial text-red-500 mr-2"></i> Complete Blood Count (CBC)</div>
+                            <div class="flex items-center"><i class="fa-solid fa-check text-brandSkyBlue mr-2"></i> Thyroid Profile - 3 (T3, T4, TSH)</div>
+                            <div class="flex items-center"><i class="fa-solid fa-check text-brandSkyBlue mr-2"></i> HbA1c & Fasting Glucose</div>
+                            <div class="flex items-center"><i class="fa-solid fa-check text-brandSkyBlue mr-2"></i> Liver & Kidney Profiles</div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="openPackageDetailModal(1)" class="py-2.5 rounded-xl border border-brandNavy text-brandNavy hover:bg-brandSkyBg font-bold text-xs transition-colors">
+                                View Included Tests
+                            </button>
+                            <button onclick="addToCart(1)" class="py-2.5 rounded-xl text-white sky-gradient-btn font-bold text-xs transition-all shadow">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-          <div class="stepper-item completed">
-            <div class="stepper-icon">✓</div>
-            <div class="stepper-content">
-              <h4>Phlebotomist Picked Up</h4>
-              <p>08:15 AM · Cold-chain transport active</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter Bar Section -->
+    <section id="packages" class="py-12 bg-brandSkyBg border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200">Catalog Search</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-brandNavy mt-2">Health Packages & Individual Profiles</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Filter diagnostic profiles by health category, budget, or test keywords.</p>
             </div>
-          </div>
-          <div class="stepper-item active">
-            <div class="stepper-icon">⚡</div>
-            <div class="stepper-content">
-              <h4>Analyzing at Lab</h4>
-              <p>In Progress · Fully automated analyzer</p>
+
+            <!-- Controls -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-8 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                    
+                    <!-- Input Search -->
+                    <div class="md:col-span-5 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="catalogSearchInput" oninput="filterCatalog()" placeholder="Search CBC, Lipid, Diabetes, Vitamin D..." class="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:ring-2 focus:ring-brandSkyBlue outline-none">
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="md:col-span-4">
+                        <select id="categoryFilter" onchange="filterCatalog()" class="w-full px-3.5 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 focus:ring-2 focus:ring-brandSkyBlue outline-none">
+                            <option value="ALL">All Categories</option>
+                            <option value="Full Body">Full Body Checkups</option>
+                            <option value="Cardiac">Cardiac & Diabetes</option>
+                            <option value="Specialized">Hair & Skin Profiles</option>
+                            <option value="Women">Women's Health / PCOD</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="md:col-span-3">
+                        <select id="priceFilter" onchange="filterCatalog()" class="w-full px-3.5 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 focus:ring-2 focus:ring-brandSkyBlue outline-none">
+                            <option value="ALL">All Price Ranges</option>
+                            <option value="UNDER_2000">Under ₹2,000</option>
+                            <option value="2000_TO_4000">₹2,000 - ₹4,000</option>
+                            <option value="ABOVE_4000">Above ₹4,000</option>
+                        </select>
+                    </div>
+
+                </div>
             </div>
-          </div>
-          <div class="stepper-item">
-            <div class="stepper-icon">4</div>
-            <div class="stepper-content">
-              <h4>Report Ready</h4>
-              <p>Expected by 02:00 PM</p>
+
+            <!-- Health Packages Grid Dynamic Container -->
+            <div id="packagesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dynamic Package Render -->
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- TRUST STRIP -->
-<div class="trust-strip">
-  <div class="container">
-    <div class="trust-grid">
-      <!-- EDITABLE STATS IN CODE -->
-      <div>
-        <span class="stat-number" data-target="70">0</span>
-        <span class="stat-label">Tests Available</span>
-      </div>
-      <div>
-        <span class="stat-number" data-target="10000">0</span>
-        <span class="stat-label">Home Pickups</span>
-      </div>
-      <div>
-        <span class="stat-number" data-target="6">0</span>
-        <span class="stat-label">Avg Turnaround (Hrs)</span>
-      </div>
-      <div>
-        <span class="stat-number" data-target="4.9">0</span>
-        <span class="stat-label">Patient Rating</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 4. HOW IT WORKS -->
-<section id="how-it-works" class="section-padding">
-  <div class="container">
-    <div class="section-header">
-      <span class="badge">SIMPLE 4-STEP PROCESS</span>
-      <h2 style="margin-top:10px;">How Home Collection Works</h2>
-      <p>Seamless pathology testing without leaving the safety of your home.</p>
-    </div>
-
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <h3>1. Book Online</h3>
-        <p style="font-size:0.875rem; margin-top:8px;">Select your required tests or package and pick a convenient date & time slot.</p>
-      </div>
-
-      <div class="step-card">
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <h3>2. Sample Collection</h3>
-        <p style="font-size:0.875rem; margin-top:8px;">A certified phlebotomist visits your address using sealed barcoded kits.</p>
-      </div>
-
-      <div class="step-card">
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <h3>3. Precise Analysis</h3>
-        <p style="font-size:0.875rem; margin-top:8px;">Samples are processed on high-precision automated lab machinery.</p>
-      </div>
-
-      <div class="step-card">
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div>
-        <h3>4. Fast Digital Report</h3>
-        <p style="font-size:0.875rem; margin-top:8px;">Receive verified PDF reports directly on WhatsApp and Email within hours.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. TESTS & PACKAGES -->
-<section id="tests" class="section-padding" style="background:var(--surface-alt)">
-  <div class="container">
-    <div class="section-header">
-      <span class="badge">TRANSPARENT PRICING</span>
-      <h2 style="margin-top:10px;">Diagnostic Tests & Health Packages</h2>
-      <p>Select individual tests or checkup packages tailored to your diagnostic needs.</p>
-    </div>
-
-    <div class="filter-container">
-      <div class="search-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="test-search-input" placeholder="Search tests (e.g. Thyroid, Vitamin, CBC)...">
-      </div>
-
-      <div class="chips-wrapper" id="filter-chips">
-        <button class="chip active" data-category="all">All Tests</button>
-        <button class="chip" data-category="Full Body Packages">Full Body Packages</button>
-        <button class="chip" data-category="Pathology Essentials">Pathology Essentials</button>
-        <button class="chip" data-category="Diabetes & Cardiac">Diabetes & Cardiac</button>
-        <button class="chip" data-category="Thyroid & Vitamins">Thyroid & Vitamins</button>
-      </div>
-    </div>
-
-    <div class="tests-grid" id="tests-grid-container">
-      <!-- Injected dynamically via Vanilla JS -->
-    </div>
-
-    <div id="no-results" style="display:none; text-align:center; padding:40px;">
-      <p>No tests matching your search query were found.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 6. CART DRAWER -->
-<div class="drawer-overlay" id="cart-overlay"></div>
-<div class="drawer" id="cart-drawer" role="dialog" aria-label="Shopping Cart">
-  <div class="drawer-header">
-    <h3>Selected Tests (<span id="cart-drawer-count">0</span>)</h3>
-    <button id="close-cart-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text);">&times;</button>
-  </div>
-  
-  <div class="drawer-body" id="cart-items-container">
-    <!-- Dynamic Cart Items -->
-  </div>
-
-  <div class="drawer-footer">
-    <div style="margin-bottom: 12px;">
-      <div style="display:flex; gap:8px;">
-        <input type="text" id="promo-input" placeholder="Promo Code (CLASMO20)" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:var(--radius-sm);">
-        <button class="btn btn-outline btn-sm" id="apply-promo-btn">Apply</button>
-      </div>
-      <p id="promo-message" style="font-size:0.75rem; margin-top:4px;"></p>
-    </div>
-
-    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem;">
-      <span>Subtotal</span>
-      <span id="cart-subtotal">₹0</span>
-    </div>
-    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.9rem; color:var(--success);">
-      <span>Discount</span>
-      <span id="cart-discount">-₹0</span>
-    </div>
-    <div style="display:flex; justify-content:space-between; margin-bottom:16px; font-weight:800; font-size:1.1rem; color:var(--navy);">
-      <span>Total</span>
-      <span id="cart-total">₹0</span>
-    </div>
-
-    <button class="btn btn-accent" id="checkout-btn" style="width:100%;">Proceed to Book</button>
-  </div>
-</div>
-
-<!-- 7. BOOKING FORM -->
-<section id="booking" class="section-padding booking-section">
-  <div class="container">
-    <div style="max-width:800px; margin:0 auto; background:var(--surface); padding:36px; border-radius:var(--radius-lg); border:1px solid var(--border); box-shadow:var(--shadow-md);">
-      <div style="margin-bottom:24px;">
-        <h2>Book Home Collection Slot</h2>
-        <p>Fill out the recipient details below to schedule your home sample collection.</p>
-      </div>
-
-      <form id="lab-booking-form" novalidate>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="full-name">Full Name *</label>
-            <input type="text" id="full-name" required placeholder="e.g. Rahul Sharma">
-            <span class="error-text">Please enter a valid full name.</span>
-          </div>
-
-          <div class="form-group">
-            <label for="mobile-number">Mobile Phone (WhatsApp) *</label>
-            <input type="tel" id="mobile-number" required placeholder="10-digit mobile number (e.g. 9823012345)">
-            <span class="error-text">Enter valid 10-digit Indian mobile number starting 6-9.</span>
-          </div>
-
-          <div class="form-group">
-            <label for="email-address">Email Address (Optional)</label>
-            <input type="email" id="email-address" placeholder="name@example.com">
-          </div>
-
-          <div class="form-group">
-            <div style="display:flex; gap:10px;">
-              <div style="flex:1;">
-                <label for="patient-age">Age *</label>
-                <input type="number" id="patient-age" required min="1" max="120" placeholder="Age">
-              </div>
-              <div style="flex:1;">
-                <label for="patient-gender">Gender *</label>
-                <select id="patient-gender" required>
-                  <option value="">Select</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
+    <!-- NEW FEATURE: UPLOAD REPORT & HEALTH RISK ANALYZER WITH DOCTOR SUGGESTIONS -->
+    <section id="upload-analyzer" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-brandSkyBg px-3 py-1 rounded-full border border-brandSkyBlue/30">AI Powered Diagnostic Assistant</span>
+                <h2 class="text-3xl font-black text-brandNavy mt-2">Upload Lab Report & Health Risk Analysis</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Upload your existing blood report image or PDF. Our parser identifies High, Medium, and Low risk markers and recommends appropriate doctor specialists.</p>
             </div>
-          </div>
 
-          <div class="form-group full">
-            <label for="tests-selected-display">Selected Tests & Packages *</label>
-            <input type="text" id="tests-selected-display" readonly placeholder="No tests selected. Choose from list above." style="background:var(--surface-alt);">
-            <span class="error-text">Please select at least one test from above.</span>
-          </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left: File Upload Box -->
+                <div class="lg:col-span-5 bg-brandSkyBg p-6 rounded-3xl border-2 border-brandSkyBlue/30 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-2xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-xl shadow">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-brandNavy text-base">Upload Report Image / PDF</h3>
+                            <p class="text-xs text-slate-500 font-medium">Supports CBC, Lipid, HbA1c, LFT, KFT reports</p>
+                        </div>
+                    </div>
 
-          <div class="form-group">
-            <label for="pickup-date">Preferred Pickup Date *</label>
-            <input type="date" id="pickup-date" required>
-            <span class="error-text">Please choose a valid upcoming date.</span>
-          </div>
+                    <div class="border-2 border-dashed border-brandSkyBlue/50 bg-white p-6 rounded-2xl text-center space-y-3 cursor-pointer hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-file-medical text-3xl text-brandSkyBlue"></i>
+                        <p class="text-xs font-bold text-slate-700">Drag and drop your report or click to browse</p>
+                        <p class="text-[10px] text-slate-400">PNG, JPG, JPEG or PDF (Max size 10MB)</p>
+                        <input type="file" id="reportUploadInput" accept="image/*,.pdf" onchange="processUploadedReport(event)" class="hidden">
+                        <button onclick="document.getElementById('reportUploadInput').click()" type="button" class="px-4 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs shadow">
+                            Select File
+                        </button>
+                    </div>
 
-          <div class="form-group">
-            <label for="time-slot">Time Slot *</label>
-            <select id="time-slot" required>
-              <option value="">Choose Time Slot</option>
-              <option value="7:00 AM - 8:30 AM">7:00 AM - 8:30 AM (Fasting Preferred)</option>
-              <option value="8:30 AM - 10:00 AM">8:30 AM - 10:00 AM</option>
-              <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-              <option value="2:00 PM - 5:00 PM">2:00 PM - 5:00 PM</option>
-            </select>
-          </div>
+                    <!-- File Attached Info -->
+                    <div id="fileAttachedBox" class="hidden bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-file-pdf text-red-500 text-lg"></i>
+                            <span id="attachedFileName" class="font-bold text-slate-700 truncate max-w-[180px]">Report.pdf</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">Ready to Analyze</span>
+                    </div>
 
-          <div class="form-group full">
-            <label for="full-address">Full Address *</label>
-            <textarea id="full-address" rows="2" required placeholder="Flat/House No, Building, Street, Area"></textarea>
-            <span class="error-text">Address details are required.</span>
-          </div>
+                    <button onclick="simulateReportAnalysis()" class="w-full py-3.5 rounded-xl sky-gradient-btn text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-microscope text-sm"></i> Analyze Report & Calculate Health Risk
+                    </button>
+                </div>
 
-          <div class="form-group">
-            <label for="pincode">Pincode *</label>
-            <input type="text" id="pincode" required placeholder="6-digit Pincode">
-            <span class="error-text">Enter valid 6-digit Indian Pincode.</span>
-          </div>
+                <!-- Right: Risk Breakdown & Doctor Suggestion Output -->
+                <div class="lg:col-span-7 bg-brandSkyBg/50 p-6 rounded-3xl border border-slate-200 relative">
+                    <div id="analysisPlaceholder" class="text-center py-12 text-slate-400 space-y-3">
+                        <i class="fa-solid fa-laptop-medical text-4xl text-brandSkyBlue/50"></i>
+                        <h4 class="font-bold text-slate-600 text-sm">No Report Analyzed Yet</h4>
+                        <p class="text-xs max-w-sm mx-auto">Upload a medical lab report on the left or click "Analyze Report" to view risk breakdown and suggested specialist doctors.</p>
+                    </div>
 
-          <div class="form-group full">
-            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
-              <input type="checkbox" id="consent-check" required>
-              <span>I confirm that the information provided is correct and consent to home pickup contact.</span>
-            </label>
-          </div>
-        </div>
+                    <!-- Animated Blood Testing Progress Loader -->
+                    <div id="analysisLoader" class="hidden text-center py-12 space-y-4">
+                        <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+                            <div class="absolute inset-0 rounded-full border-4 border-slate-200 border-t-red-500 border-r-brandSkyBlue animate-spin"></div>
+                            <i class="fa-solid fa-vial text-2xl text-red-500 animate-blood-pulse"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-brandNavy text-sm">Centrifuging & Analyzing Blood Markers...</h4>
+                            <p class="text-xs text-slate-500 mt-1">Checking parameter values against standard laboratory reference ranges</p>
+                        </div>
+                        <div class="w-48 bg-slate-200 h-1.5 mx-auto rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-red-500 to-brandSkyBlue h-full w-full animate-pulse"></div>
+                        </div>
+                    </div>
 
-        <button type="submit" class="btn btn-accent" style="width:100%; margin-top:16px;">Confirm & Schedule Pickup</button>
-      </form>
-    </div>
-  </div>
-</section>
+                    <!-- Results Container -->
+                    <div id="analysisResultsBox" class="hidden space-y-6">
+                        
+                        <!-- Risk Summary Badges -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+                            <h4 class="font-black text-brandNavy text-xs uppercase tracking-wider mb-3">Overall Parameter Risk Breakdown</h4>
+                            <div class="grid grid-cols-3 gap-3 text-center">
+                                <div class="p-3 bg-red-50 border border-red-200 rounded-xl">
+                                    <span class="text-2xl font-black text-red-600" id="highRiskCount">2</span>
+                                    <p class="text-[10px] font-black uppercase text-red-700 mt-0.5">High Risk</p>
+                                </div>
+                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                                    <span class="text-2xl font-black text-amber-600" id="medRiskCount">1</span>
+                                    <p class="text-[10px] font-black uppercase text-amber-700 mt-0.5">Medium Risk</p>
+                                </div>
+                                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                                    <span class="text-2xl font-black text-emerald-600" id="lowRiskCount">12</span>
+                                    <p class="text-[10px] font-black uppercase text-emerald-700 mt-0.5">Low / Normal</p>
+                                </div>
+                            </div>
+                        </div>
 
-<!-- 8. PATIENT PORTAL DEMO -->
-<section id="portal" class="section-padding">
-  <div class="container">
-    <div class="section-header">
-      <span class="badge" style="background:rgba(239, 68, 68, 0.1); color:var(--danger);">DEMO PORTAL – SAMPLE DATA ONLY</span>
-      <h2 style="margin-top:10px;">Patient Digital Portal</h2>
-      <p>Preview how patients access past diagnostic records and live pickup states.</p>
-    </div>
+                        <!-- Detected Abnormal Parameters -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
+                            <h4 class="font-black text-brandNavy text-xs uppercase tracking-wider mb-2">Detected Risk Markers</h4>
+                            
+                            <div class="p-2.5 bg-red-50 rounded-xl border border-red-100 flex items-center justify-between text-xs">
+                                <div>
+                                    <span class="font-extrabold text-slate-800">HbA1c (Glycated Hemoglobin)</span>
+                                    <p class="text-[10px] text-slate-500">Value: <strong class="text-red-600">8.4 %</strong> (Normal: &lt; 5.7 %)</p>
+                                </div>
+                                <span class="bg-red-600 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase">High Risk</span>
+                            </div>
 
-    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid var(--border);">
-        <div>
-          <h3 style="font-size:1.1rem;">Patient Profile: Sample Patient</h3>
-          <p style="font-size:0.85rem;">UHID: #CLS-DEMO-001 | Age/Sex: 42Y / Male</p>
-        </div>
-      </div>
+                            <div class="p-2.5 bg-red-50 rounded-xl border border-red-100 flex items-center justify-between text-xs">
+                                <div>
+                                    <span class="font-extrabold text-slate-800">Serum Triglycerides (Lipid Profile)</span>
+                                    <p class="text-[10px] text-slate-500">Value: <strong class="text-red-600">260 mg/dL</strong> (Normal: &lt; 150 mg/dL)</p>
+                                </div>
+                                <span class="bg-red-600 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase">High Risk</span>
+                            </div>
 
-      <div class="portal-tabs">
-        <button class="tab-btn active" onclick="switchPortalTab(event, 'tab-overview')">Overview</button>
-        <button class="tab-btn" onclick="switchPortalTab(event, 'tab-reports')">Lab Reports</button>
-        <button class="tab-btn" onclick="switchPortalTab(event, 'tab-pickup')">Pickup Status</button>
-      </div>
+                            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-100 flex items-center justify-between text-xs">
+                                <div>
+                                    <span class="font-extrabold text-slate-800">TSH (Thyroid Stimulating Hormone)</span>
+                                    <p class="text-[10px] text-slate-500">Value: <strong class="text-amber-600">5.8 mIU/L</strong> (Normal: 0.4 - 4.2 mIU/L)</p>
+                                </div>
+                                <span class="bg-amber-500 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-md uppercase">Medium Risk</span>
+                            </div>
+                        </div>
 
-      <!-- TAB 1: OVERVIEW -->
-      <div id="tab-overview" class="tab-content active">
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
-          <div style="background:var(--surface-alt); padding:20px; border-radius:var(--radius-md);">
-            <h4>Fasting Blood Sugar</h4>
-            <div style="font-size:1.8rem; font-weight:800; color:var(--success); margin:8px 0;">94 mg/dL</div>
-            <p style="font-size:0.8rem;">Normal Range: 70 - 99 mg/dL</p>
-            <svg width="100%" height="40" style="margin-top:10px;">
-              <polyline fill="none" stroke="var(--primary)" stroke-width="3" points="0,30 30,20 60,25 90,10 120,15 150,5" />
-            </svg>
-          </div>
+                        <!-- Doctor Specialist Suggestions Engine -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+                            <div class="flex items-center space-x-2 text-brandNavy">
+                                <i class="fa-solid fa-user-doctor text-brandSkyBlue text-lg"></i>
+                                <h4 class="font-extrabold text-xs uppercase tracking-wider">Suggested Doctor Consultations</h4>
+                            </div>
 
-          <div style="background:var(--surface-alt); padding:20px; border-radius:var(--radius-md);">
-            <h4>HbA1c (Glycated Hemoglobin)</h4>
-            <div style="font-size:1.8rem; font-weight:800; color:var(--warning); margin:8px 0;">5.8 %</div>
-            <p style="font-size:0.8rem;">Prediabetes Range: 5.7 - 6.4 %</p>
-            <svg width="100%" height="40" style="margin-top:10px;">
-              <polyline fill="none" stroke="var(--warning)" stroke-width="3" points="0,25 30,22 60,18 90,15 120,12 150,10" />
-            </svg>
-          </div>
-        </div>
-      </div>
+                            <div class="space-y-2">
+                                <!-- Doctor 1 -->
+                                <div class="p-3 bg-brandSkyBg rounded-xl border border-brandSkyBlue/30 flex items-center justify-between">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="font-extrabold text-xs text-brandNavy">Diabetologist / Endocrinologist</span>
+                                            <span class="text-[9px] font-bold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">For High HbA1c & TSH</span>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500 font-medium">Evaluates blood sugar control, insulin resistance, and thyroid gland regulation.</p>
+                                    </div>
+                                    <a href="https://wa.me/919272173712?text=Hello%20Clasmo,%20I%20need%20a%20Diabetologist/Endocrinologist%20consultation%20based%20on%20my%20report." target="_blank" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] whitespace-nowrap transition-colors flex items-center gap-1">
+                                        <i class="fa-brands fa-whatsapp"></i> Book Doctor
+                                    </a>
+                                </div>
 
-      <!-- TAB 2: REPORTS -->
-      <div id="tab-reports" class="tab-content">
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid var(--border); border-radius:var(--radius-sm);">
-            <div>
-              <strong>Full Body Wellness Package</strong>
-              <p style="font-size:0.8rem;">Date: 15 Oct 2026 · Status: Verified PDF</p>
+                                <!-- Doctor 2 -->
+                                <div class="p-3 bg-brandSkyBg rounded-xl border border-brandSkyBlue/30 flex items-center justify-between">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="font-extrabold text-xs text-brandNavy">Cardiologist / General Physician</span>
+                                            <span class="text-[9px] font-bold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">For High Triglycerides</span>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500 font-medium">Recommends dietary, statin lipid management, and cardiovascular risk screening.</p>
+                                    </div>
+                                    <a href="https://wa.me/919272173712?text=Hello%20Clasmo,%20I%20need%20a%20Cardiologist%20consultation%20based%20on%20my%20high%20triglycerides%20report." target="_blank" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] whitespace-nowrap transition-colors flex items-center gap-1">
+                                        <i class="fa-brands fa-whatsapp"></i> Book Doctor
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-            <button class="btn btn-outline btn-sm" onclick="openReportModal('Full Body Wellness Package')">View Report</button>
-          </div>
+        </div>
+    </section>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid var(--border); border-radius:var(--radius-sm);">
-            <div>
-              <strong>Thyroid Profile (T3, T4, TSH)</strong>
-              <p style="font-size:0.8rem;">Date: 02 Jun 2026 · Status: Verified PDF</p>
+    <!-- COME AND JOIN WITH CLASMO SECTION -->
+    <section id="join-clasmo" class="py-16 bg-gradient-to-b from-brandSkyBg to-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-extrabold text-brandNavy uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200 shadow-xs">Partner & Career Opportunities</span>
+                <h2 class="text-3xl font-black text-brandNavy mt-2">COME N JOIN WITH CLASMO</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Expand your healthcare business with us or start your professional career at a CLASMO Diagnostic branch.</p>
             </div>
-            <button class="btn btn-outline btn-sm" onclick="openReportModal('Thyroid Profile')">View Report</button>
-          </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Option A: FRANCHISE -->
+                <div class="bg-white rounded-3xl p-8 border-2 border-brandSkyBlue/40 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-brandSkyBlue/10 rounded-full group-hover:scale-125 transition-transform"></div>
+                    <div class="space-y-4 relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-2xl shadow-md">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                        <span class="inline-block bg-brandSkyBg text-brandSkyBlue font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider border border-brandSkyBlue/30">PART A • FRANCHISE</span>
+                        <h3 class="text-2xl font-black text-brandNavy">FRANCHISE</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                            Register as a CLASMO Brand Partner or Self-Operated Lab. Partner with India's trusted diagnostic brand to leverage automated lab infrastructure, brand visibility, and full technical support.
+                        </p>
+                        
+                        <div class="space-y-2 pt-2 text-xs font-semibold text-slate-700">
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandSkyBlue"></i> CLASMO Brand Partner Franchise</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandSkyBlue"></i> Self-Operated Sample Collection Center</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandSkyBlue"></i> Complete Logistics & Software Support</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-8 relative z-10">
+                        <button onclick="openFranchiseModal()" class="w-full py-3.5 rounded-xl sky-gradient-btn text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-signature text-sm"></i> Register As Brand Partner or Lab
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Option B: JOB VACANCY -->
+                <div class="bg-white rounded-3xl p-8 border-2 border-brandNavy/20 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-brandNavy/10 rounded-full group-hover:scale-125 transition-transform"></div>
+                    <div class="space-y-4 relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-brandSkyBlue text-white flex items-center justify-center text-2xl shadow-md">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <span class="inline-block bg-brandNavy/10 text-brandNavy font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">PART B • JOB VACANCY</span>
+                        <h3 class="text-2xl font-black text-brandNavy">JOB VACANCY</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                            Apply for a position at an existing CLASMO branch. Build a fulfilling career in diagnostic technology, patient care, phlebotomy, or healthcare management.
+                        </p>
+                        
+                        <div class="space-y-2 pt-2 text-xs font-semibold text-slate-700">
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandNavy"></i> Openings for Phlebotomists & Lab Techs</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandNavy"></i> Front Desk & Marketing Executive Roles</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-brandNavy"></i> Competitive Salary & Career Growth</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-8 relative z-10">
+                        <button onclick="openJobVacancyModal()" class="w-full py-3.5 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white font-extrabold text-xs shadow-md transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-briefcase text-sm"></i> Apply For Position At CLASMO
+                        </button>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- TAB 3: PICKUP STATUS -->
-      <div id="tab-pickup" class="tab-content">
-        <p style="margin-bottom:12px;">Active Home Collection Order: <strong>#CLS-88310</strong></p>
-        <div class="stepper">
-          <div class="stepper-item completed">
-            <div class="stepper-icon">✓</div>
-            <div class="stepper-content"><h4>Phlebotomist Assigned</h4><p>Ramesh Kumar (ID: PH-402)</p></div>
-          </div>
-          <div class="stepper-item active">
-            <div class="stepper-icon">➔</div>
-            <div class="stepper-content"><h4>En Route to Address</h4><p>Arriving in ~15 mins</p></div>
-          </div>
+    <!-- Patient Portal / Report Downloader & Upload Prescription -->
+    <section id="portal" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-brandSkyBg px-3 py-1 rounded-full">Patient Services</span>
+                <h2 class="text-3xl font-black text-brandNavy mt-2">Download Reports & Upload Prescription</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Access your diagnostic results securely or upload your doctor's prescription for home sample pickup.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Report Downloader Box -->
+                <div class="p-6 md:p-8 bg-brandSkyBg rounded-3xl border border-slate-200 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-slate-900 text-lg">Online Report Download</h3>
+                            <p class="text-xs text-slate-500 font-medium">Enter Sample ID or Registered Mobile Number</p>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleReportSearch(event)" class="space-y-3 pt-2">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Sample ID / Booking Reference *</label>
+                            <input type="text" id="reportSampleId" required placeholder="e.g., CLM-98241" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Registered Phone Number *</label>
+                            <input type="tel" id="reportPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white font-bold text-xs transition-colors shadow">
+                            <i class="fa-solid fa-magnifying-glass mr-1"></i> Retrieve Diagnostic Report
+                        </button>
+                    </form>
+
+                    <!-- Result Output Box -->
+                    <div id="reportStatusOutput" class="hidden p-4 bg-white rounded-2xl border border-slate-200 text-xs space-y-2">
+                        <div class="flex justify-between items-center text-emerald-700 font-bold">
+                            <span><i class="fa-solid fa-circle-check"></i> Report Available</span>
+                            <span class="text-[10px] text-slate-400">Sample ID: <span id="outSampleId"></span></span>
+                        </div>
+                        <p class="text-slate-600 font-medium">Patient Name: <strong>Rahul Sharma</strong></p>
+                        <p class="text-slate-600 font-medium">Test: <strong>Fitness Smart Checkup Profile</strong></p>
+                        <button onclick="showToast('Downloading verified PDF report...')" class="w-full py-2 bg-brandSkyBlue hover:bg-brandSkyLight text-white font-bold rounded-lg text-xs transition-colors">
+                            <i class="fa-solid fa-download mr-1"></i> Download Verified PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prescription Upload Box -->
+                <div class="p-6 md:p-8 bg-brandSkyBg rounded-3xl border border-slate-200 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-brandNavy text-brandSkyLight flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-file-prescription"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-slate-900 text-lg">Upload Doctor's Prescription</h3>
+                            <p class="text-xs text-slate-500 font-medium">Our phlebotomist will contact you to arrange tests based on your prescription.</p>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handlePrescriptionSubmit(event)" class="space-y-3 pt-2">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Your Full Name *</label>
+                            <input type="text" id="rxName" required placeholder="Enter full name" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number *</label>
+                            <input type="tel" id="rxPhone" required pattern="[0-9]{10}" placeholder="10-digit phone number" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Upload Prescription Photo/File *</label>
+                            <input type="file" id="rxFile" accept="image/*,.pdf" onchange="previewPrescription(event)" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brandNavy file:text-white hover:file:bg-brandNavyLight">
+                        </div>
+
+                        <!-- Image Preview Box -->
+                        <div id="rxPreviewBox" class="hidden p-2 bg-white rounded-xl border border-slate-200 flex items-center space-x-3">
+                            <img id="rxPreviewImg" src="" class="w-12 h-12 object-cover rounded-lg border">
+                            <span class="text-xs text-slate-600 font-medium">Prescription File Attached</span>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-bold text-xs transition-all shadow">
+                            <i class="fa-solid fa-paper-plane mr-1"></i> Submit Prescription For Callback
+                        </button>
+                    </form>
+                </div>
+
+            </div>
         </div>
-      </div>
+    </section>
 
-      <p style="font-size:0.75rem; color:var(--text-muted); margin-top:20px; border-top:1px solid var(--border); padding-top:12px;">
-        Disclaimer: This is a demo interface with sample data. Real patient login will be available after backend API integration.
-      </p>
-    </div>
-  </div>
-</section>
+    <!-- Individual Tests Grid -->
+    <section id="tests" class="py-16 bg-brandSkyBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200">Individual Parameters</span>
+                <h2 class="text-3xl font-black text-brandNavy mt-2">Popular Single Blood Tests</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Need a standalone test? Book individual diagnostic tests with doorstep pickup.</p>
+            </div>
 
-<!-- 9. ABOUT & TRUST -->
-<section id="about" class="section-padding" style="background:var(--surface-alt)">
-  <div class="container">
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:center;">
-      <div>
-        <span class="badge">OUR COMMITMENT</span>
-        <h2 style="margin-top:10px;">Precision Laboratory Diagnostics You Can Trust</h2>
-        <p style="margin-top:16px;">
-          Clasmo Diagnostics Pvt Ltd was founded to make clinical lab testing seamless, transparent, and completely accurate. We combine state-of-the-art automated diagnostic equipment with trained phlebotomy professionals to provide painless doorstep sample collection.
-        </p>
-        <p style="margin-top:12px;">
-          Every sample collected undergoes strict temperature-controlled logistics, barcoded tracking, and double-pass verification by certified pathologists before reports are generated.
-        </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Test 1 -->
+                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Hematology</span>
+                        <h3 class="font-extrabold text-base text-slate-900 mt-2">Complete Blood Count (CBC)</h3>
+                        <p class="text-xs text-slate-500 mt-1">28 Parameters including Hb, TLC, DLC, Platelets & RBC Indices.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through">₹400</span>
+                            <div class="text-lg font-black text-brandNavy">₹299</div>
+                        </div>
+                        <button onclick="addSingleTestToCart('Complete Blood Count (CBC)', 299)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
 
-        <!-- ACCREDITATION PLACEHOLDER BOX -->
-        <!-- CODE COMMENT: HONESTY RULE - Do NOT claim NABL/CAP certifications as facts until verified certificate details are added below. -->
-        <div style="background:var(--surface); border:1px dashed var(--primary); padding:16px; border-radius:var(--radius-md); margin-top:20px;">
-          <h4 style="color:var(--primary); font-size:0.95rem;">Verified Accreditation Info</h4>
-          <p style="font-size:0.85rem; margin-top:4px;">
-            NABL Accreditation No: <strong>[ADD NABL CERTIFICATE NO.]</strong><br>
-            Lab Location: <strong>[ADD LAB ADDRESS]</strong><br>
-            Consultant Pathologist: <strong>[ADD PATHOLOGIST NAME & REG. NO.]</strong>
-          </p>
+                <!-- Test 2 -->
+                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Diabetic Profile</span>
+                        <h3 class="font-extrabold text-base text-slate-900 mt-2">HbA1c (Glycated Hb)</h3>
+                        <p class="text-xs text-slate-500 mt-1">Gold standard marker for average 3-month blood sugar control.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through">₹600</span>
+                            <div class="text-lg font-black text-brandNavy">₹399</div>
+                        </div>
+                        <button onclick="addSingleTestToCart('HbA1c (Glycated Hb)', 399)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Test 3 -->
+                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Endocrinology</span>
+                        <h3 class="font-extrabold text-base text-slate-900 mt-2">Thyroid Profile (T3, T4, TSH)</h3>
+                        <p class="text-xs text-slate-500 mt-1">Evaluates thyroid gland activity and metabolic hormone levels.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through">₹700</span>
+                            <div class="text-lg font-black text-brandNavy">₹450</div>
+                        </div>
+                        <button onclick="addSingleTestToCart('Thyroid Profile (T3, T4, TSH)', 450)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Test 4 -->
+                <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <span class="text-[10px] font-extrabold text-brandNavy uppercase bg-brandSkyBg px-2 py-0.5 rounded">Vitamins</span>
+                        <h3 class="font-extrabold text-base text-slate-900 mt-2">Vitamin D3 (25-OH)</h3>
+                        <p class="text-xs text-slate-500 mt-1">Assesses bone density support and immune health parameters.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through">₹1,500</span>
+                            <div class="text-lg font-black text-brandNavy">₹699</div>
+                        </div>
+                        <button onclick="addSingleTestToCart('Vitamin D3 (25-OH)', 699)" class="px-3 py-2 bg-brandNavy hover:bg-brandNavyLight text-white rounded-xl font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <div>
-        <div style="display:grid; gap:16px;">
-          <div style="background:var(--surface); padding:20px; border-radius:var(--radius-md); border:1px solid var(--border);">
-            <h4>Quality-Controlled Testing</h4>
-            <p style="font-size:0.875rem; margin-top:4px;">Internal and external quality assessment protocols run daily on all equipment.</p>
-          </div>
-          <div style="background:var(--surface); padding:20px; border-radius:var(--radius-md); border:1px solid var(--border);">
-            <h4>Painless Home Collection</h4>
-            <p style="font-size:0.875rem; margin-top:4px;">Single-use vacuum tubes and butterfly needles used by experienced technicians.</p>
-          </div>
-          <div style="background:var(--surface); padding:20px; border-radius:var(--radius-md); border:1px solid var(--border);">
-            <h4>Barcoded Sample Workflow</h4>
-            <p style="font-size:0.875rem; margin-top:4px;">Zero sample mix-up risk through unique barcode scanning at point of collection.</p>
-          </div>
+    <!-- About Us & Accreditation Features Section -->
+    <section id="about" class="py-16 bg-brandSkyBg border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-extrabold text-brandSkyBlue uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-slate-200">Quality Assured</span>
+                <h2 class="text-3xl font-black text-brandNavy mt-2">Why Choose Clasmo Diagnostics?</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Clinical precision, modern automation, and patient-first care.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">NABL Standard Process</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Standardized clinical guidelines and double-check pathologist report verification.</p>
+                </div>
+
+                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
+                        <i class="fa-solid fa-microscope"></i>
+                    </div>
+                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">Fully Automated Analyzers</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Equipped with robotic clinical systems minimizing manual margin of error.</p>
+                </div>
+
+                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">Safe Home Pickup</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Sterile blood sample collection by certified phlebotomists within 30-60 mins.</p>
+                </div>
+
+                <div class="p-6 bg-white rounded-3xl border border-slate-200 text-center hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-brandSkyBg text-brandSkyBlue flex items-center justify-center text-xl font-bold mb-3">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="font-extrabold text-brandNavy text-sm mb-1">Rapid Digital Turnaround</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">Receive verified PDF lab reports directly on WhatsApp and Email on the same day.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- TESTIMONIALS CAROUSEL -->
-    <div style="margin-top:60px;">
-      <div style="text-align:center; margin-bottom:24px;">
-        <h3>Patient Feedback</h3>
-        <p style="font-size:0.85rem;">Sample reviews – replace with real patient feedback</p>
-      </div>
+    <!-- Footer -->
+    <footer class="bg-brandDarkBlue text-white pt-12 pb-8 border-t-4 border-brandSkyBlue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-brandNavyLight text-xs">
+                
+                <div class="md:col-span-5 space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-brandSkyBlue flex items-center justify-center text-white">
+                            <i class="fa-solid fa-dna text-lg text-white"></i>
+                        </div>
+                        <span class="text-lg font-black tracking-tight text-white">CLASMO <span class="text-brandSkyLight">DIAGNOSTICS</span></span>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed max-w-sm">
+                        Clasmo Diagnostics Pvt Ltd is dedicated to bringing accurate, accessible, and timely clinical testing with seamless sample collection.
+                    </p>
+                    <p class="text-brandSkyLight font-bold italic">"Where Accuracy Saves Lives"</p>
+                </div>
 
-      <div id="testimonial-container" style="max-width:600px; margin:0 auto; background:var(--surface); padding:24px; border-radius:var(--radius-md); text-align:center; border:1px solid var(--border);" aria-live="polite">
-        <p id="testimonial-text" style="font-style:italic; font-size:1.05rem;">"Very punctual phlebotomist. Arrived right at 7:00 AM for fasting sample. Got my reports on WhatsApp by afternoon!"</p>
-        <p id="testimonial-author" style="font-weight:700; margin-top:12px; color:var(--primary);">- Sunita Agarwal, Pune</p>
-      </div>
-    </div>
-  </div>
-</section>
+                <div class="md:col-span-3 space-y-2">
+                    <p class="font-extrabold text-brandSkyLight uppercase tracking-wider text-sm mb-3">Quick Navigation</p>
+                    <p><a href="#home" class="hover:underline text-slate-300">Home</a></p>
+                    <p><a href="#packages" class="hover:underline text-slate-300">Health Checkup Packages</a></p>
+                    <p><a href="#upload-analyzer" class="hover:underline text-slate-300">Upload Report & Risk Analyzer</a></p>
+                    <p><a href="#portal" class="hover:underline text-slate-300">Download Reports / Upload Prescription</a></p>
+                    <p><a href="#join-clasmo" class="hover:underline text-slate-300">COME N JOIN WITH CLASMO</a></p>
+                </div>
 
-<!-- 10. FAQ -->
-<section id="faq" class="section-padding">
-  <div class="container" style="max-width:800px;">
-    <div class="section-header">
-      <span class="badge">FREQUENTLY ASKED QUESTIONS</span>
-      <h2 style="margin-top:10px;">Got Questions? We Have Answers</h2>
-    </div>
+                <div class="md:col-span-4 space-y-2">
+                    <p class="font-extrabold text-brandSkyLight uppercase tracking-wider text-sm mb-3">Contact Details</p>
+                    <p class="flex items-center gap-2 text-slate-300"><i class="fa-solid fa-phone text-brandSkyBlue"></i> Helpline: <a href="tel:9272173712" class="font-bold underline text-white">9272173712</a></p>
+                    <p class="flex items-center gap-2 text-slate-300"><i class="fa-solid fa-clock text-brandSkyBlue"></i> Working Hours: 07:00 AM - 09:00 PM (Mon-Sun)</p>
+                    <div class="pt-3 flex items-center space-x-3">
+                        <a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/posts/" target="_blank" class="w-8 h-8 rounded-full bg-brandNavyLight hover:bg-brandSkyBlue flex items-center justify-center text-white transition-colors">
+                            <i class="fa-brands fa-linkedin text-sm"></i>
+                        </a>
+                        <a href="https://maps.app.goo.gl/pm8WjvHN1AqmuN2h9" target="_blank" class="w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-white transition-colors">
+                            <i class="fa-solid fa-location-dot text-sm"></i>
+                        </a>
+                        <a href="https://wa.me/919272173712" target="_blank" class="w-8 h-8 rounded-full bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center text-white transition-colors">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                        </a>
+                    </div>
+                </div>
 
-    <div class="faq-accordion">
-      <div class="faq-item">
-        <button class="faq-trigger">What are the rules for fasting tests? <span>+</span></button>
-        <div class="faq-panel"><p>Fasting for 8-12 hours is required for tests like Fasting Blood Sugar and Lipid Profile. Water is allowed during fasting.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">Which areas do you cover for home sample collection? <span>+</span></button>
-        <div class="faq-panel"><p>We cover major urban pincodes within city limits. Please enter your pincode in the booking form to verify exact coverage.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">How quickly will I receive my lab report? <span>+</span></button>
-        <div class="faq-panel"><p>Most routine pathology tests (CBC, Blood Sugar, Thyroid) are delivered within 6 hours of sample collection.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">How do you ensure sample safety during transport? <span>+</span></button>
-        <div class="faq-panel"><p>Samples are carried in temperature-controlled cold-chain gel bags equipped with digital temp monitors.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">What payment options are available? <span>+</span></button>
-        <div class="faq-panel"><p>You can pay via Cash, UPI, or QR code directly to the phlebotomist after sample collection.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">Can I reschedule or cancel my booking? <span>+</span></button>
-        <div class="faq-panel"><p>Yes, you can reschedule free of charge by calling or sending a WhatsApp message to 9272173712 up to 1 hour before slot time.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">How do I access digital PDF reports? <span>+</span></button>
-        <div class="faq-panel"><p>Digital reports are delivered directly via WhatsApp PDF link and sent to your registered email address.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">Do you offer sample collection for children and elderly patients? <span>+</span></button>
-        <div class="faq-panel"><p>Yes, our phlebotomists are specifically trained in pediatric and geriatric painless sample extraction techniques.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+            </div>
 
-<!-- 11. CONTACT -->
-<section id="contact" class="section-padding" style="background:var(--surface-alt)">
-  <div class="container">
-    <div class="section-header">
-      <span class="badge">GET IN TOUCH</span>
-      <h2 style="margin-top:10px;">Contact & Location Details</h2>
-    </div>
-
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
-      <div style="background:var(--surface); padding:24px; border-radius:var(--radius-md); border:1px solid var(--border);">
-        <h3>Direct Contact</h3>
-        <p style="margin-top:12px;"><strong>Phone / WhatsApp:</strong><br><a href="https://wa.me/919272173712" target="_blank" rel="noopener">+91 9272173712</a></p>
-        <p style="margin-top:12px;"><strong>Operating Hours:</strong><br>Mon–Sat: 7:00 AM – 8:00 PM</p>
-        <p style="margin-top:12px;"><strong>LinkedIn:</strong><br><a href="https://www.linkedin.com/company/clasmo-diagnostics-pvt-ltd/" target="_blank" rel="noopener">Clasmo Diagnostics Page</a></p>
-      </div>
-
-      <div style="background:var(--surface); padding:24px; border-radius:var(--radius-md); border:1px solid var(--border);">
-        <h3>Quick WhatsApp Inquiry</h3>
-        <form id="contact-quick-form" style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
-          <input type="text" id="contact-name" placeholder="Your Name" required style="padding:10px; border:1px solid var(--border); border-radius:var(--radius-sm);">
-          <textarea id="contact-msg" rows="3" placeholder="Message or test inquiry..." required style="padding:10px; border:1px solid var(--border); border-radius:var(--radius-sm);"></textarea>
-          <button type="submit" class="btn btn-primary btn-sm">Send via WhatsApp</button>
-        </form>
-      </div>
-
-      <!-- MAP PLACEHOLDER -->
-      <div style="background:var(--surface); padding:24px; border-radius:var(--radius-md); border:1px solid var(--border);">
-        <h3>Lab Address</h3>
-        <p style="margin-top:8px; font-size:0.9rem;">[ADD LAB ADDRESS HERE]</p>
-        <div style="width:100%; height:140px; background:var(--surface-alt); margin-top:12px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.85rem;">
-          <!-- CODE COMMENT: Embed Google Maps iframe here -->
-          [ Google Maps Embed Placeholder ]
+            <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-400 font-medium">
+                <p>&copy; 2026 Clasmo Diagnostics Pvt Ltd. All rights reserved.</p>
+                <p class="mt-2 sm:mt-0">Clasmo Diagnostics | Precision Diagnostics, Compassionate Care</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </footer>
 
-<!-- 12. FOOTER -->
-<footer style="background:var(--navy); color:#FFF; padding:60px 0 20px;">
-  <div class="container">
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.1);">
-      <div>
-        <h3 style="color:#FFF;">CLASMO DIAGNOSTICS</h3>
-        <p style="font-size:0.85rem; color:rgba(255,255,255,0.7); margin-top:10px;">Ultra-Precise Testing, Delivered At Your Doorstep. Registered Diagnostic Laboratory.</p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul style="list-style:none; margin-top:10px; font-size:0.85rem; display:flex; flex-direction:column; gap:6px;">
-          <li><a href="#tests" style="color:rgba(255,255,255,0.8);">Tests & Packages</a></li>
-          <li><a href="#how-it-works" style="color:rgba(255,255,255,0.8);">How It Works</a></li>
-          <li><a href="#portal" style="color:rgba(255,255,255,0.8);">Patient Portal Demo</a></li>
-          <li><a href="#" onclick="openModal('privacy-modal'); return false;" style="color:rgba(255,255,255,0.8);">Privacy Policy</a></li>
-          <li><a href="#" onclick="openModal('terms-modal'); return false;" style="color:rgba(255,255,255,0.8);">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Popular Packages</h4>
-        <ul style="list-style:none; margin-top:10px; font-size:0.85rem; display:flex; flex-direction:column; gap:6px; color:rgba(255,255,255,0.8);">
-          <li>Full Body Wellness Package</li>
-          <li>Thyroid Profile (T3, T4, TSH)</li>
-          <li>Diabetes Care Package</li>
-          <li>Vitamin D3 & B12 Combo</li>
-        </ul>
-      </div>
-    </div>
-
-    <div style="margin-top:20px; font-size:0.75rem; color:rgba(255,255,255,0.6); text-align:center;">
-      <p style="margin-bottom:8px;"><strong>Medical Disclaimer:</strong> Test results are for informational purposes and not a substitute for professional medical advice, diagnosis, or treatment. Always consult your qualified healthcare physician.</p>
-      <p>© 2026 Clasmo Diagnostics Pvt Ltd. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer>
-
-<!-- FLOATING WHATSAPP BUTTON -->
-<a href="https://wa.me/919272173712" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-</a>
-
-<!-- MOBILE STICKY BOTTOM BAR -->
-<div class="mobile-sticky-bar">
-  <div>
-    <span style="font-size:0.75rem; display:block; color:var(--text-muted);">Home Sample Pickup</span>
-    <strong style="font-size:0.95rem; color:var(--primary);">Free Collection</strong>
-  </div>
-  <a href="#booking" class="btn btn-accent btn-sm">Book Pickup Now</a>
-</div>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toast-container"></div>
-
-<!-- MODALS -->
-
-<!-- 1. TEST DETAILS MODAL -->
-<div class="modal-overlay" id="test-detail-modal">
-  <div class="modal" role="dialog" aria-label="Test Details">
-    <button onclick="closeModal('test-detail-modal')" style="position:absolute; right:20px; top:20px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-    <div id="test-detail-content"></div>
-  </div>
-</div>
-
-<!-- 2. BOOKING CONFIRMATION MODAL -->
-<div class="modal-overlay" id="booking-confirm-modal">
-  <div class="modal" role="dialog" aria-label="Booking Confirmation">
-    <div style="text-align:center;">
-      <div style="width:60px; height:60px; background:rgba(22, 163, 74, 0.1); color:var(--success); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:1.8rem;">✓</div>
-      <h3>Home Collection Scheduled!</h3>
-      <p style="margin-top:4px;">Booking ID: <strong id="modal-booking-id" style="color:var(--primary);">#CLS-00000</strong></p>
-      
-      <div id="modal-booking-summary" style="text-align:left; background:var(--surface-alt); padding:16px; border-radius:var(--radius-md); margin:20px 0; font-size:0.875rem;">
-        <!-- Injected via JS -->
-      </div>
-
-      <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <button class="btn btn-primary" id="wa-share-booking-btn" style="flex:1;">Send details on WhatsApp</button>
-        <button class="btn btn-outline" id="download-summary-btn" style="flex:1;">Download Summary</button>
-      </div>
-      <button class="btn" onclick="closeModal('booking-confirm-modal')" style="margin-top:12px; width:100%; background:transparent; color:var(--text-muted);">Close Window</button>
-    </div>
-  </div>
-</div>
-
-<!-- 3. REPORT PREVIEW MODAL -->
-<div class="modal-overlay" id="report-modal">
-  <div class="modal" style="max-width:800px;" role="dialog" aria-label="Lab Report Preview">
-    <button onclick="closeModal('report-modal')" style="position:absolute; right:20px; top:20px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-    
-    <div id="report-print-area" style="padding:10px;">
-      <div style="display:flex; justify-content:space-between; border-bottom:2px solid var(--navy); padding-bottom:12px; margin-bottom:16px;">
-        <div>
-          <h2 style="color:var(--navy); font-size:1.4rem;">CLASMO DIAGNOSTICS PVT LTD</h2>
-          <p style="font-size:0.75rem;">Pathology & Medical Diagnostics Laboratory</p>
-        </div>
-        <div style="text-align:right; font-size:0.75rem;">
-          <p><strong>NABL Accredited Lab</strong></p>
-          <p>Date: 15 Oct 2026</p>
-        </div>
-      </div>
-
-      <div style="background:var(--surface-alt); padding:12px; border-radius:var(--radius-sm); margin-bottom:16px; font-size:0.85rem; display:grid; grid-template-columns:1fr 1fr;">
-        <div>
-          <p><strong>Patient Name:</strong> Sample Patient</p>
-          <p><strong>Age/Gender:</strong> 42 Y / Male</p>
-        </div>
-        <div>
-          <p><strong>Referred By:</strong> Self / Dr. Consultation</p>
-          <p><strong>Sample ID:</strong> #CLS-98421</p>
-        </div>
-      </div>
-
-      <table style="width:100%; border-collapse:collapse; margin-bottom:20px; font-size:0.85rem;">
-        <thead>
-          <tr style="border-bottom:1px solid var(--border); text-align:left; background:var(--surface-alt);">
-            <th style="padding:8px;">TEST PARAMETER</th>
-            <th style="padding:8px;">RESULT</th>
-            <th style="padding:8px;">REF RANGE</th>
-            <th style="padding:8px;">STATUS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px;">Hemoglobin</td>
-            <td style="padding:8px;"><strong>14.2 g/dL</strong></td>
-            <td style="padding:8px;">13.0 - 17.0 g/dL</td>
-            <td style="padding:8px; color:var(--success);">NORMAL</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px;">Fasting Blood Sugar</td>
-            <td style="padding:8px;"><strong>94 mg/dL</strong></td>
-            <td style="padding:8px;">70 - 99 mg/dL</td>
-            <td style="padding:8px; color:var(--success);">NORMAL</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px;">HbA1c</td>
-            <td style="padding:8px;"><strong>5.8 %</strong></td>
-            <td style="padding:8px;">4.0 - 5.6 %</td>
-            <td style="padding:8px; color:var(--warning);">HIGH</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; border-top:1px solid var(--border); padding-top:16px; font-size:0.8rem;">
-        <div><p>Verified By: Automated Analyzer</p></div>
-        <div style="text-align:center;">
-          <div style="font-family:cursive; font-size:1.2rem; color:var(--navy);">Dr. Pathologist</div>
-          <p>[ADD PATHOLOGIST NAME & REG. NO.]</p>
-        </div>
-      </div>
-    </div>
-
-    <button class="btn btn-primary btn-sm" onclick="window.print()" style="margin-top:20px;">Print / Save as PDF</button>
-  </div>
-</div>
-
-<!-- 4. PRIVACY POLICY MODAL -->
-<div class="modal-overlay" id="privacy-modal">
-  <div class="modal" role="dialog" aria-label="Privacy Policy">
-    <button onclick="closeModal('privacy-modal')" style="position:absolute; right:20px; top:20px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-    <h3>Privacy Policy</h3>
-    <div style="margin-top:16px; font-size:0.875rem; display:flex; flex-direction:column; gap:10px;">
-      <p>Clasmo Diagnostics Pvt Ltd respects patient data privacy. Personal information collected through booking forms (Name, Mobile Number, Address) is solely used for scheduling phlebotomist visits and dispatching diagnostic reports.</p>
-      <p>We do not sell or share patient medical records with third-party marketing entities.</p>
-    </div>
-  </div>
-</div>
-
-<!-- 5. TERMS OF SERVICE MODAL -->
-<div class="modal-overlay" id="terms-modal">
-  <div class="modal" role="dialog" aria-label="Terms of Service">
-    <button onclick="closeModal('terms-modal')" style="position:absolute; right:20px; top:20px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-    <h3>Terms of Service</h3>
-    <div style="margin-top:16px; font-size:0.875rem; display:flex; flex-direction:column; gap:10px;">
-      <p>Home collection services are subject to location coverage and slot availability. Fasting recommendations must be strictly followed by patients for test accuracy.</p>
-      <p>Diagnostic reports delivered are meant for clinical assistance and must be reviewed by a licensed medical practitioner.</p>
-    </div>
-  </div>
-</div>
-
-<!-- JAVASCRIPT APPLICATION LOGIC -->
-<script>
-'use strict';
-
-/* 1. TEST DATA ARRAY (14 FULL ITEMS) */
-const TESTS_DATA = [
-  {
-    id: 'test-1',
-    name: 'Full Body Wellness Package',
-    category: 'Full Body Packages',
-    price: 1499,
-    includesCount: 62,
-    fastingRequired: true,
-    reportTime: '8 Hours',
-    description: 'Comprehensive screening covering CBC, Lipid, Kidney, Liver, Thyroid & Diabetes markers.'
-  },
-  {
-    id: 'test-2',
-    name: 'Complete Blood Count (CBC)',
-    category: 'Pathology Essentials',
-    price: 299,
-    includesCount: 24,
-    fastingRequired: false,
-    reportTime: '6 Hours',
-    description: 'Measures RBCs, WBCs, Platelets, Hemoglobin and infection indicators.'
-  },
-  {
-    id: 'test-3',
-    name: 'Thyroid Profile (T3, T4, TSH)',
-    category: 'Thyroid & Vitamins',
-    price: 399,
-    includesCount: 3,
-    fastingRequired: false,
-    reportTime: '6 Hours',
-    description: 'Evaluates overall thyroid gland activity and metabolic hormone balance.'
-  },
-  {
-    id: 'test-4',
-    name: 'Diabetes Care Package (HbA1c)',
-    category: 'Diabetes & Cardiac',
-    price: 699,
-    includesCount: 4,
-    fastingRequired: true,
-    reportTime: '6 Hours',
-    description: 'Includes HbA1c average blood sugar (3 months) plus Fasting Blood Sugar.'
-  },
-  {
-    id: 'test-5',
-    name: 'Lipid Profile',
-    category: 'Diabetes & Cardiac',
-    price: 499,
-    includesCount: 8,
-    fastingRequired: true,
-    reportTime: '6 Hours',
-    description: 'Detailed cardiac risk assessment including Cholesterol, Triglycerides, HDL, LDL.'
-  },
-  {
-    id: 'test-6',
-    name: 'Vitamin D3 & B12 Combo',
-    category: 'Thyroid & Vitamins',
-    price: 899,
-    includesCount: 2,
-    fastingRequired: false,
-    reportTime: '12 Hours',
-    description: 'Assesses bone health strength and nerve function vitamin levels.'
-  },
-  {
-    id: 'test-7',
-    name: 'Liver Function Test (LFT)',
-    category: 'Pathology Essentials',
-    price: 599,
-    includesCount: 11,
-    fastingRequired: false,
-    reportTime: '6 Hours',
-    description: 'Checks Bilirubin, SGOT, SGPT, Alkaline Phosphatase and Protein levels.'
-  },
-  {
-    id: 'test-8',
-    name: 'Kidney Function Test (KFT)',
-    category: 'Pathology Essentials',
-    price: 599,
-    includesCount: 8,
-    fastingRequired: false,
-    reportTime: '6 Hours',
-    description: 'Evaluates Urea, Creatinine, Uric Acid and Electrolytes.'
-  },
-  {
-    id: 'test-9',
-    name: 'Fasting Blood Sugar (FBS)',
-    category: 'Diabetes & Cardiac',
-    price: 120,
-    includesCount: 1,
-    fastingRequired: true,
-    reportTime: '4 Hours',
-    description: 'Single-point blood glucose level assessment after overnight fasting.'
-  },
-  {
-    id: 'test-10',
-    name: 'Urine Routine & Microscopy',
-    category: 'Pathology Essentials',
-    price: 199,
-    includesCount: 18,
-    fastingRequired: false,
-    reportTime: '4 Hours',
-    description: 'Screens for urinary tract infections, kidney conditions and glucose excretion.'
-  },
-  {
-    id: 'test-11',
-    name: 'Iron Studies Package',
-    category: 'Thyroid & Vitamins',
-    price: 650,
-    includesCount: 4,
-    fastingRequired: false,
-    reportTime: '8 Hours',
-    description: 'Measures Serum Iron, Ferritin, and Total Iron Binding Capacity (TIBC).'
-  },
-  {
-    id: 'test-12',
-    name: 'C-Reactive Protein (CRP) High Sensitivity',
-    category: 'Pathology Essentials',
-    price: 450,
-    includesCount: 1,
-    fastingRequired: false,
-    reportTime: '6 Hours',
-    description: 'Detects acute systemic inflammation and cardiac risk factor elevation.'
-  },
-  {
-    id: 'test-13',
-    name: 'HbA1c (Glycated Hemoglobin Alone)',
-    category: 'Diabetes & Cardiac',
-    price: 450,
-    includesCount: 1,
-    fastingRequired: false,
-    reportTime: '4 Hours',
-    description: 'Monitors long-term 90-day glycemic control without requiring fasting.'
-  },
-  {
-    id: 'test-14',
-    name: 'Vitamin B12 Alone',
-    category: 'Thyroid & Vitamins',
-    price: 499,
-    includesCount: 1,
-    fastingRequired: false,
-    reportTime: '8 Hours',
-    description: 'Specific evaluation of Cyanocobalamin levels for neurological health.'
-  }
-];
-
-/* 2. STATE MANAGEMENT */
-let cart = [];
-let appliedPromo = null;
-
-/* 3. INITIALIZATION & DOM LOAD */
-document.addEventListener('DOMContentLoaded', () => {
-  renderTestCards(TESTS_DATA);
-  setupEventListeners();
-  setupCounters();
-  setupDateRestriction();
-});
-
-/* 4. RENDER TESTS GRID */
-function renderTestCards(items) {
-  const container = document.getElementById('tests-grid-container');
-  const noRes = document.getElementById('no-results');
-  container.innerHTML = '';
-
-  if (items.length === 0) {
-    noRes.style.display = 'block';
-    return;
-  }
-  noRes.style.display = 'none';
-
-  items.forEach(test => {
-    const isInCart = cart.some(item => item.id === test.id);
-    const card = document.createElement('div');
-    card.className = 'test-card';
-    card.innerHTML = `
-      <div class="test-header">
-        ${test.fastingRequired ? '<span class="badge" style="background:rgba(217, 119, 6, 0.1); color:var(--warning);">Fasting Required</span>' : '<span class="badge">No Fasting Required</span>'}
-        <h3 class="test-title" style="margin-top:8px;">${test.name}</h3>
-        <p style="font-size:0.85rem;">Includes ${test.includesCount} Parameters</p>
-      </div>
-      <p style="font-size:0.85rem; margin-bottom:12px;">${test.description}</p>
-      <div class="test-meta">
-        <span>⏱ Report in ${test.reportTime}</span>
-      </div>
-      <div class="test-price">₹${test.price.toLocaleString('en-IN')}</div>
-      <div class="test-actions">
-        <button class="btn btn-outline btn-sm" onclick="openTestDetail('${test.id}')">Details</button>
-        <button class="btn ${isInCart ? 'btn-primary' : 'btn-accent'} btn-sm" style="flex:1;" onclick="toggleCartItem('${test.id}')">
-          ${isInCart ? 'Added ✓' : 'Add to Cart'}
+    <!-- FLOATING DIRECT CALL & WHATSAPP BUTTONS -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
+        <!-- AI Chatbot Toggle Button -->
+        <button onclick="toggleChatbot()" class="w-14 h-14 bg-brandNavy hover:bg-brandNavyLight text-brandSkyLight rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-110 border-2 border-brandSkyBlue group relative" title="Chat with Clasmo AI Assistant">
+            <i class="fa-solid fa-robot text-2xl group-hover:rotate-12 transition-transform"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-ping"></span>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></span>
         </button>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
+        <a href="https://wa.me/919272173712?text=Hello%20Clasmo%20Diagnostics,%20I%20want%20to%20book%20a%20test." target="_blank" class="w-13 h-13 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-110">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+        </a>
+        <a href="tel:9272173712" class="w-13 h-13 bg-brandSkyBlue hover:bg-brandSkyLight text-white rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-110">
+            <i class="fa-solid fa-phone text-xl"></i>
+        </a>
+    </div>
 
-/* 5. FILTER & SEARCH LOGIC */
-function setupEventListeners() {
-  // Search Box Live Filter
-  document.getElementById('test-search-input').addEventListener('input', (e) => {
-    const val = e.target.value.toLowerCase();
-    const activeChip = document.querySelector('.chip.active').dataset.category;
-    filterTests(val, activeChip);
-  });
-
-  // Filter Chips
-  document.getElementById('filter-chips').addEventListener('click', (e) => {
-    if (e.target.classList.contains('chip')) {
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      e.target.classList.add('active');
-      const searchVal = document.getElementById('test-search-input').value.toLowerCase();
-      filterTests(searchVal, e.target.dataset.category);
-    }
-  });
-
-  // Dark Mode Toggle
-  document.getElementById('theme-toggle-btn').addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-  });
-
-  // Mobile Menu Toggle
-  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-    document.getElementById('nav-links').classList.toggle('active');
-  });
-
-  // Cart Drawer Opens / Closes
-  document.getElementById('open-cart-btn').addEventListener('click', openCartDrawer);
-  document.getElementById('close-cart-btn').addEventListener('click', closeCartDrawer);
-  document.getElementById('cart-overlay').addEventListener('click', closeCartDrawer);
-
-  // Promo Code Copy
-  document.getElementById('copy-code-btn').addEventListener('click', () => {
-    navigator.clipboard.writeText('CLASMO20');
-    showToast('Promo code CLASMO20 copied!');
-  });
-
-  // Apply Promo Logic
-  document.getElementById('apply-promo-btn').addEventListener('click', handleApplyPromo);
-
-  // Checkout Button
-  document.getElementById('checkout-btn').addEventListener('click', () => {
-    closeCartDrawer();
-    window.location.hash = '#booking';
-  });
-
-  // Booking Form Submission
-  document.getElementById('lab-booking-form').addEventListener('submit', handleBookingSubmit);
-
-  // Quick WhatsApp Contact Form
-  document.getElementById('contact-quick-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('contact-name').value;
-    const msg = document.getElementById('contact-msg').value;
-    const text = encodeURIComponent(`Hello Clasmo Diagnostics, I am ${name}. ${msg}`);
-    window.open(`https://wa.me/919272173712?text=${text}`, '_blank');
-  });
-
-  // FAQ Accordion Toggle
-  document.querySelectorAll('.faq-trigger').forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      const item = trigger.parentElement;
-      item.classList.toggle('active');
-    });
-  });
-
-  // Scroll Shrink Header
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      document.getElementById('main-header').classList.add('shrink');
-    } else {
-      document.getElementById('main-header').classList.remove('shrink');
-    }
-  });
-}
-
-function filterTests(searchVal, category) {
-  const filtered = TESTS_DATA.filter(t => {
-    const matchesSearch = t.name.toLowerCase().includes(searchVal) || t.description.toLowerCase().includes(searchVal);
-    const matchesCategory = category === 'all' || t.category === category;
-    return matchesSearch && matchesCategory;
-  });
-  renderTestCards(filtered);
-}
-
-/* 6. CART MANAGEMENT */
-function toggleCartItem(testId) {
-  const existingIndex = cart.findIndex(item => item.id === testId);
-  const testObj = TESTS_DATA.find(t => t.id === testId);
-
-  if (existingIndex > -1) {
-    cart.splice(existingIndex, 1);
-    showToast(`Removed ${testObj.name} from cart`);
-  } else {
-    cart.push(testObj);
-    showToast(`Added ${testObj.name} to cart`);
-  }
-
-  updateCartUI();
-  // Re-render current visible items to reflect button changes
-  const activeCategory = document.querySelector('.chip.active').dataset.category;
-  const searchVal = document.getElementById('test-search-input').value.toLowerCase();
-  filterTests(searchVal, activeCategory);
-}
-
-function updateCartUI() {
-  document.getElementById('cart-badge-count').textContent = cart.length;
-  document.getElementById('cart-drawer-count').textContent = cart.length;
-
-  const container = document.getElementById('cart-items-container');
-  container.innerHTML = '';
-
-  if (cart.length === 0) {
-    container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:40px;">Your cart is empty.</p>';
-  } else {
-    cart.forEach(item => {
-      const el = document.createElement('div');
-      el.className = 'cart-item';
-      el.innerHTML = `
-        <div>
-          <strong style="font-size:0.9rem;">${item.name}</strong>
-          <div style="font-size:0.8rem; color:var(--primary);">₹${item.price}</div>
+    <!-- INTELLIGENT AI CHATBOT DRAWER / WINDOW -->
+    <div id="chatbotWindow" class="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border-2 border-brandSkyBlue/40 overflow-hidden transform scale-95 opacity-0 pointer-events-none transition-all duration-300 flex flex-col h-[500px]">
+        
+        <!-- Chat Header -->
+        <div class="bg-brandDarkBlue p-4 text-white flex items-center justify-between border-b border-brandNavyLight">
+            <div class="flex items-center space-x-3">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-2xl bg-brandSkyBlue flex items-center justify-center text-white font-bold shadow">
+                        <i class="fa-solid fa-robot text-xl"></i>
+                    </div>
+                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-brandDarkBlue"></span>
+                </div>
+                <div>
+                    <h3 class="font-black text-sm tracking-wide">Clasmo AI Assistant</h3>
+                    <p class="text-[10px] text-brandSkyLight font-medium">Online • 24/7 Diagnostic Support</p>
+                </div>
+            </div>
+            <button onclick="toggleChatbot()" class="w-8 h-8 rounded-full bg-brandNavy hover:bg-brandNavyLight text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
-        <button onclick="toggleCartItem('${item.id}')" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:1.1rem;">&times;</button>
-      `;
-      container.appendChild(el);
-    });
-  }
 
-  calculateCartTotals();
-  syncBookingFormTests();
-}
+        <!-- Quick Topic Chips -->
+        <div class="bg-brandSkyBg px-3 py-2 border-b border-slate-200 flex gap-1.5 overflow-x-auto text-[10px] font-bold text-slate-700 whitespace-nowrap scrollbar-none">
+            <button onclick="sendQuickPrompt('Book Home Sample')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">🏠 Book Sample</button>
+            <button onclick="sendQuickPrompt('Health Packages')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">📦 Packages</button>
+            <button onclick="sendQuickPrompt('Franchise Partner')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">🤝 Franchise</button>
+            <button onclick="sendQuickPrompt('Job Vacancy')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">💼 Jobs</button>
+            <button onclick="sendQuickPrompt('Report Risk Analysis')" class="px-2.5 py-1 bg-white hover:bg-brandSkyBlue hover:text-white rounded-lg border border-slate-200 shadow-xs transition-colors">🔬 Report Risk</button>
+        </div>
 
-function calculateCartTotals() {
-  const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
-  let discount = 0;
+        <!-- Chat Message Log -->
+        <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs bg-slate-50">
+            <!-- Greeting Message -->
+            <div class="flex items-start space-x-2">
+                <div class="w-7 h-7 rounded-full bg-brandSkyBlue text-white flex items-center justify-center text-[10px] shrink-0 font-bold">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl rounded-tl-sm border border-slate-200 shadow-xs text-slate-800 max-w-[80%] space-y-1">
+                    <p class="font-bold text-brandNavy">Hello! Welcome to Clasmo Diagnostics AI Assistant. 🧬</p>
+                    <p>How can I help you today? You can ask about our health checkup packages, home collection, lab report analysis, franchise registration, or open job vacancies!</p>
+                </div>
+            </div>
+        </div>
 
-  // PROMO RULE: CLASMO20 gives 20% off only if cart contains Full Body Wellness Package
-  if (appliedPromo === 'CLASMO20') {
-    const hasFullBodyPackage = cart.some(item => item.id === 'test-1');
-    if (hasFullBodyPackage) {
-      discount = Math.round(subtotal * 0.20);
-      document.getElementById('promo-message').textContent = '20% discount applied!';
-      document.getElementById('promo-message').style.color = 'var(--success)';
-    } else {
-      document.getElementById('promo-message').textContent = 'Code CLASMO20 requires Full Body Wellness Package in cart.';
-      document.getElementById('promo-message').style.color = 'var(--warning)';
-    }
-  }
+        <!-- Typing Indicator -->
+        <div id="chatTyping" class="hidden px-4 py-2 text-[10px] text-slate-400 italic flex items-center gap-1.5 bg-slate-50">
+            <span class="w-1.5 h-1.5 bg-brandSkyBlue rounded-full animate-bounce"></span>
+            <span class="w-1.5 h-1.5 bg-brandSkyBlue rounded-full animate-bounce [animation-delay:0.2s]"></span>
+            <span class="w-1.5 h-1.5 bg-brandSkyBlue rounded-full animate-bounce [animation-delay:0.4s]"></span>
+            <span>Clasmo AI is typing...</span>
+        </div>
 
-  const total = subtotal - discount;
+        <!-- Chat Input Form -->
+        <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+            <input type="text" id="chatInput" placeholder="Type your health or booking question..." autocomplete="off" class="flex-1 px-3.5 py-2 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+            <button type="submit" class="w-10 h-10 rounded-xl sky-gradient-btn text-white flex items-center justify-center shadow transition-all hover:scale-105 shrink-0">
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+        </form>
 
-  document.getElementById('cart-subtotal').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
-  document.getElementById('cart-discount').textContent = `-₹${discount.toLocaleString('en-IN')}`;
-  document.getElementById('cart-total').textContent = `₹${total.toLocaleString('en-IN')}`;
-}
+    </div>
 
-function handleApplyPromo() {
-  const code = document.getElementById('promo-input').value.trim().toUpperCase();
-  if (code === 'CLASMO20') {
-    appliedPromo = 'CLASMO20';
-  } else {
-    appliedPromo = null;
-    document.getElementById('promo-message').textContent = 'Invalid promo code.';
-    document.getElementById('promo-message').style.color = 'var(--danger)';
-  }
-  calculateCartTotals();
-}
+    <!-- FRANCHISE APPLICATION MODAL -->
+    <div id="franchiseModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="franchiseModalCard" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandSkyBlue max-h-[90vh] overflow-y-auto">
+            <button onclick="closeFranchiseModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
-function openCartDrawer() {
-  document.getElementById('cart-drawer').classList.add('active');
-  document.getElementById('cart-overlay').classList.add('active');
-}
+            <div class="text-center mb-4">
+                <div class="w-10 h-10 bg-brandSkyBg text-brandSkyBlue rounded-2xl flex items-center justify-center text-xl mx-auto mb-2 font-bold">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+                <h3 class="text-lg font-black text-brandNavy">CLASMO Franchise Partner Registration</h3>
+                <p class="text-xs text-slate-500 font-medium">Register as a Brand Partner or Self-Operated Diagnostic Lab.</p>
+            </div>
 
-function closeCartDrawer() {
-  document.getElementById('cart-drawer').classList.remove('active');
-  document.getElementById('cart-overlay').classList.remove('active');
-}
+            <form onsubmit="handleFranchiseSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Applicant / Organization Name *</label>
+                    <input type="text" id="franName" required placeholder="Enter full name or firm name" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                </div>
 
-function syncBookingFormTests() {
-  const input = document.getElementById('tests-selected-display');
-  if (cart.length === 0) {
-    input.value = '';
-  } else {
-    input.value = cart.map(i => i.name).join(', ');
-  }
-}
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Phone Number *</label>
+                        <input type="tel" id="franPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Email Address *</label>
+                        <input type="email" id="franEmail" required placeholder="email@domain.com" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                    </div>
+                </div>
 
-/* 7. BOOKING FORM VALIDATION & SUBMISSION */
-function handleBookingSubmit(e) {
-  e.preventDefault();
-  let isValid = true;
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Preferred City / Location *</label>
+                        <input type="text" id="franLocation" required placeholder="e.g., Pune, Mumbai" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Franchise Model *</label>
+                        <select id="franType" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
+                            <option value="CLASMO Brand Partner Center">CLASMO Brand Partner</option>
+                            <option value="Self-Operated Collection Lab">Self-Operated Collection Lab</option>
+                            <option value="Hospital/Clinic Diagnostic Tie-up">Clinic / Hospital Tie-up</option>
+                        </select>
+                    </div>
+                </div>
 
-  const name = document.getElementById('full-name');
-  const mobile = document.getElementById('mobile-number');
-  const age = document.getElementById('patient-age');
-  const gender = document.getElementById('patient-gender');
-  const date = document.getElementById('pickup-date');
-  const slot = document.getElementById('time-slot');
-  const address = document.getElementById('full-address');
-  const pincode = document.getElementById('pincode');
-  const testsVal = document.getElementById('tests-selected-display');
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Investment Capacity</label>
+                    <select id="franInvestment" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
+                        <option>₹2 Lakhs - ₹5 Lakhs</option>
+                        <option>₹5 Lakhs - ₹10 Lakhs</option>
+                        <option>₹10 Lakhs - ₹25 Lakhs</option>
+                        <option>Above ₹25 Lakhs</option>
+                    </select>
+                </div>
 
-  // Clear errors
-  document.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Additional Details / Space Availability</label>
+                    <textarea id="franComments" rows="2" placeholder="Mention commercial space size (sq ft), medical background, etc." class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandSkyBlue"></textarea>
+                </div>
 
-  if (!name.value.trim()) { name.parentElement.classList.add('error'); isValid = false; }
-  
-  // 10-digit Indian Mobile check starting 6-9
-  const mobileRegex = /^[6-9]\d{9}$/;
-  if (!mobileRegex.test(mobile.value.trim())) { mobile.parentElement.classList.add('error'); isValid = false; }
+                <button type="submit" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-black text-xs transition-all shadow">
+                    Submit Franchise Partner Application
+                </button>
+            </form>
+        </div>
+    </div>
 
-  if (!age.value || age.value < 1) { age.parentElement.parentElement.classList.add('error'); isValid = false; }
-  if (!gender.value) { gender.parentElement.parentElement.classList.add('error'); isValid = false; }
-  if (cart.length === 0) { testsVal.parentElement.classList.add('error'); isValid = false; }
-  if (!date.value) { date.parentElement.classList.add('error'); isValid = false; }
-  if (!slot.value) { slot.parentElement.classList.add('error'); isValid = false; }
-  if (!address.value.trim()) { address.parentElement.classList.add('error'); isValid = false; }
-  
-  // 6-digit Pincode check
-  const pinRegex = /^\d{6}$/;
-  if (!pinRegex.test(pincode.value.trim())) { pincode.parentElement.classList.add('error'); isValid = false; }
+    <!-- JOB VACANCY APPLICATION MODAL -->
+    <div id="jobVacancyModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="jobModalCard" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandNavy max-h-[90vh] overflow-y-auto">
+            <button onclick="closeJobVacancyModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
-  if (!isValid) return;
+            <div class="text-center mb-4">
+                <div class="w-10 h-10 bg-brandNavy text-brandSkyLight rounded-2xl flex items-center justify-center text-xl mx-auto mb-2 font-bold">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <h3 class="text-lg font-black text-brandNavy">Apply For Position at CLASMO</h3>
+                <p class="text-xs text-slate-500 font-medium">Join our team across existing diagnostic branches.</p>
+            </div>
 
-  // Generate Booking ID
-  const bookingId = '#CLS-' + Math.floor(10000 + Math.random() * 90000);
-  
-  // Show Confirmation Modal
-  document.getElementById('modal-booking-id').textContent = bookingId;
-  const summaryBox = document.getElementById('modal-booking-summary');
-  
-  const subtotalText = document.getElementById('cart-subtotal').textContent;
-  const totalText = document.getElementById('cart-total').textContent;
+            <form onsubmit="handleJobSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Full Applicant Name *</label>
+                    <input type="text" id="jobName" required placeholder="Full legal name" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                </div>
 
-  summaryBox.innerHTML = `
-    <p><strong>Patient:</strong> ${name.value} (${age.value}Y / ${gender.value})</p>
-    <p><strong>Mobile:</strong> ${mobile.value}</p>
-    <p><strong>Pickup Slot:</strong> ${date.value} | ${slot.value}</p>
-    <p><strong>Address:</strong> ${address.value}, ${pincode.value}</p>
-    <p style="margin-top:8px;"><strong>Selected Tests:</strong> ${testsVal.value}</p>
-    <p style="margin-top:8px; font-size:1rem; color:var(--primary);"><strong>Total Payable:</strong> ${totalText}</p>
-  `;
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Phone Number *</label>
+                        <input type="tel" id="jobPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Email Address *</label>
+                        <input type="email" id="jobEmail" required placeholder="email@domain.com" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                    </div>
+                </div>
 
-  /* =========================================================================
-     BACKEND API INTEGRATION HOOK (3-STEP PLACEHOLDER)
-     =========================================================================
-     To connect a real production backend:
-     1. Construct payload object: 
-        const payload = { bookingId, name: name.value, mobile: mobile.value, cart, totalText };
-     2. Send async POST request:
-        fetch('https://YOUR-BACKEND-API-ENDPOINT.com/bookings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Position Applied For *</label>
+                        <select id="jobRole" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
+                            <option value="Phlebotomist (Sample Collector)">Phlebotomist</option>
+                            <option value="Lab Technician (DMLT/BMLT)">Lab Technician</option>
+                            <option value="Receptionist / Front Desk Executive">Receptionist / Front Desk</option>
+                            <option value="Business Development / Marketing Executive">Marketing Executive</option>
+                            <option value="Branch Manager">Branch Manager</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Experience Level *</label>
+                        <select id="jobExp" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
+                            <option>Fresher (0 Years)</option>
+                            <option>1 - 3 Years</option>
+                            <option>3 - 5 Years</option>
+                            <option>5+ Years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Highest Qualification *</label>
+                        <input type="text" id="jobQual" required placeholder="e.g. DMLT, BMLT, BSc, MBA" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Preferred Branch / City *</label>
+                        <input type="text" id="jobBranch" required placeholder="e.g. Main Lab / Pune" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brandNavy">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Attach Resume / CV *</label>
+                    <input type="file" id="jobResume" accept=".pdf,.doc,.docx" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brandNavy file:text-white hover:file:bg-brandNavyLight">
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-brandNavy hover:bg-brandNavyLight text-white font-black text-xs transition-all shadow">
+                    Submit Job Application
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PACKAGE DETAILS & TEST BREAKDOWN MODAL -->
+    <div id="packageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="packageModalCard" class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandSkyBlue max-h-[85vh] overflow-y-auto">
+            <button onclick="closePackageDetailModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalPackageContent">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- HOME SAMPLE COLLECTION MODAL -->
+    <div id="homeCollectionModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="modalCard" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative transform scale-95 transition-transform duration-300 border-2 border-brandNavy">
+            <button onclick="closeHomeCollectionModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <div class="w-10 h-10 bg-brandSkyBg text-brandSkyBlue rounded-2xl flex items-center justify-center text-xl mx-auto mb-2 font-bold">
+                    <i class="fa-solid fa-house-medical"></i>
+                </div>
+                <h3 class="text-lg font-black text-brandNavy">Book Doorstep Sample Collection</h3>
+                <p class="text-xs text-slate-500 font-medium">Select your preferred date & slot for sample pickup.</p>
+            </div>
+
+            <form onsubmit="handleModalFormSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Patient Name *</label>
+                    <input type="text" id="modalName" required placeholder="Full name" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Phone Number *</label>
+                        <input type="tel" id="modalPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Preferred Slot *</label>
+                        <select id="modalSlot" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
+                            <option>07:00 AM - 09:00 AM</option>
+                            <option>09:00 AM - 11:00 AM</option>
+                            <option>11:00 AM - 01:00 PM</option>
+                            <option>04:00 PM - 06:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Address / Landmark *</label>
+                    <input type="text" id="modalAddress" required placeholder="Complete home address" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Selected Test / Package</label>
+                    <select id="modalPackage" class="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none font-semibold">
+                        <option value="Fitness Smart Checkup (₹1,999)">Fitness Smart Checkup (₹1,999)</option>
+                        <option value="Fitness Advance Package (₹2,999)">Fitness Advance Package (₹2,999)</option>
+                        <option value="Hairfall Profile (₹2,999)">Hairfall Profile (₹2,999)</option>
+                        <option value="PCOD Extended Profile (₹5,999)">PCOD Extended Profile (₹5,999)</option>
+                        <option value="Custom Blood Test">Custom Blood Test</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-black text-xs transition-all shadow">
+                    Confirm Home Pickup Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden opacity-0 pointer-events-none transition-opacity duration-300">
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
+                
+                <div class="p-5 bg-brandNavy text-white flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-shopping-bag text-brandSkyLight text-lg"></i>
+                        <h3 class="font-extrabold text-base">Your Cart Items</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="text-slate-300 hover:text-white p-1">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div id="cartItemsContainer" class="p-5 overflow-y-auto flex-1 space-y-3 text-xs">
+                    <!-- Dynamic cart list -->
+                </div>
+
+                <div class="p-5 bg-brandSkyBg border-t border-slate-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs text-slate-500 font-semibold">Subtotal</span>
+                        <span id="cartSubtotal" class="text-lg font-black text-brandNavy">₹0</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4 text-emerald-600 text-xs font-bold">
+                        <span>Doorstep Collection Fee</span>
+                        <span>FREE</span>
+                    </div>
+
+                    <button onclick="checkoutCart()" class="w-full py-3 rounded-xl sky-gradient-btn text-white font-black text-xs transition-all shadow">
+                        Proceed To Checkout <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 bg-brandDarkBlue text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 border border-brandSkyBlue">
+        <i class="fa-solid fa-circle-check text-brandSkyLight text-base"></i>
+        <span id="toastMessage">Done!</span>
+    </div>
+
+    <!-- JavaScript Master Application Code -->
+    <script>
+        // ... existing JavaScript code ...
+
+        // Intelligent Chatbot State & Logic
+        let isChatOpen = false;
+
+        function toggleChatbot() {
+            isChatOpen = !isChatOpen;
+            const chatWin = document.getElementById('chatbotWindow');
+            if (isChatOpen) {
+                chatWin.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                chatWin.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+                document.getElementById('chatInput').focus();
+            } else {
+                chatWin.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                chatWin.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            }
+        }
+
+        function sendQuickPrompt(promptText) {
+            document.getElementById('chatInput').value = promptText;
+            handleChatSubmit(new Event('submit'));
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('chatInput');
+            const userMsg = inputField.value.trim();
+            if (!userMsg) return;
+
+            appendMessage(userMsg, 'user');
+            inputField.value = '';
+
+            // Show typing indicator
+            const typing = document.getElementById('chatTyping');
+            typing.classList.remove('hidden');
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            setTimeout(() => {
+                typing.classList.add('hidden');
+                const botReply = generateBotResponse(userMsg);
+                appendMessage(botReply, 'bot');
+            }, 900);
+        }
+
+        function appendMessage(text, sender) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+
+            if (sender === 'user') {
+                messageDiv.className = 'flex items-end justify-end space-x-2';
+                messageDiv.innerHTML = `
+                    <div class="bg-brandNavy text-white p-3 rounded-2xl rounded-tr-sm shadow-xs max-w-[80%]">
+                        <p>${escapeHtml(text)}</p>
+                    </div>
+                `;
+            } else {
+                messageDiv.className = 'flex items-start space-x-2';
+                messageDiv.innerHTML = `
+                    <div class="w-7 h-7 rounded-full bg-brandSkyBlue text-white flex items-center justify-center text-[10px] shrink-0 font-bold">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-sm border border-slate-200 shadow-xs text-slate-800 max-w-[80%] space-y-1">
+                        <p>${text}</p>
+                    </div>
+                `;
+            }
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        function generateBotResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('book') || q.includes('home') || q.includes('collection') || q.includes('pickup')) {
+                return `We offer free doorstep sample collection within 30-60 minutes! You can click <a href="#" onclick="openHomeCollectionModal(); toggleChatbot();" class="text-brandSkyBlue font-extrabold underline">Book Home Sample</a> or call our helpline at <a href="tel:9272173712" class="font-bold underline text-brandNavy">9272173712</a>.`;
+            }
+            if (q.includes('package') || q.includes('price') || q.includes('cost') || q.includes('checkup') || q.includes('fitness')) {
+                return `Our top packages include: <br>• <strong>Fitness Smart Checkup (80+ parameters)</strong> for <strong>₹1,999</strong> (was ₹4,500)<br>• <strong>Fitness Advance Package</strong> for <strong>₹2,999</strong><br>Check out our Health Packages section above to explore all options!`;
+            }
+            if (q.includes('franchise') || q.includes('partner') || q.includes('lab') || q.includes('business')) {
+                return `Want to partner with Clasmo Diagnostics? You can register as a Brand Partner or Self-Operated Lab! Click <a href="#" onclick="openFranchiseModal(); toggleChatbot();" class="text-brandSkyBlue font-extrabold underline">Register Franchise</a> to fill out our partnership application.`;
+            }
+            if (q.includes('job') || q.includes('vacancy') || q.includes('career') || q.includes('hire') || q.includes('phlebotomist')) {
+                return `We have exciting openings for Phlebotomists, Lab Technicians, Receptionists, and Marketing Executives at our branches. Click <a href="#" onclick="openJobVacancyModal(); toggleChatbot();" class="text-brandSkyBlue font-extrabold underline">Apply For Position</a> to submit your resume!`;
+            }
+            if (q.includes('report') || q.includes('download') || q.includes('result') || q.includes('pdf')) {
+                return `You can download your verified PDF report instantly in our <a href="#portal" onclick="toggleChatbot()" class="text-brandSkyBlue font-extrabold underline">Download Report</a> portal by entering your Sample ID and mobile number.`;
+            }
+            if (q.includes('risk') || q.includes('analyze') || q.includes('doctor') || q.includes('ai')) {
+                return `Try our AI-powered <strong>Upload Report & Health Risk Analysis</strong> tool on the website! Upload your report image or PDF to instantly get High/Medium/Low risk counts and suggested specialist doctor consultations.`;
+            }
+            if (q.includes('contact') || q.includes('phone') || q.includes('helpline') || q.includes('address') || q.includes('location')) {
+                return `Clasmo Diagnostics Helpline: <a href="tel:9272173712" class="font-bold underline text-brandNavy">9272173712</a>. Working hours: 07:00 AM - 09:00 PM (Mon-Sun). You can also chat with us on WhatsApp anytime!`;
+            }
+
+            return `Thank you for asking! For immediate assistance with your query, please call our 24/7 helpline at <strong>9272173712</strong> or connect with us on WhatsApp via the floating button below.`;
+        }
+
+        // Blood Cell Canvas Interactive Animation
+        function initBloodCellCanvas() {
+            const canvas = document.getElementById('bloodCellCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let width = (canvas.width = canvas.parentElement.offsetWidth);
+            let height = (canvas.height = canvas.parentElement.offsetHeight);
+
+            window.addEventListener('resize', () => {
+                if (canvas.parentElement) {
+                    width = canvas.width = canvas.parentElement.offsetWidth;
+                    height = canvas.height = canvas.parentElement.offsetHeight;
+                }
+            });
+
+            const cells = [];
+            const numCells = 28;
+
+            for (let i = 0; i < numCells; i++) {
+                cells.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 8 + 6,
+                    color: Math.random() > 0.3 ? 'rgba(239, 68, 68, 0.45)' : 'rgba(0, 168, 232, 0.45)', // Red blood cells and Sky Blue particles
+                    speedX: (Math.random() - 0.5) * 0.8,
+                    speedY: (Math.random() - 0.5) * 0.8,
+                    pulse: Math.random() * Math.PI
+                });
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, width, height);
+
+                cells.forEach(cell => {
+                    cell.x += cell.speedX;
+                    cell.y += cell.speedY;
+                    cell.pulse += 0.03;
+
+                    if (cell.x < 0) cell.x = width;
+                    if (cell.x > width) cell.x = 0;
+                    if (cell.y < 0) cell.y = height;
+                    if (cell.y > height) cell.y = 0;
+
+                    const r = cell.radius + Math.sin(cell.pulse) * 1.5;
+
+                    ctx.beginPath();
+                    ctx.arc(cell.x, cell.y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = cell.color;
+                    ctx.fill();
+
+                    // Inner cell ring / core
+                    ctx.beginPath();
+                    ctx.arc(cell.x, cell.y, r * 0.4, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animateCanvas);
+            }
+
+            animateCanvas();
+        }
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCatalog(healthPackages);
+            initBloodCellCanvas();
         });
-     3. Handle response success/failure callbacks here.
-     ========================================================================= */
-
-  // Setup WhatsApp & Download Action Buttons
-  const waText = encodeURIComponent(
-    `Hello Clasmo Diagnostics, I have booked a home collection pickup.\n\nBooking ID: ${bookingId}\nName: ${name.value}\nMobile: ${mobile.value}\nDate/Slot: ${date.value} (${slot.value})\nTests: ${testsVal.value}\nTotal: ${totalText}\nAddress: ${address.value}`
-  );
-
-  document.getElementById('wa-share-booking-btn').onclick = () => {
-    window.open(`https://wa.me/919272173712?text=${waText}`, '_blank');
-  };
-
-  document.getElementById('download-summary-btn').onclick = () => {
-    const fileContent = `CLASMO DIAGNOSTICS - HOME PICKUP SUMMARY\nBooking ID: ${bookingId}\nPatient Name: ${name.value}\nMobile: ${mobile.value}\nSlot: ${date.value} ${slot.value}\nAddress: ${address.value}\nTests: ${testsVal.value}\nAmount Payable: ${totalText}\n`;
-    const blob = new Blob([fileContent], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `Clasmo_Booking_${bookingId}.txt`;
-    link.click();
-  };
-
-  openModal('booking-confirm-modal');
-}
-
-/* 8. MODAL CONTROL SYSTEM WITH FOCUS TRAP */
-function openModal(id) {
-  const modal = document.getElementById(id);
-  modal.classList.add('active');
-  modal.querySelector('button, input, [tabindex="0"]')?.focus();
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('active');
-}
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
-    closeCartDrawer();
-  }
-});
-
-/* 9. TEST DETAILS MODAL INJECTION */
-function openTestDetail(testId) {
-  const test = TESTS_DATA.find(t => t.id === testId);
-  const content = document.getElementById('test-detail-content');
-  content.innerHTML = `
-    <h3>${test.name}</h3>
-    <span class="badge" style="margin:10px 0;">${test.category}</span>
-    <p style="margin:12px 0;">${test.description}</p>
-    <ul style="margin-left:20px; font-size:0.9rem; margin-bottom:16px;">
-      <li>Fast Report Delivery within <strong>${test.reportTime}</strong></li>
-      <li>Fasting Instruction: ${test.fastingRequired ? '8-12 Hours Fasting Required' : 'No Fasting Required'}</li>
-      <li>Sample Type: Venous Blood / Routine Specimen</li>
-    </ul>
-    <div style="font-size:1.5rem; font-weight:800; color:var(--primary); margin-bottom:16px;">₹${test.price}</div>
-    <button class="btn btn-accent" style="width:100%;" onclick="toggleCartItem('${test.id}'); closeModal('test-detail-modal');">
-      Add to Booking Cart
-    </button>
-  `;
-  openModal('test-detail-modal');
-}
-
-function openReportModal(title) {
-  openModal('report-modal');
-}
-
-/* 10. PORTAL TAB SWITCHING */
-function switchPortalTab(event, tabId) {
-  document.querySelectorAll('.portal-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  
-  event.target.classList.add('active');
-  document.getElementById(tabId).classList.add('active');
-}
-
-/* 11. STAT COUNTERS ANIMATION */
-function setupCounters() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseFloat(el.dataset.target);
-        let count = 0;
-        const step = target / 40;
-        const timer = setInterval(() => {
-          count += step;
-          if (count >= target) {
-            el.textContent = target % 1 === 0 ? target.toLocaleString('en-IN') : target.toFixed(1);
-            clearInterval(timer);
-          } else {
-            el.textContent = count % 1 === 0 ? Math.floor(count).toLocaleString('en-IN') : count.toFixed(1);
-          }
-        }, 30);
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.stat-number').forEach(num => observer.observe(num));
-}
-
-/* 12. UTILS & TOASTS */
-function showToast(msg) {
-  const container = document.getElementById('toast-container');
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = `<span>✓</span> <span>${msg}</span>`;
-  container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-function setupDateRestriction() {
-  const dateInput = document.getElementById('pickup-date');
-  const today = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 30);
-
-  dateInput.min = today.toISOString().split('T')[0];
-  dateInput.max = maxDate.toISOString().split('T')[0];
-}
-</script>
+    </script>
 </body>
 </html>
